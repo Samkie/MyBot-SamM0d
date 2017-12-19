@@ -26,31 +26,10 @@ Func MyTrainClick($TroopButton, $iTimes = 1, $iSpeed = 0, $sdebugtxt="", $bIsBre
 			SetLog("MyTrainClick " & $x & "," & $y & "," & $iTimes & "," & $iSpeed & " " & $sdebugtxt & $txt, $COLOR_ORANGE, "Verdana", "7.5", 0)
 		EndIf
 
-		Local $aRegionForScan[4] = [0,0,0,0]
-		Local $aTroopsRegionForScan[4][4] = [[26,411,815,435],[26,512,815,536],[640,411,831,435],[640,512,831,536]]
-;~  		Local $aTroopsRegionForScan[4][4] = [[26,411,816,435],[26,512,816,536],[542,411,831,435],[542,512,831,536]]
-
-		Local $aSpellsRegionForScan[2][4] = [[26,411,521,435],[26,512,521,536]]
-;~ 		Local $aSpellsRegionForScan[2][4] = [[26,411,615,435],[26,512,615,536]] ; event 25-08
-		Local $iRegionForClick
-		Local $hHBitmapRegionForScan
-		Local $aTempA
+		Local $aRegionForScan[4] = [26,411,840,536]
 		Local $aButtonXY
 
-		If $bIsBrewSpell = False Then
-			$iRegionForClick = $MyTroopsButton[Eval("eTrain" & $TroopButton)][1]
-			$aRegionForScan[0] = $aTroopsRegionForScan[$iRegionForClick][0]
-			$aRegionForScan[1] = $aTroopsRegionForScan[$iRegionForClick][1]
-			$aRegionForScan[2] = $aTroopsRegionForScan[$iRegionForClick][2]
-			$aRegionForScan[3] = $aTroopsRegionForScan[$iRegionForClick][3]
-		Else
-			$iRegionForClick = $MySpellsButton[Eval("eBrew" & $TroopButton)][1]
-			$aRegionForScan[0] = $aSpellsRegionForScan[$iRegionForClick][0]
-			$aRegionForScan[1] = $aSpellsRegionForScan[$iRegionForClick][1]
-			$aRegionForScan[2] = $aSpellsRegionForScan[$iRegionForClick][2]
-			$aRegionForScan[3] = $aSpellsRegionForScan[$iRegionForClick][3]
-			$TroopButton = "Spell" & $TroopButton
-		EndIf
+		If $bIsBrewSpell Then $TroopButton = "Spell" & $TroopButton
 
 		_CaptureRegion2($aRegionForScan[0],$aRegionForScan[1],$aRegionForScan[2],$aRegionForScan[3])
 		Local $aFileToScan = _FileListToArrayRec($g_sSamM0dImageLocation & "\TrainButtons", $TroopButton & "*.png", $FLTAR_FILES, $FLTAR_NORECUR, $FLTAR_SORT, $FLTAR_NOPATH)
@@ -94,29 +73,23 @@ Func MyTrainClick($TroopButton, $iTimes = 1, $iSpeed = 0, $sdebugtxt="", $bIsBre
 				EndIf
 			Next
 		Else
-			; try fix train button
-			If $g_iSamM0dDebug = 1 Then SetLog("Cannot find button: " & $TroopButton & " , $iRegionForClick = " & $iRegionForClick, $COLOR_ERROR)
-			Switch $iRegionForClick
-				Case 0
-					$iRegionForClick = 1
-				case 1
-					$iRegionForClick = 0
-				Case 2
-					$iRegionForClick = 3
-				case 3
-					$iRegionForClick = 2
-			EndSwitch
-
-			If $bIsBrewSpell = False Then
-				$aRegionForScan[0] = $aTroopsRegionForScan[$iRegionForClick][0]
-				$aRegionForScan[1] = $aTroopsRegionForScan[$iRegionForClick][1]
-				$aRegionForScan[2] = $aTroopsRegionForScan[$iRegionForClick][2]
-				$aRegionForScan[3] = $aTroopsRegionForScan[$iRegionForClick][3]
-			Else
-				$aRegionForScan[0] = $aSpellsRegionForScan[$iRegionForClick][0]
-				$aRegionForScan[1] = $aSpellsRegionForScan[$iRegionForClick][1]
-				$aRegionForScan[2] = $aSpellsRegionForScan[$iRegionForClick][2]
-				$aRegionForScan[3] = $aSpellsRegionForScan[$iRegionForClick][3]
+			Local $iCount = 0
+			If _ColorCheck(_GetPixelColor(24, 370 + $g_iMidOffsetY, True), Hex(0XD3D3CB, 6), 10) Then
+				While Not _ColorCheck(_GetPixelColor(838, 370 + $g_iMidOffsetY, True), Hex(0XD3D3CB, 6), 10)
+					;ClickDrag(830,476,25,476,250)
+					ClickDrag(617,476,318,476,250)
+					If _sleep(500) Then Return False
+					$iCount += 1
+					If $iCount > 3 Then Return False
+				WEnd
+			ElseIf _ColorCheck(_GetPixelColor(838, 370 + $g_iMidOffsetY, True), Hex(0XD3D3CB, 6), 10) Then
+				While Not _ColorCheck(_GetPixelColor(24, 370 + $g_iMidOffsetY, True), Hex(0XD3D3CB, 6), 10)
+					;ClickDrag(25,476,830,476,250)
+					ClickDrag(236,476,538,476,250)
+					If _sleep(500) Then Return False
+					$iCount += 1
+					If $iCount > 3 Then Return False
+				WEnd
 			EndIf
 
 			_CaptureRegion2($aRegionForScan[0],$aRegionForScan[1],$aRegionForScan[2],$aRegionForScan[3])

@@ -106,11 +106,11 @@ Func DoRevampTroops($bDoPreTrain = False)
 
 					Local $fixRemain = 0
 
-					; check need swipe
-					If CheckNeedSwipe(Eval("e" & $tempTroops[$i][0])) = False Then
-						SetLog("Cannot click drag to select troop: " &  MyNameOfTroop(Eval("e" & $tempTroops[$i][0]), 1) , $COLOR_ERROR)
-						Return
-					EndIf
+;~ 					; check need swipe
+;~ 					If CheckNeedSwipe(Eval("e" & $tempTroops[$i][0])) = False Then
+;~ 						SetLog("Cannot click drag to select troop: " &  MyNameOfTroop(Eval("e" & $tempTroops[$i][0]), 1) , $COLOR_ERROR)
+;~ 						Return
+;~ 					EndIf
 
 					Local $iCost
 					; check train cost before click, incase use gem
@@ -175,7 +175,7 @@ Func DoRevampTroops($bDoPreTrain = False)
 						EndIf
 					EndIf
 					If $fixRemain > 0 Then
-						CheckNeedSwipe($eArch)
+;~ 						CheckNeedSwipe($eArch)
 						SetLog("still got remain capacity, so train " & MyNameOfTroop(Eval("eArch"),$fixRemain) & " x" & $fixRemain & " to fit it.",$COLOR_ERROR)
 						If MyTrainClick("Arch",$fixRemain,$g_iTrainClickDelay, "#TT01") Then
 							If Eval("e" & $tempTroops[$i][0]) > 11 Then

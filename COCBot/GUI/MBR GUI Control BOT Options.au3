@@ -279,8 +279,6 @@ Func btnTestTrain()
 	$tempDisableBrewSpell=False
     ModTrain()
 
-	DonateCC()
-
 	SetLog("Elapsed: " & Round(__TimerDiff($hTimer) / 1000, 2))
 	SetLog("===END===")
 

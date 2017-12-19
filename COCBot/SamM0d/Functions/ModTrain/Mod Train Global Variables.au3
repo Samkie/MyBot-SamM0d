@@ -149,6 +149,7 @@ Global Enum $eTrainBarb, $eTrainArch, $eTrainGiant, $eTrainGobl, $eTrainWall, $e
 		$eTrainMini, $eTrainHogs, $eTrainValk, $eTrainGole, $eTrainWitc, $eTrainLava, $eTrainBowl
 
 
+Global Enum $eBrewLightning, $eBrewHeal, $eBrewRage, $eBrewJump, $eBrewFreeze, $eBrewClone, $eBrewPoison, $eBrewEarth, $eBrewHaste, $eBrewSkeleton
 Global $MySpellsButton[10][3] = _
 [["Lightning",  0,  0], _
 ["Heal"	     ,  1,  0], _
@@ -161,11 +162,9 @@ Global $MySpellsButton[10][3] = _
 ["Haste"	 ,  0,  4], _
 ["Skeleton"	 ,  1,  4]]
 
-Global Enum $eBrewLightning, $eBrewHeal, $eBrewRage, $eBrewJump, $eBrewFreeze, $eBrewClone, $eBrewPoison, $eBrewEarth, $eBrewHaste, $eBrewSkeleton
-
 ;~ Global $MySpellsButton[11][3] = _
 ;~ [["Lightning",  0,  0], _
-;~ ["Boom"	     ,  1,  0], _
+;~ ["Santa"	 ,  1,  0], _
 ;~ ["Heal"	     ,  0,  1], _
 ;~ ["Rage"      ,  1,  1], _
 ;~ ["Jump"	     ,  0,  2], _
@@ -200,7 +199,6 @@ Global $MyTroopsCost[19][9] = _
 
 Global Enum $enumLightning, $enumHeal, $enumRage, $enumJump, $enumFreeze, $enumClone, $enumPoison, $enumEarth, $enumHaste, $enumSkeleton
 
-;Global $iLightningSpellComp = 0, $iHealSpellComp = 0, $iRageSpellComp = 0, $iJumpSpellComp = 0, $iFreezeSpellComp = 0,$iCloneSpellComp = 0, $iPoisonSpellComp = 0, $iEarthSpellComp = 0, $iHasteSpellComp = 0, $iSkeletonSpellComp = 0
 Global $CurLightningSpell = 0, $CurHealSpell = 0, $CurRageSpell = 0, $CurJumpSpell = 0, $CurFreezeSpell = 0, $CurCloneSpell = 0, $CurPoisonSpell = 0, $CurHasteSpell = 0, $CurEarthSpell = 0, $CurSkeletonSpell = 0
 Global $OnQLightningSpell = 0, $OnQHealSpell = 0, $OnQRageSpell = 0, $OnQJumpSpell = 0, $OnQFreezeSpell = 0, $OnQCloneSpell = 0, $OnQPoisonSpell = 0, $OnQHasteSpell = 0, $OnQEarthSpell = 0, $OnQSkeletonSpell = 0
 Global $OnTLightningSpell = 0, $OnTHealSpell = 0, $OnTRageSpell = 0, $OnTJumpSpell = 0, $OnTFreezeSpell = 0, $OnTCloneSpell = 0, $OnTPoisonSpell = 0, $OnTHasteSpell = 0, $OnTEarthSpell = 0, $OnTSkeletonSpell = 0
