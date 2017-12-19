@@ -47,4 +47,17 @@ Func CreateBotTab()
 		CreateBotStats()
 	GUICtrlCreateTabItem("")
 
+	; samm0d
+	Local $x = 220
+	Local $y = 380
+	$g_hLblProfileName = GUICtrlCreateLabel("Profile", $x+9, $y, 190, 17, $SS_CENTER)
+	Local $sTxtTip = GetTranslatedFileIni("sam m0d",26, "Better result is pause bot before view stats.")
+	_GUICtrlSetTip(-1, $sTxtTip)
+	$arrowleft2 = GUICtrlCreatePic(@ScriptDir & "\Images\triangle_left.bmp", $x, $y+1, 8, 14)
+	$sTxtTip = GetTranslatedFileIni("sam m0d",25, "Switch between profile stats")
+	_GUICtrlSetTip(-1, $sTxtTip)
+	GUICtrlSetOnEvent(-1, "DoViewStats1")
+	$arrowright2 = GUICtrlCreatePic(@ScriptDir & "\Images\triangle_right.bmp", $x + 198, $y+1, 8, 14)
+	_GUICtrlSetTip(-1, $sTxtTip)
+	GUICtrlSetOnEvent(-1, "DoViewStats2")
 EndFunc   ;==>CreateBotTab

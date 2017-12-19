@@ -47,11 +47,11 @@ Func CreateAttackSearchDeadBaseStandard()
 								   GetTranslatedFileIni("MBR GUI Design Child Attack - Attack Standard", "CmbStandardDropSides_Info_02", "Attack on two sides, penetrates through base") & @CRLF & _
 								   GetTranslatedFileIni("MBR GUI Design Child Attack - Attack Standard", "CmbStandardDropSides_Info_03", "Attack on three sides, gets outer and some inside of base") & @CRLF & _
 								   GetTranslatedFileIni("MBR GUI Design Child Attack - Attack Standard", "CmbStandardDropSides_Info_04", "Select the No. of sides to attack on."))
-				GUICtrlSetData(-1, GetTranslatedFileIni("MBR GUI Design Child Attack - Attack Standard", "CmbStandardDropSides_Item_01", "one side") & "|" & _
-								   GetTranslatedFileIni("MBR GUI Design Child Attack - Attack Standard", "CmbStandardDropSides_Item_02", "two sides") & "|" & _
-								   GetTranslatedFileIni("MBR GUI Design Child Attack - Attack Standard", "CmbStandardDropSides_Item_03", "three sides") & "|" & _
-								   GetTranslatedFileIni("MBR GUI Design Child Attack - Attack Standard", "CmbStandardDropSides_Item_04", "all sides equally"), GetTranslatedFileIni("MBR GUI Design Child Attack - Attack Standard", "CmbStandardDropSides_Item_04", -1))
-
+			   ; samm0d
+			   GUICtrlSetData(-1, GetTranslatedFileIni("MBR GUI Design Child Attack - Attack Standard", "CmbStandardDropSides_Item_01", "one side") & "|" & GetTranslatedFileIni("MBR GUI Design Child Attack - Attack Standard", "CmbStandardDropSides_Item_02", "two sides") & "|" & _
+								  GetTranslatedFileIni("MBR GUI Design Child Attack - Attack Standard", "CmbStandardDropSides_Item_03", "three sides") & "|" & GetTranslatedFileIni("MBR GUI Design Child Attack - Attack Standard", "CmbStandardDropSides_Item_04", "all sides equally" ) & "|" & GetTranslatedFileIni("sam m0d",42,"Multi Finger"), _
+								  GetTranslatedFileIni("MBR GUI Design Child Attack - Attack Standard", "CmbStandardDropSides_Item_04", -1))
+			  GUICtrlSetOnEvent(-1, "cmbDeployDB")
 		$y += 25
 			GUICtrlCreateLabel(GetTranslatedFileIni("MBR GUI Design Child Attack - Attack Standard", "Lbl-CmbStandardUnitDelay", "Delay Unit") & ":", $x, $y + 5, -1, -1)
 				$sTxtTip = GetTranslatedFileIni("MBR GUI Design Child Attack - Attack Standard", "Lbl-CmbStandardUnitDelay_Info_01", "This delays the deployment of troops, 1 (fast) = like a Bot, 10 (slow) = Like a Human.") & @CRLF & _
@@ -108,6 +108,26 @@ Func CreateAttackSearchDeadBaseStandard()
 				_GUICtrlSetTip(-1, $sTxtTip)
 			$g_hPicAttackNearDarkElixirDrillDB = _GUICtrlCreateIcon($g_sLibIconPath, $eIcnDrill, $x + 20 , $y - 3, 24, 24)
 				_GUICtrlSetTip(-1, $sTxtTip)
+
+			; samm0d multi finger
+			$x = 25
+			$y += 60
+			$lblDBMultiFinger = GUICtrlCreateLabel(GetTranslatedFileIni("sam m0d","MF_Atk_Style","Style:"), $x, $y, 60)
+			$y += 20
+			$cmbDBMultiFinger = GUICtrlCreateCombo("", $x, $y, 170, 25, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
+				$sTxtTip = "Select which multi finger attack style you would like." & @CRLF & @CRLF & _
+						  "     Random will chose one of the attacks at random." & @CRLF & _
+						  "     Four Finger and Eight Finger attacks will attack from all 4 sides at once."
+			GUICtrlSetTip(-1, $sTxtTip)
+			GUICtrlSetData(-1,  GetTranslatedFileIni("sam m0d",43,"Random") & "|" & _
+								GetTranslatedFileIni("sam m0d",44,"Four Finger Standard") & "|" & _
+								GetTranslatedFileIni("sam m0d",45,"Four Finger Spiral Left") & "|" & _
+								GetTranslatedFileIni("sam m0d",46,"Four Finger Spiral Right") & "|" & _
+								GetTranslatedFileIni("sam m0d",47,"Eight Finger Blossom") & "|" & _
+								GetTranslatedFileIni("sam m0d",48,"Eight Finger Implosion") & "|" & _
+								GetTranslatedFileIni("sam m0d",49,"Eight Finger Pin Wheel Spiral Left") & "|" & _
+								GetTranslatedFileIni("sam m0d",50,"Eight Finger Pin Wheel Spiral Right"), GetTranslatedFileIni("sam m0d",42,"Random"))
+			GUICtrlSetOnEvent(-1, "cmbDBMultiFinger")
 
 		$y += 40
 		$x = 98

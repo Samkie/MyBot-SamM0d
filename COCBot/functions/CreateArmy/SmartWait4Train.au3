@@ -87,7 +87,7 @@ Func SmartWait4Train()
 	If $g_asShieldStatus[0] = "none" And $g_bCloseWithoutShield = False Then Return ; skip if not on shield and other options not selected
 	;================
 
-	Local $result = OpenArmyWindow() ; Open train overview
+	Local $result = OpenArmyOverview() ; Open train overview
 	If $result = False Then
 		If $g_bDebugImageSave Or $g_bDebugSetlogTrain Then DebugImageSave("SmartWait4Troop2_")
 	EndIf

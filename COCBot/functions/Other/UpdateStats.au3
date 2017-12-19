@@ -605,7 +605,9 @@ Func UpdateStats($bForceUpdate = False)
 			$bStatsUpdated = True
 			GUICtrlSetData($g_alblBldBaseStats[$i], _NumberFormat($g_aiCurrentLootBB[$i], True))
 			$iOldCurrentLootBB[$i] = $g_aiCurrentLootBB[$i]
-	EndIf
+		EndIf
+
+	Next
 
 	; samm0d ==============================================
 	If $ichkEnableMySwitch Then
@@ -691,7 +693,7 @@ Func UpdateStats($bForceUpdate = False)
 							$iCurStep = $i
 						EndIf
 					Next
-					GUICtrlSetData($g_hGrpVillage, GetTranslated(603, 32, "Village") & ": " & $aSwitchList[$iCurStep][3])
+					GUICtrlSetData($g_hGrpVillage, GetTranslatedFileIni("MBR GUI Design Bottom", "GrpVillage", "Village") & ": " & $aSwitchList[$iCurStep][3])
 					GUICtrlSetData($g_hLblProfileName,$aSwitchList[$iCurStep][3])
 
 					displayStats($iCurActiveAcc)
@@ -699,7 +701,6 @@ Func UpdateStats($bForceUpdate = False)
 				EndIf
 			EndIf
 		EndIf
-	Next
 	EndIf
 	;===================================
 

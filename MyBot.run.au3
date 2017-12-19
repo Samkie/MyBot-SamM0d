@@ -1342,7 +1342,7 @@ Func _RunFunction($action)
 							$g_iActualTrainSkip = 0
 						EndIf
 						CheckOverviewFullArmy(True, False) ; use true parameter to open train overview window
-						If ISArmyWindow(False, $ArmyTAB) Then CheckExistentArmy("Spells") ; Imgloc Method
+						getArmySpells()
 						getArmyHeroCount(False, True)
 					EndIf
 				Else
