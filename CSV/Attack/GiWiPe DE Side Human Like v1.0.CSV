@@ -1,0 +1,43 @@
+NOTE  |Author: Samkie
+NOTE  |
+NOTE  |Attack: GiWiPe 1 Side DE
+NOTE  |Composition: 12 Giants, 8 walls, 12 wizard, barb 20, arch 41 Spells:1 Rage, 1 Jump
+
+
+      |EXTR. GOLD |EXTR.ELIXIR|EXTR. DARK |DEPO. GOLD |DEPO.ELIXIR|DEPO. DARK |TOWNHALL   |FORCED SIDE|
+SIDE  |0          |0          |0          |0          |0          |4          |1          |           |
+
+
+      |VECTOR_____|SIDE_______|DROP_POINTS|ADDTILES___|VERSUS_____|RANDOMX_PX_|RANDOMY_PX_|___________|
+MAKE  |A          |FRONT-LEFT |10         |1          |INT-EXT    |1          |1          |           |
+MAKE  |B          |FRONT-RIGHT|10         |1          |INT-EXT    |1          |1          |           |
+MAKE  |C          |FRONT-LEFT |10         |-8         |INT-EXT    |1          |1          |           |
+MAKE  |D          |FRONT-RIGHT|10         |-11        |INT-EXT    |1          |1          |           |
+
+
+      |VECTOR_____|INDEX______|QTY_X_VECT_|TROOPNAME__|DELAY_DROP_|DELAYCHANGE|SLEEPAFTER_|___________|
+DROP  |A-B        |6          |3          |giant      |50         |100        |250        |           |
+DROP  |A-B        |6,7,8      |20         |barb       |50         |50         |50         |           |
+DROP  |A-B        |6,7        |2          |wiza       |50         |50         |50         |           |
+DROP  |A-B        |6,7,8      |20         |arch       |50         |50         |50         |           |
+DROP  |A-B        |7          |1          |pekk       |50         |50         |50         |           |
+DROP  |A-B        |1          |6          |giant      |50         |100        |500        |           |
+DROP  |A-B        |1          |4          |wiza       |50         |100        |500        |           |
+DROP  |A          |1          |1          |castle     |50         |100        |50         |           |
+DROP  |B          |1          |3          |wall       |50         |50         |1000       |           |
+DROP  |C          |1          |1          |RSpell     |50         |50         |50         |           |
+DROP  |A          |1          |1          |pekk       |50         |50         |50         |           |
+DROP  |B          |1          |1          |king       |50         |50         |100        |           |
+DROP  |A          |1          |1          |queen      |50         |50         |100        |           |
+DROP  |B          |1          |1          |warden     |50         |50         |100        |           |
+DROP  |A          |1          |5          |wall       |100        |100        |500        |           |
+DROP  |D          |1          |1          |JSpell     |50         |50         |50         |           |
+DROP  |A-B        |1,2,3      |40         |arch       |50         |50         |50         |           |
+
+RECALC|           |           |           |           |           |           |           |           |
+
+DROP  |A-B        |1          |2          |giant      |50         |100        |250        |           |
+DROP  |A-B        |1          |4          |barb       |50         |50         |50         |           |
+DROP  |A-B        |1          |1          |pekk       |50         |50         |50         |           |
+DROP  |A-B        |1          |3          |wiza       |50         |50         |50         |           |
+DROP  |A-B        |1          |4          |arch       |50         |50         |50         |           |

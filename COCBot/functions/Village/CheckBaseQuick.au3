@@ -56,24 +56,29 @@ Func CheckBaseQuick($bStopRecursion = False, $sReturnHome = "")
 			Return
 		EndIf
 
-		CheckOverviewFullArmy(True) ; Check if army needs to be trained due donations
-		If Not ($g_bFullArmy) And $g_bTrainEnabled = True Then
-			If $g_iActualTrainSkip < $g_iMaxTrainSkip Then
-				; Train()
-				TrainRevamp()
-				If $g_bRestart Then Return
-			Else
-				If $g_bDebugSetlogTrain Then Setlog("skip train. " & $g_iActualTrainSkip + 1 & "/" & $g_iMaxTrainSkip, $color_purple)
-				$g_iActualTrainSkip = $g_iActualTrainSkip + 1
-				CheckOverviewFullArmy(True, False) ; use true parameter to open train overview window
-				getArmySpells()
-				getArmyHeroCount(False, True) ; true to close the window
-				If $g_iActualTrainSkip >= $g_iMaxTrainSkip Then
-					$g_iActualTrainSkip = 0
+		; samm0d
+		If $ichkModTrain = 0 Then
+			CheckOverviewFullArmy(True) ; Check if army needs to be trained due donations
+			If Not ($g_bFullArmy) And $g_bTrainEnabled = True Then
+				If $g_iActualTrainSkip < $g_iMaxTrainSkip Then
+					; Train()
+					TrainRevamp()
+					If $g_bRestart Then Return
+				Else
+					If $g_bDebugSetlogTrain Then Setlog("skip train. " & $g_iActualTrainSkip + 1 & "/" & $g_iMaxTrainSkip, $color_purple)
+					$g_iActualTrainSkip = $g_iActualTrainSkip + 1
+					CheckOverviewFullArmy(True, False) ; use true parameter to open train overview window
+					If IsArmyWindow(False, $ArmyTAB) Then CheckExistentArmy("Spells") ; Imgloc Method
+					getArmyHeroCount(False, True) ; true to close the window
+					If $g_iActualTrainSkip >= $g_iMaxTrainSkip Then
+						$g_iActualTrainSkip = 0
+					EndIf
+					If $bStopRecursion = True Then $g_bDisableBreakCheck = False
+					Return
 				EndIf
-				If $bStopRecursion = True Then $g_bDisableBreakCheck = False
-				Return
 			EndIf
+		Else
+			ModTrain(True)
 		EndIf
 
 		Collect() ; Empty Collectors

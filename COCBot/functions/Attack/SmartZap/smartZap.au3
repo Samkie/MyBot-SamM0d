@@ -592,6 +592,8 @@ Func zapBuilding(ByRef $Spells, $x, $y)
 EndFunc   ;==>zapBuilding
 
 Func ReCheckDrillExist($x, $y)
+	; samm0d
+	ForceCaptureRegion()
 	_CaptureRegion2($x - 25, $y - 25, $x + 25, $y + 25)
 
 	Local $aResult = multiMatches($g_sImgSearchDrill, 1, "DCD", $g_sImglocRedline, "", 0, 1000, False) ; Setting Force Captureregion to false, else it will recapture the whole screen, finding any drill

@@ -17,9 +17,28 @@
 #include <WinAPISys.au3>
 
 Func Click($x, $y, $times = 1, $speed = 0, $debugtxt = "")
-	If $g_bDebugClick Or TestCapture() Then
-		Local $txt = _DecodeDebug($debugtxt)
-		SetLog("Click " & $x & "," & $y & "," & $times & "," & $speed & " " & $debugtxt & $txt, $COLOR_ACTION, "Verdana", "7.5", 0)
+	If $ichkEnableHLFClick = 1 Then
+		Local $txt =""
+		Local $PrevCoor = $x & "," & $y
+		Local $iResult = CheckClickMsg($x,$y,$times,$speed,$debugtxt)
+		If $iResult = 2 Then Return
+		If $iResult Then
+			If $EnableHMLSetLog = 1 Then
+				$txt = _DecodeDebug($debugtxt)
+				SetLog("Random Click =-= Change " & $PrevCoor & " To " & $x & "," & $y & " " & $debugtxt & $txt, $COLOR_HMLClick_LOG)
+			EndIf
+		Else
+			If $g_bDebugClick Then
+				$txt = _DecodeDebug($debugtxt)
+				SetLog("Click " & $x & "," & $y & "," & $times & "," & $speed & " " & $debugtxt & $txt, $COLOR_ACTION, "Verdana", "7.5", 0)
+			EndIf
+		EndIf
+		If TestCapture() Then Return
+	Else
+		If $g_bDebugClick Or TestCapture() Then
+			Local $txt = _DecodeDebug($debugtxt)
+			SetLog("Click " & $x & "," & $y & "," & $times & "," & $speed & " " & $debugtxt & $txt, $COLOR_ACTION, "Verdana", "7.5", 0)
+		EndIf
 	EndIf
 
 	If TestCapture() Then Return
@@ -109,9 +128,27 @@ Func BuildingClickP($point, $debugtxt = "")
 EndFunc   ;==>BuildingClickP
 
 Func PureClick($x, $y, $times = 1, $speed = 0, $debugtxt = "")
-	If $g_bDebugClick Then
-		Local $txt = _DecodeDebug($debugtxt)
-		SetLog("PureClick " & $x & "," & $y & "," & $times & "," & $speed & " " & $debugtxt & $txt, $COLOR_ACTION, "Verdana", "7.5", 0)
+	If $ichkEnableHLFClick = 1 Then
+		Local $txt = ""
+		Local $PrevCoor = $x & "," & $y
+		Local $iResult = CheckClickMsg($x,$y,$times,$speed,$debugtxt)
+		If $iResult = 2 Then Return
+		If $iResult Then
+			If $EnableHMLSetLog = 1 Then
+				$txt = _DecodeDebug($debugtxt)
+				SetLog("Random Click =-= Change " & $PrevCoor & " To " & $x & "," & $y & " " & $debugtxt & $txt, $COLOR_HMLClick_LOG)
+			EndIf
+		Else
+			If $g_bDebugClick Then
+				$txt = _DecodeDebug($debugtxt)
+				SetLog("Click " & $x & "," & $y & "," & $times & "," & $speed & " " & $debugtxt & $txt, $COLOR_ACTION, "Verdana", "7.5", 0)
+			EndIf
+		EndIf
+	Else
+		If $g_bDebugClick Then
+			Local $txt = _DecodeDebug($debugtxt)
+			SetLog("PureClick " & $x & "," & $y & "," & $times & "," & $speed & " " & $debugtxt & $txt, $COLOR_ACTION, "Verdana", "7.5", 0)
+		EndIf
 	EndIf
 
 	If TestCapture() Then Return
@@ -143,9 +180,28 @@ Func PureClickP($point, $howMuch = 1, $speed = 0, $debugtxt = "")
 EndFunc   ;==>PureClickP
 
 Func GemClick($x, $y, $times = 1, $speed = 0, $debugtxt = "")
-	If $g_bDebugClick Then
-		Local $txt = _DecodeDebug($debugtxt)
-		SetLog("GemClick " & $x & "," & $y & "," & $times & "," & $speed & " " & $debugtxt & $txt, $COLOR_ACTION, "Verdana", "7.5", 0)
+
+	If $ichkEnableHLFClick = 1 Then
+		Local $txt = ""
+		Local $PrevCoor = $x & "," & $y
+		Local $iResult = CheckClickMsg($x,$y,$times,$speed,$debugtxt)
+		If $iResult = 2 Then Return
+		If $iResult Then
+			If $EnableHMLSetLog = 1 Then
+				$txt = _DecodeDebug($debugtxt)
+				SetLog("Random Click =-= Change " & $PrevCoor & " To " & $x & "," & $y & " " & $debugtxt & $txt, $COLOR_HMLClick_LOG)
+			EndIf
+		Else
+			If $g_bDebugClick Then
+				$txt = _DecodeDebug($debugtxt)
+				SetLog("Click " & $x & "," & $y & "," & $times & "," & $speed & " " & $debugtxt & $txt, $COLOR_ACTION, "Verdana", "7.5", 0)
+			EndIf
+		EndIf
+	Else
+		If $g_bDebugClick Then
+			Local $txt = _DecodeDebug($debugtxt)
+			SetLog("GemClick " & $x & "," & $y & "," & $times & "," & $speed & " " & $debugtxt & $txt, $COLOR_ACTION, "Verdana", "7.5", 0)
+		EndIf
 	EndIf
 
 	If TestCapture() Then Return

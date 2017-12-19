@@ -266,42 +266,22 @@ Func chkmakeIMGCSV()
 EndFunc   ;==>chkmakeIMGCSV
 
 Func btnTestTrain()
-	Local $currentOCR = $g_bDebugOcr
 	Local $currentRunState = $g_bRunState
+
 	$g_bRunState = True
-	BeginImageTest()
 
-	Local $result
-	SetLog("Testing checkArmyCamp()", $COLOR_INFO)
-	$result = checkArmyCamp()
-	If @error Then $result = "Error " & @error & ", " & @extended & ", " & ((IsArray($result)) ? (_ArrayToString($result, ",")) : ($result))
-	SetLog("Result checkArmyCamp() = " & ((IsArray($result)) ? ("Array: " & _ArrayToString($result, ",")) : ($result)), $COLOR_INFO)
+	_GUICtrlTab_ClickTab($g_hTabMain, 0)
+	SetLog("===START===")
+	Local $hTimer = __TimerInit()
 
-	SetLog("Testing getArmyHeroTime()", $COLOR_INFO)
-	$result = getArmyHeroTime("all")
-	If @error Then $result = "Error " & @error & ", " & @extended & ", " & ((IsArray($result)) ? (_ArrayToString($result, ",")) : ($result))
-	SetLog("Result getArmyHeroTime() = " & ((IsArray($result)) ? ("Array: " & _ArrayToString($result, ",")) : ($result)), $COLOR_INFO)
+	$g_bRestart = False
+	$tempDisableTrain=False
+	$tempDisableBrewSpell=False
+    ModTrain()
 
-	$result = "";
-	SetLog("Testing ArmyHeroStatus()", $COLOR_INFO)
-	For $i = 0 To 2
-		$result &= " " & ArmyHeroStatus($i)
-	Next
-	If @error Then $result = "Error " & @error & ", " & @extended & ", " & ((IsArray($result)) ? (_ArrayToString($result, ",")) : ($result))
-	SetLog("Result ArmyHeroStatus(0, 1, 2) = " & ((IsArray($result)) ? ("Array: " & _ArrayToString($result, ",")) : ($result)), $COLOR_INFO)
+	SetLog("Elapsed: " & Round(__TimerDiff($hTimer) / 1000, 2))
+	SetLog("===END===")
 
-	SetLog("Testing GetCurCCSpell()", $COLOR_INFO)
-	$result = GetCurCCSpell(1)
-	If @error Then $result = "Error " & @error & ", " & @extended & ", " & ((IsArray($result)) ? ("Array: " & _ArrayToString($result, ",")) : ($result))
-	SetLog("Result GetCurCCSpell(1) = " & ((IsArray($result)) ? ("Array: " & _ArrayToString($result, ",")) : ($result)), $COLOR_INFO)
-	$result = GetCurCCSpell(2)
-	If @error Then $result = "Error " & @error & ", " & @extended & ", " & ((IsArray($result)) ? ("Array: " & _ArrayToString($result, ",")) : ($result))
-	SetLog("Result GetCurCCSpell(2) = " & ((IsArray($result)) ? ("Array: " & _ArrayToString($result, ",")) : ($result)), $COLOR_INFO)
-
-	SetLog("Testing Train DONE", $COLOR_INFO)
-	EndImageTest()
-
-	$g_bDebugOcr = $currentOCR
 	$g_bRunState = $currentRunState
 EndFunc   ;==>btnTestTrain
 

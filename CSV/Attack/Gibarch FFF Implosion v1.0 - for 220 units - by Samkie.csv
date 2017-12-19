@@ -1,0 +1,50 @@
+NOTE  |Name: Gibarch FFF Implosion v1.0
+NOTE  |Author: Samkie
+NOTE  |
+NOTE  |Warning: Very Bot Like
+NOTE  |
+NOTE  |Unit: 220
+NOTE  |Troops: 8x Giant : 72x Barbarians : 108x Archers
+NOTE  |
+NOTE  |CSV Deployment Speed: Normal
+NOTE  |
+NOTE  |Description: Will drop all Giants to all vectors then delay 1 second,
+NOTE  |continuous Barbs, Archs and finally All Heroes and Castle if enabled from GUI
+
+      |EXTR. GOLD |EXTR.ELIXIR  |EXTR. DARK |DEPO. GOLD |DEPO.ELIXIR|DEPO. DARK |TOWNHALL   |FORCED SIDE|
+SIDE  |           |             |           |           |           |           |1          |           |
+
+      |VECTOR_____|SIDE_________|DROP_POINTS|ADDTILES___|VERSUS_____|RANDOMX_PX_|RANDOMY_PX_|___________|
+MAKE  |A          |FRONT-LEFT   |15         |1          |INT-EXT    |2          |2          |           |
+MAKE  |B          |LEFT-FRONT   |15         |1          |INT-EXT    |2          |2          |           |
+MAKE  |C          |BACK-RIGHT   |15         |1          |INT-EXT    |2          |2          |           |
+MAKE  |D          |RIGHT-BACK   |15         |1          |INT-EXT    |2          |2          |           |
+MAKE  |E          |FRONT-RIGHT  |15         |1          |INT-EXT    |2          |2          |           |
+MAKE  |F          |RIGHT-FRONT  |15         |1          |INT-EXT    |2          |2          |           |
+MAKE  |G          |BACK-LEFT    |15         |1          |INT-EXT    |2          |2          |           |
+MAKE  |H          |LEFT-BACK    |15         |1          |INT-EXT    |2          |2          |           |
+
+      |VECTOR_____|INDEX________|QTY_X_VECT_|TROOPNAME__|DELAY_DROP_|DELAYCHANGE|SLEEPAFTER_|___________|
+DROP  |A-B-C-D    |6          	|1          |giant      |1          |1          |0          |           |
+DROP  |E-F-G-H    |6          	|1          |giant      |1          |1          |1000       |           |
+DROP  |A-B-C-D    |1-9    	|9          |barb       |1          |1          |0          |           |
+DROP  |E-F-G-H    |1-9  	|9          |barb       |1          |1          |0          |           |
+DROP  |A-B-C-D    |1-9          |13         |arch       |1          |1          |0          |           |
+DROP  |E-F-G-H    |1-9          |13         |arch       |1          |1          |0          |           |
+DROP  |A-B-C-D    |6            |2          |wall       |1          |1          |0          |           |
+DROP  |A          |4            |1          |king       |1          |1          |0          |           |
+DROP  |A          |5            |1          |queen      |1          |1          |0          |           |
+DROP  |A          |6            |1          |castle     |1          |1          |0          |           |
+DROP  |A          |5            |1          |Warden     |1          |1          |0          |           |
+RECALC|           |             |           |           |           |           |           |           |
+DROP  |A-B-C-D    |6          	|1          |giant      |1          |1          |0          |           |
+DROP  |E-F-G-H    |6          	|1          |giant      |1          |1          |1000       |           |
+DROP  |A-B-C-D    |1-9    	|9          |barb       |1          |1          |0          |           |
+DROP  |E-F-G-H    |1-9  	|9          |barb       |1          |1          |0          |           |
+DROP  |A-B-C-D    |1-9          |13         |arch       |1          |1          |0          |           |
+DROP  |E-F-G-H    |1-9          |13         |arch       |1          |1          |0          |           |
+DROP  |A-B-C-D    |6            |2          |wall       |1          |1          |0          |           |
+DROP  |A          |4            |1          |king       |1          |1          |0          |           |
+DROP  |A          |5            |1          |queen      |1          |1          |0          |           |
+DROP  |A          |6            |1          |castle     |1          |1          |0          |           |
+DROP  |A          |5            |1          |Warden     |1          |1          |0          |           |

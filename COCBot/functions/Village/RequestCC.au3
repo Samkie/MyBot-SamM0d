@@ -13,7 +13,8 @@
 ; Example .......: No
 ; ===============================================================================================================================
 
-Func RequestCC($ClickPAtEnd = True, $specifyText = "")
+; samm0d
+Func RequestCC($ClickPAtEnd = True, $specifyText = "", $bOpenTrainWindow = True)
 
 	If Not $g_bRequestTroopsEnable Or Not $g_bCanRequestCC Or Not $g_bDonationEnabled Then
 		Return
@@ -30,16 +31,21 @@ Func RequestCC($ClickPAtEnd = True, $specifyText = "")
 	SetLog("Requesting Clan Castle Troops", $COLOR_INFO)
 
 	;open army overview
-	If IsMainPage() Then
-		If Not $g_bUseRandomClick Then
-			Click($aArmyTrainButton[0], $aArmyTrainButton[1], 1, 0, "#0334")
-		Else
-			ClickR($aArmyTrainButtonRND, $aArmyTrainButton[0], $aArmyTrainButton[1], 1, 0)
-		EndIf
-	EndIf
-	If _Sleep($DELAYREQUESTCC1) Then Return
 
-	checkAttackDisable($g_iTaBChkIdle) ; Early Take-A-Break detection
+	; samm0d
+	If $bOpenTrainWindow = True Then
+		;open army overview
+		If IsMainPage() Then
+			If $g_bUseRandomClick = 0 then
+				Click($aArmyTrainButton[0], $aArmyTrainButton[1], 1, 0, "#0334")
+			Else
+				ClickR($aArmyTrainButtonRND, $aArmyTrainButton[0], $aArmyTrainButton[1], 1, 0)
+			EndIF
+		EndIf
+		If _Sleep(500) Then Return
+
+		checkAttackDisable($g_iTaBChkIdle) ; Early Take-A-Break detection
+	EndIf
 
 	;wait to see army overview
 	Local $iCount = 0

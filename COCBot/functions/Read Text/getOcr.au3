@@ -344,8 +344,12 @@ Func getOcrAndCapture($language, $x_start, $y_start, $width, $height, $removeSpa
 	Static $_hHBitmap = 0
 	If $bForceCaptureRegion = True Then
 		_CaptureRegion2($x_start, $y_start, $x_start + $width, $y_start + $height)
+		; samm0d
+		If $g_iSamM0dDebugOCR = 1 Then _debugSaveHBitmapToImage($g_hHBitmap2, $language, True, True)
 	Else
 		$_hHBitmap = GetHHBitmapArea($g_hHBitmap2, $x_start, $y_start, $x_start + $width, $y_start + $height)
+		; samm0d
+		If $g_iSamM0dDebugOCR = 1 Then _debugSaveHBitmapToImage($_hHBitmap, $language, True, True)
 	EndIf
 	Local $result
 	If $bImgLoc Then

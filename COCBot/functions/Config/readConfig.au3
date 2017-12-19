@@ -24,6 +24,10 @@ Func readConfig($inputfile = $g_sProfileConfigPath) ;Reads config and sets it to
 	ReadProfileConfig()
 	If FileExists($g_sProfileBuildingPath) Then ReadBuildingConfig()
 	If FileExists($g_sProfileConfigPath) Then ReadRegularConfig()
+
+	;===========SamM0d Config=======================
+	#include "..\..\SamM0d\readConfig.au3"
+	;==============End SamM0D Config================
 EndFunc   ;==>readConfig
 
 Func ReadProfileConfig($sIniFile = $g_sProfilePath & "\profile.ini")
@@ -136,6 +140,8 @@ Func ReadRegularConfig()
 	If $g_iThreads < 0 Then $g_iThreads = 0
 	IniReadS($g_iBotDesignFlags, $g_sProfileConfigPath, "general", "botDesignFlags", 0, "int") ; Default for existing profiles is 0, for new is 3
 
+	; samm0d
+	If $ichkEnableMySwitch = 0 And $g_bRunState = False Then
 	; Window positions
 	IniReadS($g_iFrmBotPosX, $g_sProfileConfigPath, "general", "frmBotPosX", $g_iFrmBotPosX, "int")
 	IniReadS($g_iFrmBotPosY, $g_sProfileConfigPath, "general", "frmBotPosY", $g_iFrmBotPosY, "int")
@@ -159,6 +165,7 @@ Func ReadRegularConfig()
 		; bot window was minimized, restore default position
 		$g_iFrmBotDockedPosX = $g_WIN_POS_DEFAULT
 		$g_iFrmBotDockedPosY = $g_WIN_POS_DEFAULT
+	EndIf
 	EndIf
 
 	; Redraw mode:  0 = disabled, 1 = Redraw always entire bot window, 2 = Redraw only required bot window area (or entire bot if control not specified)
@@ -283,6 +290,8 @@ EndFunc   ;==>ReadConfig_Debug
 Func ReadConfig_Android()
 	; Android Configuration
 	$g_sAndroidGameDistributor = IniRead($g_sProfileConfigPath, "android", "game.distributor", $g_sAndroidGameDistributor)
+	; samm0d - Advertising window
+	readADConfig()
 	$g_sAndroidGamePackage = IniRead($g_sProfileConfigPath, "android", "game.package", $g_sAndroidGamePackage)
 	$g_sAndroidGameClass = IniRead($g_sProfileConfigPath, "android", "game.class", $g_sAndroidGameClass)
 	$g_sUserGameDistributor = IniRead($g_sProfileConfigPath, "android", "user.distributor", $g_sUserGameDistributor)

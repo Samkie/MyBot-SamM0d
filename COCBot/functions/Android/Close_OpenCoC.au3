@@ -158,8 +158,13 @@ Func PoliteCloseCoC($sSource = "Unknown_", $bPoliteCloseCoC = $g_bPoliteCloseCoC
 			While 1
 				checkObstacles()
 				AndroidBackButton()
-				If _Sleep($DELAYCLOSEOPEN1000) Then Return ; wait for window to open
-				If ClickOkay("ExitOkay_" & $sSource, True) = True Then ExitLoop ; Confirm okay to exit
+				; samm0d
+				If _Wait4Pixel(465,445,0x6CBB1F,10,1000,100,"PoliteCloseCoC") = True Then
+					PureClick(514, 427, 1, 50, "#0117") ; Click Okay Button
+					ExitLoop
+				EndIf
+				;If _Sleep($DELAYCLOSEOPEN1000) Then Return ; wait for window to open
+				;If ClickOkay("ExitOkay_" & $sSource, True) = True Then ExitLoop ; Confirm okay to exit
 				If $i > 10 Then
 					Setlog("Can not find Okay button to exit CoC, Forcefully Closing CoC", $COLOR_ERROR)
 					If $g_bDebugImageSave Then DebugImageSave($sSource)

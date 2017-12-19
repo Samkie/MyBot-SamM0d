@@ -705,6 +705,9 @@ Func GUIControl_WM_NOTIFY($hWind, $iMsg, $wParam, $lParam)
 			tabTHSnipe()
 		Case $g_hGUI_BOT_TAB
 			tabBot()
+		; samm0d
+		Case $g_hGUI_STATS_TAB
+			tabStats()
 		Case Else
 			$bCheckEmbeddedShield = False
 	EndSwitch
@@ -1262,6 +1265,8 @@ Func BotClose($SaveConfig = Default, $bExit = True)
 		AndroidToFront(Default, "BotClose")
 		AndroidAdbTerminateShellInstance()
 	EndIf
+   ; samm0d
+   DirRemove(@ScriptDir & "\profiles\SamM0d", 1)
 
 	; Close Mutexes
 	If $g_hMutex_BotTitle <> 0 Then ReleaseMutex($g_hMutex_BotTitle)
@@ -1584,51 +1589,81 @@ EndFunc   ;==>SetTime
 Func tabMain()
 	If $g_iGuiMode = 0 Then Return
 	Local $tabidx = GUICtrlRead($g_hTabMain)
-	Select
-		Case $tabidx = 0 ; Log
-			GUISetState(@SW_HIDE, $g_hGUI_VILLAGE)
-			GUISetState(@SW_HIDE, $g_hGUI_ATTACK)
-			GUISetState(@SW_HIDE, $g_hGUI_BOT)
-			GUISetState(@SW_HIDE, $g_hGUI_ABOUT)
-			GUISetState(@SW_SHOWNOACTIVATE, $g_hGUI_LOG)
+		Select
+			Case $tabidx = 0 ; Log
+				GUISetState(@SW_HIDE, $g_hGUI_VILLAGE)
+				GUISetState(@SW_HIDE, $g_hGUI_ATTACK)
+				GUISetState(@SW_HIDE, $g_hGUI_BOT)
 
-		Case $tabidx = 1 ; Village
-			GUISetState(@SW_HIDE, $g_hGUI_LOG)
-			GUISetState(@SW_HIDE, $g_hGUI_ATTACK)
-			GUISetState(@SW_HIDE, $g_hGUI_BOT)
-			GUISetState(@SW_HIDE, $g_hGUI_ABOUT)
-			GUISetState(@SW_SHOWNOACTIVATE, $g_hGUI_VILLAGE)
-			tabVillage()
+				; SamM0d
+				GUISetState(@SW_HIDE, $hGUI_MOD)
 
-		Case $tabidx = 2 ; Attack
-			GUISetState(@SW_HIDE, $g_hGUI_LOG)
-			GUISetState(@SW_HIDE, $g_hGUI_VILLAGE)
-			GUISetState(@SW_HIDE, $g_hGUI_BOT)
-			GUISetState(@SW_HIDE, $g_hGUI_ABOUT)
-			GUISetState(@SW_SHOWNOACTIVATE, $g_hGUI_ATTACK)
-			tabAttack()
+				GUISetState(@SW_HIDE, $g_hGUI_ABOUT)
+				GUISetState(@SW_SHOWNOACTIVATE, $g_hGUI_LOG)
 
-		Case $tabidx = 3 ; Options
-			GUISetState(@SW_HIDE, $g_hGUI_LOG)
-			GUISetState(@SW_HIDE, $g_hGUI_VILLAGE)
-			GUISetState(@SW_HIDE, $g_hGUI_ATTACK)
-			GUISetState(@SW_HIDE, $g_hGUI_ABOUT)
-			GUISetState(@SW_SHOWNOACTIVATE, $g_hGUI_BOT)
-			tabBot()
+			Case $tabidx = 1 ; Village
+				GUISetState(@SW_HIDE, $g_hGUI_LOG)
+				GUISetState(@SW_HIDE, $g_hGUI_ATTACK)
+				GUISetState(@SW_HIDE, $g_hGUI_BOT)
 
-		Case $tabidx = 4 ; About
-			GUISetState(@SW_HIDE, $g_hGUI_LOG)
-			GUISetState(@SW_HIDE, $g_hGUI_VILLAGE)
-			GUISetState(@SW_HIDE, $g_hGUI_ATTACK)
-			GUISetState(@SW_HIDE, $g_hGUI_BOT)
-			GUISetState(@SW_SHOWNOACTIVATE, $g_hGUI_ABOUT)
+				; SamM0d
+				GUISetState(@SW_HIDE, $hGUI_MOD)
 
-		Case Else
-			GUISetState(@SW_HIDE, $g_hGUI_LOG)
-			GUISetState(@SW_HIDE, $g_hGUI_VILLAGE)
-			GUISetState(@SW_HIDE, $g_hGUI_ATTACK)
-			GUISetState(@SW_HIDE, $g_hGUI_BOT)
-	EndSelect
+				GUISetState(@SW_HIDE, $g_hGUI_ABOUT)
+				GUISetState(@SW_SHOWNOACTIVATE, $g_hGUI_VILLAGE)
+				tabVillage()
+
+			Case $tabidx = 2 ; Attack
+				GUISetState(@SW_HIDE, $g_hGUI_LOG)
+				GUISetState(@SW_HIDE, $g_hGUI_VILLAGE)
+				GUISetState(@SW_HIDE, $g_hGUI_BOT)
+
+				; SamM0d
+				GUISetState(@SW_HIDE, $hGUI_MOD)
+
+				GUISetState(@SW_HIDE, $g_hGUI_ABOUT)
+				GUISetState(@SW_SHOWNOACTIVATE, $g_hGUI_ATTACK)
+				tabAttack()
+
+			Case $tabidx = 3 ; Options
+				GUISetState(@SW_HIDE, $g_hGUI_LOG)
+				GUISetState(@SW_HIDE, $g_hGUI_VILLAGE)
+				GUISetState(@SW_HIDE, $g_hGUI_ATTACK)
+
+				; SamM0d
+				GUISetState(@SW_HIDE, $hGUI_MOD)
+
+				GUISetState(@SW_HIDE, $g_hGUI_ABOUT)
+				GUISetState(@SW_SHOWNOACTIVATE, $g_hGUI_BOT)
+				tabBot()
+
+			Case $tabidx = 4 ; About
+				GUISetState(@SW_HIDE, $g_hGUI_LOG)
+				GUISetState(@SW_HIDE, $g_hGUI_VILLAGE)
+				GUISetState(@SW_HIDE, $g_hGUI_ATTACK)
+				GUISetState(@SW_HIDE, $g_hGUI_BOT)
+				GUISetState(@SW_SHOWNOACTIVATE, $g_hGUI_ABOUT)
+				; SamM0d
+				GUISetState(@SW_SHOWNOACTIVATE, $hGUI_MOD)
+
+			Case $tabidx = 5 ; About
+				GUISetState(@SW_HIDE, $g_hGUI_LOG)
+				GUISetState(@SW_HIDE, $g_hGUI_VILLAGE)
+				GUISetState(@SW_HIDE, $g_hGUI_ATTACK)
+				GUISetState(@SW_HIDE, $g_hGUI_BOT)
+				; SamM0d
+				GUISetState(@SW_HIDE, $hGUI_MOD)
+
+				GUISetState(@SW_SHOWNOACTIVATE, $g_hGUI_ABOUT)
+
+			Case ELSE
+				GUISetState(@SW_HIDE, $g_hGUI_LOG)
+				GUISetState(@SW_HIDE, $g_hGUI_VILLAGE)
+				GUISetState(@SW_HIDE, $g_hGUI_ATTACK)
+				GUISetState(@SW_HIDE, $g_hGUI_BOT)
+				; SamM0d
+				GUISetState(@SW_HIDE, $hGUI_MOD)
+		EndSelect
 
 EndFunc   ;==>tabMain
 
@@ -1847,6 +1882,22 @@ Func tabBot()
 	EndSelect
 EndFunc   ;==>tabBot
 
+; samm0d
+Func tabStats()
+	Local $tabidx = GUICtrlRead($g_hGUI_STATS_TAB)
+	;SetLog("$tabidx: " & $tabidx)
+		Select
+			Case $tabidx = 3 ; Options tab
+				GUICtrlSetState($g_hLblProfileName,$GUI_HIDE)
+				GUICtrlSetState($arrowleft2,$GUI_HIDE)
+				GUICtrlSetState($arrowright2,$GUI_HIDE)
+			Case Else
+				GUICtrlSetState($g_hLblProfileName,$GUI_SHOW)
+				GUICtrlSetState($arrowleft2,$GUI_SHOW)
+				GUICtrlSetState($arrowright2,$GUI_SHOW)
+		EndSelect
+EndFunc
+
 Func tabDeadbase()
 	Local $tabidx = GUICtrlRead($g_hGUI_DEADBASE_TAB)
 	Select
@@ -1916,7 +1967,9 @@ Func Bind_ImageList($nCtrl, ByRef $hImageList)
 	Switch $nCtrl
 		Case $g_hTabMain
 			; the icons for main tab
-			Local $aIconIndex = [$eIcnHourGlass, $eIcnTH11, $eIcnAttack, $eIcnGUI, $eIcnInfo]
+			; Local $aIconIndex = [$eIcnHourGlass, $eIcnTH11, $eIcnAttack, $eIcnGUI, $eIcnInfo]
+			; samm0d
+			Local $aIconIndex = [$eIcnHourGlass, $eIcnTH11, $eIcnAttack, $eIcnGUI, $eIcnPekka, $eIcnInfo]
 
 		Case $g_hGUI_VILLAGE_TAB
 			; the icons for village tab

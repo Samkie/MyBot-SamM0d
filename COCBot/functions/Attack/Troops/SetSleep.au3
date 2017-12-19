@@ -21,6 +21,11 @@ Func SetSleep($type)
 		$factor0 = 10
 		$factor1 = 100
 	EndIf
+
+	; samm0d - Unit Wave Factor
+	If $ichkUnitFactor = 1 Then $factor0 = $itxtUnitFactor
+	If $ichkWaveFactor = 1 Then $factor1 = $itxtWaveFactor
+
 	Switch $type
 		Case 0
 			If $g_abAttackStdRandomizeDelay[$g_iMatchMode] Then

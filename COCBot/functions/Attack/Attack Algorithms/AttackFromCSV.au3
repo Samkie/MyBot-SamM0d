@@ -86,6 +86,63 @@ Func ConvertInternalExternArea()
 		$ExternalArea[$i][2] = $ExternalAreaRef[$i][2]
 		;debugAttackCSV("External Area Point " & $ExternalArea[$i][2] & ": " & $x & ", " & $y)
 	Next
+
+	; ================  samm0d - update edge coor
+
+	Local $fEdgeFactor = 8.0
+
+	$g_aaiTopLeftDropPoints[0][0] = Ceiling($ExternalArea[0][0] + ((($ExternalArea[2][0] - $ExternalArea[0][0]) * $fEdgeFactor) / 100))
+	$g_aaiTopLeftDropPoints[0][1] = Ceiling($ExternalArea[0][1] - ((($ExternalArea[0][1] - $ExternalArea[2][1]) * $fEdgeFactor) / 100))
+	$g_aaiTopLeftDropPoints[4][0] = Ceiling($ExternalArea[2][0] - ((($ExternalArea[2][0] - $ExternalArea[0][0]) * $fEdgeFactor) / 100))
+	$g_aaiTopLeftDropPoints[4][1] = Ceiling($ExternalArea[2][1] + ((($ExternalArea[0][1] - $ExternalArea[2][1]) * $fEdgeFactor) / 100))
+	$g_aaiTopLeftDropPoints[2][0] = Ceiling($g_aaiTopLeftDropPoints[0][0] + (($g_aaiTopLeftDropPoints[4][0] - $g_aaiTopLeftDropPoints[0][0]) / 2))
+	$g_aaiTopLeftDropPoints[2][1] = Ceiling($g_aaiTopLeftDropPoints[0][1] - (($g_aaiTopLeftDropPoints[0][1] - $g_aaiTopLeftDropPoints[4][1]) / 2))
+	$g_aaiTopLeftDropPoints[1][0] = Ceiling($g_aaiTopLeftDropPoints[0][0] + (($g_aaiTopLeftDropPoints[2][0] - $g_aaiTopLeftDropPoints[0][0]) / 2))
+	$g_aaiTopLeftDropPoints[1][1] = Ceiling($g_aaiTopLeftDropPoints[0][1] - (($g_aaiTopLeftDropPoints[0][1] - $g_aaiTopLeftDropPoints[2][1]) / 2))
+	$g_aaiTopLeftDropPoints[3][0] = Ceiling($g_aaiTopLeftDropPoints[2][0] + (($g_aaiTopLeftDropPoints[4][0] - $g_aaiTopLeftDropPoints[2][0]) / 2))
+	$g_aaiTopLeftDropPoints[3][1] = Ceiling($g_aaiTopLeftDropPoints[2][1] - (($g_aaiTopLeftDropPoints[2][1] - $g_aaiTopLeftDropPoints[4][1]) / 2))
+
+	$g_aaiTopRightDropPoints[0][0] = Ceiling($ExternalArea[2][0] + ((($ExternalArea[1][0] - $ExternalArea[2][0]) * $fEdgeFactor) / 100))
+	$g_aaiTopRightDropPoints[0][1] = Ceiling($ExternalArea[2][1] + ((($ExternalArea[1][1] - $ExternalArea[2][1]) * $fEdgeFactor) / 100))
+	$g_aaiTopRightDropPoints[4][0] = Ceiling($ExternalArea[1][0] - ((($ExternalArea[1][0] - $ExternalArea[2][0]) * $fEdgeFactor) / 100))
+	$g_aaiTopRightDropPoints[4][1] = Ceiling($ExternalArea[1][1] - ((($ExternalArea[1][1] - $ExternalArea[2][1]) * $fEdgeFactor) / 100))
+	$g_aaiTopRightDropPoints[2][0] = Ceiling($g_aaiTopRightDropPoints[0][0] + (($g_aaiTopRightDropPoints[4][0] - $g_aaiTopRightDropPoints[0][0]) / 2))
+	$g_aaiTopRightDropPoints[2][1] = Ceiling($g_aaiTopRightDropPoints[0][1] + (($g_aaiTopRightDropPoints[4][1] - $g_aaiTopRightDropPoints[0][1]) / 2))
+	$g_aaiTopRightDropPoints[1][0] = Ceiling($g_aaiTopRightDropPoints[0][0] + (($g_aaiTopRightDropPoints[2][0] - $g_aaiTopRightDropPoints[0][0]) / 2))
+	$g_aaiTopRightDropPoints[1][1] = Ceiling($g_aaiTopRightDropPoints[0][1] + (($g_aaiTopRightDropPoints[2][1] - $g_aaiTopRightDropPoints[0][1]) / 2))
+	$g_aaiTopRightDropPoints[3][0] = Ceiling($g_aaiTopRightDropPoints[2][0] + (($g_aaiTopRightDropPoints[4][0] - $g_aaiTopRightDropPoints[2][0]) / 2))
+	$g_aaiTopRightDropPoints[3][1] = Ceiling($g_aaiTopRightDropPoints[2][1] + (($g_aaiTopRightDropPoints[4][1] - $g_aaiTopRightDropPoints[2][1]) / 2))
+
+
+	Local $fBottomFactor
+
+	$g_aaiBottomLeftDropPoints[0][0] = Ceiling($ExternalArea[0][0] + ((($ExternalArea[3][0] - $ExternalArea[0][0]) * $fEdgeFactor) / 100))
+	$g_aaiBottomLeftDropPoints[0][1] = Ceiling($ExternalArea[0][1] + ((($ExternalArea[3][1] - $ExternalArea[0][1]) * $fEdgeFactor) / 100))
+	$fBottomFactor = (($ExternalArea[3][1] - 610) * 100) / ($ExternalArea[3][1] - $ExternalArea[0][1])
+	$g_aaiBottomLeftDropPoints[4][0] = Ceiling($ExternalArea[3][0] - ((($ExternalArea[3][0] - $ExternalArea[0][0]) * $fBottomFactor) / 100))
+	$g_aaiBottomLeftDropPoints[4][1] = 610
+	$g_aaiBottomLeftDropPoints[2][0] = Ceiling($g_aaiBottomLeftDropPoints[0][0] + (($g_aaiBottomLeftDropPoints[4][0] - $g_aaiBottomLeftDropPoints[0][0]) / 2))
+	$g_aaiBottomLeftDropPoints[2][1] = Ceiling($g_aaiBottomLeftDropPoints[0][1] + (($g_aaiBottomLeftDropPoints[4][1] - $g_aaiBottomLeftDropPoints[0][1]) / 2))
+	$g_aaiBottomLeftDropPoints[1][0] = Ceiling($g_aaiBottomLeftDropPoints[0][0] + (($g_aaiBottomLeftDropPoints[2][0] - $g_aaiBottomLeftDropPoints[0][0]) / 2))
+	$g_aaiBottomLeftDropPoints[1][1] = Ceiling($g_aaiBottomLeftDropPoints[0][1] + (($g_aaiBottomLeftDropPoints[2][1] - $g_aaiBottomLeftDropPoints[0][1]) / 2))
+	$g_aaiBottomLeftDropPoints[3][0] = Ceiling($g_aaiBottomLeftDropPoints[2][0] + (($g_aaiBottomLeftDropPoints[4][0] - $g_aaiBottomLeftDropPoints[2][0]) / 2))
+	$g_aaiBottomLeftDropPoints[3][1] = Ceiling($g_aaiBottomLeftDropPoints[2][1] + (($g_aaiBottomLeftDropPoints[4][1] - $g_aaiBottomLeftDropPoints[2][1]) / 2))
+
+
+	$fBottomFactor = (($ExternalArea[3][1] - 610) * 100) / ($ExternalArea[3][1] - $ExternalArea[1][1])
+	$g_aaiBottomRightDropPoints[0][0] = Ceiling($ExternalArea[3][0] + ((($ExternalArea[1][0] - $ExternalArea[3][0]) * $fBottomFactor) / 100))
+	$g_aaiBottomRightDropPoints[0][1] = 610
+	$g_aaiBottomRightDropPoints[4][0] = Ceiling($ExternalArea[1][0] - ((($ExternalArea[1][0] - $ExternalArea[3][0]) * $fEdgeFactor) / 100))
+	$g_aaiBottomRightDropPoints[4][1] = Ceiling($ExternalArea[1][1] + ((($ExternalArea[3][1] - $ExternalArea[1][1]) * $fEdgeFactor) / 100))
+	$g_aaiBottomRightDropPoints[2][0] = Ceiling($g_aaiBottomRightDropPoints[0][0] + (($g_aaiBottomRightDropPoints[4][0] - $g_aaiBottomRightDropPoints[0][0]) / 2))
+	$g_aaiBottomRightDropPoints[2][1] = Ceiling($g_aaiBottomRightDropPoints[0][1] - (($g_aaiBottomRightDropPoints[0][1] - $g_aaiBottomRightDropPoints[4][1]) / 2))
+	$g_aaiBottomRightDropPoints[1][0] = Ceiling($g_aaiBottomRightDropPoints[0][0] + (($g_aaiBottomRightDropPoints[2][0] - $g_aaiBottomRightDropPoints[0][0]) / 2))
+	$g_aaiBottomRightDropPoints[1][1] = Ceiling($g_aaiBottomRightDropPoints[0][1] - (($g_aaiBottomRightDropPoints[0][1] - $g_aaiBottomRightDropPoints[2][1]) / 2))
+	$g_aaiBottomRightDropPoints[3][0] = Ceiling($g_aaiBottomRightDropPoints[2][0] + (($g_aaiBottomRightDropPoints[4][0] - $g_aaiBottomRightDropPoints[2][0]) / 2))
+	$g_aaiBottomRightDropPoints[3][1] = Ceiling($g_aaiBottomRightDropPoints[2][1] - (($g_aaiBottomRightDropPoints[2][1] - $g_aaiBottomRightDropPoints[4][1]) / 2))
+
+	Global $g_aaiEdgeDropPoints[4] = [$g_aaiBottomRightDropPoints, $g_aaiTopLeftDropPoints, $g_aaiBottomLeftDropPoints, $g_aaiTopRightDropPoints]
+
 	; Full ECD Diamond $CocDiamondECD
 	; Top
 	$x = $ExternalAreaRef[2][0]
@@ -416,8 +473,11 @@ Func Algorithm_AttackCSV($testattack = False, $captureredarea = True)
 	;_CaptureRegion()
 
 	;reset variables
-	Global $g_aiPixelMine[0]
-	Global $g_aiPixelElixir[0]
+	; samm0d
+	If $bIDoScanMineAndElixir = False Then
+		Global $g_aiPixelMine[0]
+		Global $g_aiPixelElixir[0]
+	EndIf
 	Global $g_aiPixelDarkElixir[0]
 	Local $g_aiPixelNearCollectorTopLeftSTR = ""
 	Local $g_aiPixelNearCollectorBottomLeftSTR = ""
@@ -429,9 +489,12 @@ Func Algorithm_AttackCSV($testattack = False, $captureredarea = True)
 	If $g_bCSVLocateMine = True Then
 		;SetLog("Locating mines")
 		$hTimer = __timerinit()
-		SuspendAndroid()
-		$g_aiPixelMine = GetLocationMine()
-		ResumeAndroid()
+		;samm0d
+		If $bIDoScanMineAndElixir = False Then
+			SuspendAndroid()
+			$g_aiPixelMine = GetLocationMine()
+			ResumeAndroid()
+		EndIf
 		If _Sleep($DELAYRESPOND) Then Return
 		CleanRedArea($g_aiPixelMine)
 		Local $htimerMine = Round(__timerdiff($hTimer) / 1000, 2)
@@ -470,9 +533,12 @@ Func Algorithm_AttackCSV($testattack = False, $captureredarea = True)
 	If $g_bCSVLocateElixir = True Then
 		;SetLog("Locating elixir")
 		$hTimer = __timerinit()
-		SuspendAndroid()
-		$g_aiPixelElixir = GetLocationElixir()
-		ResumeAndroid()
+		;samm0d
+		If $bIDoScanMineAndElixir = False Then
+			SuspendAndroid()
+			$g_aiPixelElixir = GetLocationElixir()
+			ResumeAndroid()
+		EndIf
 		If _Sleep($DELAYRESPOND) Then Return
 		CleanRedArea($g_aiPixelElixir)
 		Local $htimerMine = Round(__timerdiff($hTimer) / 1000, 2)
@@ -506,6 +572,9 @@ Func Algorithm_AttackCSV($testattack = False, $captureredarea = True)
 		Setlog("> Elixir collectors detection not needed, skip", $COLOR_INFO)
 	EndIf
 	If _Sleep($DELAYRESPOND) Then Return
+
+	;samm0d
+	$bIDoScanMineAndElixir = False
 
 	;04.03 If drop troop near drill
 	If $g_bCSVLocateDrill = True Then

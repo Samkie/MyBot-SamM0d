@@ -20,6 +20,9 @@ Func checkAttackDisable($iSource, $Result = "")
 	Local $i = 0, $iCount = 0
 	Local $iModSource
 
+	; samm0d
+	Local $bchkQuickBase = False
+
 	If $g_bDisableBreakCheck = True Then Return ; check Disable break flag, added to prevent recursion for CheckBaseQuick
 
 	If $g_bForceSinglePBLogoff And _DateIsValid($g_sPBStartTime) Then
@@ -87,6 +90,8 @@ Func checkAttackDisable($iSource, $Result = "")
 				Return ; exit function, take a break text not found
 			EndIf
 		Case $g_iTaBChkTime
+			; samm0d
+			$bchkQuickBase = True
 			If $iSource = $g_iTaBChkAttack Then ; If from village search, need to return home
 				While _CheckPixel($aIsAttackPage, $g_bCapturePixel) = False ; Wait for attack page ready
 					If _Sleep($DELAYATTACKDISABLE500) Then Return
@@ -120,6 +125,8 @@ Func checkAttackDisable($iSource, $Result = "")
 			EndIf
 			If $g_asShieldStatus[0] = "guard" Then
 				Setlog("Unable to Force PB, Guard shield present", $COLOR_INFO)
+				; samm0d
+				BreakPersonalShield()
 			Else
 				Setlog("Forcing Early Personal Break Now!!", $COLOR_SUCCESS)
 			EndIf
@@ -129,7 +136,8 @@ Func checkAttackDisable($iSource, $Result = "")
 	EndSwitch
 
 	Setlog("Prepare base before Personal Break..", $COLOR_INFO)
-	CheckBaseQuick(True) ; check and restock base before exit.
+	; samm0d
+	If $bchkQuickBase Then CheckBaseQuick(True) ; check and restock base before exit.
 
 	$g_bIsClientSyncError = False ; reset OOS fast restart flag
 	$g_bIsSearchLimit = False ; reset search limit flag
@@ -137,6 +145,21 @@ Func checkAttackDisable($iSource, $Result = "")
 
 	Setlog("Time for break, exit now..", $COLOR_INFO)
 
+	;samm0d
+	If $ichkEnableMySwitch Then
+		If $iCurActiveAcc <> -1 Then
+			For $i = 0 To UBound($aSwitchList) - 1
+				If $aSwitchList[$i][4] = $iCurActiveAcc Then
+					; $aSwitchList[$i][5] mark as PB, never switch to this profile until $aSwitchList[$i][5] reset 0 by getNextSwitchList()
+					$aSwitchList[$i][5] = 1
+					$aSwitchList[$i][0] = _DateAdd('n', $g_iSinglePBForcedLogoffTime, _NowCalc())
+					$aSwitchList[$i][1] = TimerInit()
+					$g_bRestart = True
+					Return
+				EndIf
+			Next
+		EndIf
+	Else
 	If TestCapture() Then
 		SetLog("checkAttackDisable: PoliteCloseCoC")
 	Else
@@ -165,6 +188,6 @@ Func checkAttackDisable($iSource, $Result = "")
 	For $i = 0 To UBound($g_asShieldStatus) - 1
 		$g_asShieldStatus[$i] = "" ; reset global shield info array
 	Next
-
+	EndIf
 EndFunc   ;==>checkAttackDisable
 

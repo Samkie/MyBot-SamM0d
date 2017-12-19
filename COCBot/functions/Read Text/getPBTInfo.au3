@@ -48,7 +48,7 @@ Func getPBTInfo()
 			Return
 	EndSelect
 
-	PureClickP($aShieldInfoButton) ; click on PBT info icon
+	PureClickP($aShieldInfoButton,1,0,"#9997") ;samm0d ; click on PBT info icon
 	If _Sleep($DELAYPERSONALSHIELD3) Then Return
 
 	Local $iCount = 0

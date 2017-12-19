@@ -14,10 +14,14 @@
 Global $aCenterEnemyVillageClickDrag = [65, 545] ; Scroll village using this location in the water
 Global $aCenterHomeVillageClickDrag = [160, 665] ; Scroll village using this location in the water
 Global $aIsReloadError[4] = [457, 301 + $g_iMidOffsetY, 0x33B5E5, 10] ; Pixel Search Check point For All Reload Button errors, except break ending
-Global $aIsMain[4] = [278, 9, 0x77BDE0, 20] ; Main Screen, Builder Info Icon
-Global $aIsMainGrayed[4] = [278, 9, 0x3C5F70, 15] ; Main Screen, Builder Info Icon grayed
+;Global $aIsMain[4] = [278, 9, 0x77BDE0, 20] ; Main Screen, Builder Info Icon
+;Global $aIsMainGrayed[4] = [278, 9, 0x3C5F70, 15] ; Main Screen, Builder Info Icon grayed
+; samm0d - change to Shield Info cause of builder info icon will got chance to block with chat windows.
+Global $aIsMain[4] = [431, 10, 0x75BDE4, 6] ; Main Screen, Shield Info ! icon
+Global $aIsMainGrayed[4] = [431, 10, 0x3B5F72, 6] ; Main Screen, Shield Info ! icon
 
-Global $aIsOnBuilderIsland[4] = [838, 18, 0xffff46, 10] ; Check the Gold Coin from resources , is a square not round
+Global $aIsOnBuilderIsland[4] = [359, 9, 0x75BDE4, 6] ; Check the Gold Coin from resources , is a square not round
+Global $aIsOnBuilderIslandGrayed[4] = [359, 9, 0x3B5F72, 6] ; Check the Gold Coin from resources , is a square not round
 
 Global $aTopLeftClient[4] = [1, 1, 0x000000, 0] ; TopLeftClient: Tolerance not needed
 Global $aTopMiddleClient[4] = [475, 1, 0x000000, 0] ; TopMiddleClient: Tolerance not needed
@@ -129,10 +133,12 @@ Global $NextBtn[4] = [780, 546 + $g_iBottomOffsetY, 0xD34300, 20] ;  Next Button
 ; Someone asking troops : Color 0xD0E978 in x = 121
 
 ; 1 - Green : available | 2 - Dark gray : request already made | 3 - Light gray : Castle filled/No Castle
-Global $aRequestTroopsAO[6] = [737, 565, 0xAEE056, 0x818181, 0xC2C2C2, 15] ; Button Request Troops in Army Overview  (x,y,can request, request already made, army full/no clan)
+; samm0d
+Global $aRequestTroopsAO[6] = [802, 593, 0x82CB2C, 0xE0F985, 0xA4A4A4, 15] ; Button Request Troops in Army Overview  (x,y,can request, request already made, army full/no clan)
 
 Global Const $aOpenChatTab[4] = [19, 335 + $g_iMidOffsetY, 0xE88D27, 20]
 Global Const $aCloseChat[4] = [331, 330 + $g_iMidOffsetY, 0xF0951D, 20] ; duplicate with $aChatTab above, need to rename and fix all code to use one?
+
 Global Const $aChatDonateBtnColors[4][4] = [[0x050505, 0, -4, 30], [0x89CA31, 0, 13, 15], [0x89CA31, 0, 16, 15], [0xFFFFFF, 21, 7, 5]]
 
 ;attackreport
@@ -148,7 +154,8 @@ Global Const $aRtnHomeCheck2[4] = [497, 548 + $g_iMidOffsetY, 0x79C326, 20]
 Global Const $aSearchLimit[6] = [19, 565, 104, 580, 0xD9DDCF, 10] ; (kaganus) no idea what this is for
 
 ;inattackscreen
-Global Const $aIsAttackPage[4] = [70, 548 + $g_iBottomOffsetY, 0xC80000, 20] ; red button "end battle" 860x780
+; samm0d
+Global Const $aIsAttackPage[4] = [70, 548 + $g_iBottomOffsetY, 0xD10D0E, 20] ; red button "end battle" 860x780
 
 ;CheckImageType (Normal, Snow, etc)
 Global Const $aImageTypeN1[4] = [237, 161, 0xD5A849, 30] ; Sand on Forest Edge 'Lane' 860x780

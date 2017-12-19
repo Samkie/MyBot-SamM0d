@@ -26,7 +26,7 @@ Func BreakPersonalShield()
 
 	If _CheckPixel($aHaveShield, $g_bCapturePixel) Then ; check for shield
 		If IsMainPage() Then ; check for main page
-			PureClickP($aShieldInfoButton)
+			PureClickP($aShieldInfoButton,1,0,"#9997") ;samm0d
 			If _Sleep($DELAYPERSONALSHIELD1) Then ; wait for break shield window
 				SetError(2) ; set error conditions to return to runbot if stop/pause
 				Return
@@ -59,7 +59,7 @@ Func BreakPersonalShield()
 
 	If _CheckPixel($aHavePerGuard, $g_bCapturePixel) Then ; check for personal guard timer
 		If IsMainPage() Then
-			PureClickP($aShieldInfoButton)
+			PureClickP($aShieldInfoButton,1,0,"#9997") ;samm0d
 			If _Sleep($DELAYPERSONALSHIELD1) Then ; wait for break guard window
 				SetError(2) ; set error conditions to return to runbot if stop
 				Return

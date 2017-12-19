@@ -17,8 +17,8 @@
 ; Example .......: No
 ; ===============================================================================================================================
 #include-once
-
-Global Const $g_iIniLinesMax = 1000 ; As of 2017-02-24, the number of active config.ini lines is 685
+; samm0d
+Global Const $g_iIniLinesMax = 1100 ; As of 2017-02-24, the number of active config.ini lines is 685
 Global $g_asIniTable[$g_iIniLinesMax][2] ; section|key, value
 Global $g_iIniLineCount = 0
 
@@ -57,6 +57,31 @@ Func _Ini_Load($filename)
 	FileClose($hFile)
 EndFunc   ;==>_Ini_Load
 
+; samm0d
+Func CheckSamM0dStrategiesSection($sCurrentSection)
+	Switch $sCurrentSection
+		Case "MultiFinger"
+			Return True
+		Case "SamM0dZap"
+			Return True
+		Case "SmartZap"
+			Return True
+		Case "CCFirst"
+			Return True
+		Case "Wait4CC"
+			Return True
+		Case "Wait4CCSpell"
+			Return True
+		Case "StickToTrainPage"
+			Return True
+		Case "MyTroops"
+			Return True
+		Case "MySpells"
+			Return True
+	EndSwitch
+	Return False
+EndFunc
+
 Func _Ini_Save($filename)
 	ReDim $g_asIniTable[$g_iIniLineCount][3]
 	_ArraySort($g_asIniTable) ; sort on section|key
@@ -75,7 +100,9 @@ Func _Ini_Save($filename)
 			FileWriteLine($hFile, "[" & $sCurrentSection & "]")
 			; Strategies File
 			If $g_sProfileSecondaryOutputFileName <> "" Then
-				If $sCurrentSection = "search" Or $sCurrentSection = "attack" Or $sCurrentSection = "troop" Or $sCurrentSection = "spells" Or $sCurrentSection = "milkingattack" Or $sCurrentSection = "endbattle" Or $sCurrentSection = "collectors" then
+				; samm0d
+				Local $bStrategiesFileFlag = CheckSamM0dStrategiesSection($sCurrentSection)
+				If $bStrategiesFileFlag = True Or $sCurrentSection = "search" Or $sCurrentSection = "attack" Or $sCurrentSection = "troop" Or $sCurrentSection = "spells" Or $sCurrentSection = "milkingattack" Or $sCurrentSection = "endbattle" Or $sCurrentSection = "collectors" then
 					FileWriteLine($g_sProfileSecondaryOutputFileName, "[" & $sCurrentSection & "]")
 				EndIF
 			EndIf
@@ -85,7 +112,9 @@ Func _Ini_Save($filename)
 
 		; Strategies File
 		If $g_sProfileSecondaryOutputFileName <> "" Then
-			If $sCurrentSection = "search" Or $sCurrentSection = "attack" Or $sCurrentSection = "troop" Or $sCurrentSection = "spells" Or $sCurrentSection = "milkingattack" Or $sCurrentSection = "endbattle" Or $sCurrentSection = "collectors" Then
+			; samm0d
+			Local $bStrategiesFileFlag = CheckSamM0dStrategiesSection($sCurrentSection)
+			If $bStrategiesFileFlag = True Or $sCurrentSection = "search" Or $sCurrentSection = "attack" Or $sCurrentSection = "troop" Or $sCurrentSection = "spells" Or $sCurrentSection = "milkingattack" Or $sCurrentSection = "endbattle" Or $sCurrentSection = "collectors" Then
 				FileWriteLine($g_sProfileSecondaryOutputFileName, $asParts[2] & "=" & $g_asIniTable[$i][1])
 			EndIf
 		EndIf

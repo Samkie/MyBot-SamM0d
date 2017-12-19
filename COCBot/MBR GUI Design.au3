@@ -375,6 +375,10 @@ Func CreateMainGUIControls($bGuiModeUpdate = False)
 	SplashStep(GetTranslatedFileIni("MBR GUI Design - Loading", "SplashStep_06", "Loading Bot tab..."))
 	CreateBotTab() ; also creates  $g_hLastControlToHide
 
+	; samm0d
+	SplashStep(GetTranslatedFileIni("Sam M0d", "Loading Bot tab", "Loading Bot tab..."))
+	#include "SamM0d\GUI\MBR GUI Design Child SamM0d.au3"
+
 	SplashStep(GetTranslatedFileIni("MBR GUI Design - Loading", "SplashStep_07", "Loading About Us tab..."))
 	CreateAboutTab()
 
@@ -396,6 +400,8 @@ Func CreateMainGUIControls($bGuiModeUpdate = False)
 	$g_hTabVillage = GUICtrlCreateTabItem(GetTranslatedFileIni("MBR Main GUI", "Tab_02", "Village"))
 	$g_hTabAttack = GUICtrlCreateTabItem(GetTranslatedFileIni("MBR Main GUI", "Tab_03", "Attack Plan"))
 	$g_hTabBot = GUICtrlCreateTabItem(GetTranslatedFileIni("MBR Main GUI", "Tab_04", "Bot"))
+   	; samm0d
+	$g_hTabMod = GUICtrlCreateTabItem("M0d")
 	$g_hTabAbout = GUICtrlCreateTabItem(GetTranslatedFileIni("MBR Main GUI", "Tab_05", "About Us"))
 	GUICtrlCreateTabItem("")
 	GUICtrlSetResizing(-1, $GUI_DOCKBORDERS)

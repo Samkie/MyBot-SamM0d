@@ -59,6 +59,10 @@ Func _Sleep($iDelay, $iSleep = True, $CheckRunState = True, $SleepWhenPaused = T
 		EndIf
 
 		If $iDelay > 0 And __TimerDiff($g_hTxtLogTimer) >= $g_iTxtLogTimerTimeout Then
+			; samm0d
+			If $ichkIncreaseGlobalDelay Then
+				$iDelay = $iDelay + Int(($iDelay * $itxtIncreaseGlobalDelay) / 100)
+			EndIf
 
 			; Notify stuff
 			If $g_bNotifyDeleteAllPushesNow = True Then PushMsg("DeleteAllPBMessages") ; only when button is pushed, and only when on a sleep cyle

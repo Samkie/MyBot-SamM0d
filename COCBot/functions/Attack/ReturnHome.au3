@@ -30,7 +30,14 @@ Func ReturnHome($TakeSS = 1, $GoldChangeCheck = True) ;Return main screen
 			While GoldElixirChangeEBO()
 				If _Sleep($DELAYRETURNHOME1) Then Return
 			WEnd
-			If IsAttackPage() Then smartZap() ; Check to see if we should zap the DE Drills
+
+			; samm0d
+			If $ichkUseSamM0dZap = 1 Then
+				If IsAttackPage() Then SamM0dZap()
+			Else
+				If IsAttackPage() Then smartZap(); Check to see if we should zap the DE Drills
+			EndIf
+
 			;If Heroes were not activated: Hero Ability activation before End of Battle to restore health
 			If ($g_bCheckKingPower Or $g_bCheckQueenPower Or $g_bCheckWardenPower) Then
 				;_CaptureRegion()
@@ -78,58 +85,91 @@ Func ReturnHome($TakeSS = 1, $GoldChangeCheck = True) ;Return main screen
 	If $g_bRunState = False Then Return
 
 	; ---- CLICK SURRENDER BUTTON ----
-	If Not (IsReturnHomeBattlePage(True, False)) Then ; check if battle is already over
-		$i = 0 ; Reset Loop counter
-		While 1 ; dynamic wait loop for surrender button to appear
-			If $g_bDebugSetlog Then SetDebugLog("Wait for surrender button to appear #" & $i)
-			If _CheckPixel($aSurrenderButton, $g_bCapturePixel) Then ;is surrender button is visible?
-				If IsAttackPage() Then ; verify still on attack page, and battle has not ended magically before clicking
-					ClickP($aSurrenderButton, 1, 0, "#0099") ;Click Surrender
-					$j = 0
-					While 1 ; dynamic wait for Okay button
-						If $g_bDebugSetlog Then SetDebugLog("Wait for OK button to appear #" & $j)
-						If IsEndBattlePage(False) Then
-							ClickOkay("SurrenderOkay") ; Click Okay to Confirm surrender
-							ExitLoop 2
-						Else
-							$j += 1
-						EndIf
-						If ReturnHomeMainPage() Then Return
-						If $j > 10 Then ExitLoop ; if Okay button not found in 10*(200)ms or 2 seconds, then give up.
-						If _Sleep($DELAYRETURNHOME5) Then Return
-					WEnd
-				Else
-					$i += 1
-				EndIf
+	; samm0d - waiting for return home button appear
+	$i = 0 ; Reset Loop counter
+	While IsReturnHomeBattlePage(True, False) = False ; dynamic wait loop for surrender button to appear
+		If $g_bDebugSetlog Then SetDebugLog("Wait for surrender button to appear #" & $i)
+		If _CheckPixel($aSurrenderButton, $g_bCapturePixel) Then ;is surrender button is visible?
+			If IsAttackPage() Then ; verify still on attack page, and battle has not ended magically before clicking
+				ClickP($aSurrenderButton, 1, 0, "#0099") ;Click Surrender
+				$j = 0
+				While 1 ; dynamic wait for Okay button
+					If $g_bDebugSetlog Then SetDebugLog("Wait for OK button to appear #" & $j)
+					If IsEndBattlePage(False) Then
+						ClickOkay("SurrenderOkay") ; Click Okay to Confirm surrender
+						ExitLoop 2
+					Else
+						$j += 1
+					EndIf
+					If ReturnHomeMainPage() Then Return
+					If $j > 10 Then ExitLoop ; if Okay button not found in 10*(200)ms or 2 seconds, then give up.
+					If _Sleep($DELAYRETURNHOME5) Then Return
+				WEnd
 			Else
 				$i += 1
 			EndIf
-			If ReturnHomeMainPage() Then Return
-			If $i > 5 Then ExitLoop ; if end battle or surrender button are not found in 5*(200)ms + 10*(200)ms or 3 seconds, then give up.
-			If _Sleep($DELAYRETURNHOME5) Then Return
-		WEnd
-	Else
-		If $g_bDebugSetlog Then Setlog("Battle already over.", $COLOR_DEBUG)
-	EndIf
-	If _Sleep($DELAYRETURNHOME2) Then Return ; short wait for return to main
+		Else
+			$i += 1
+		EndIf
+		If ReturnHomeMainPage() Then Return
+		If $i > 5 Then ExitLoop ; if end battle or surrender button are not found in 5*(200)ms + 10*(200)ms or 3 seconds, then give up.
+		If _Sleep($DELAYRETURNHOME5) Then Return
+	WEnd
+
+;~ 	If Not (IsReturnHomeBattlePage(True, False)) Then ; check if battle is already over
+;~ 		$i = 0 ; Reset Loop counter
+;~ 		While 1 ; dynamic wait loop for surrender button to appear
+;~ 			If $g_bDebugSetlog Then SetDebugLog("Wait for surrender button to appear #" & $i)
+;~ 			If _CheckPixel($aSurrenderButton, $g_bCapturePixel) Then ;is surrender button is visible?
+;~ 				If IsAttackPage() Then ; verify still on attack page, and battle has not ended magically before clicking
+;~ 					ClickP($aSurrenderButton, 1, 0, "#0099") ;Click Surrender
+;~ 					$j = 0
+;~ 					While 1 ; dynamic wait for Okay button
+;~ 						If $g_bDebugSetlog Then SetDebugLog("Wait for OK button to appear #" & $j)
+;~ 						If IsEndBattlePage(False) Then
+;~ 							ClickOkay("SurrenderOkay") ; Click Okay to Confirm surrender
+;~ 							ExitLoop 2
+;~ 						Else
+;~ 							$j += 1
+;~ 						EndIf
+;~ 						If ReturnHomeMainPage() Then Return
+;~ 						If $j > 10 Then ExitLoop ; if Okay button not found in 10*(200)ms or 2 seconds, then give up.
+;~ 						If _Sleep($DELAYRETURNHOME5) Then Return
+;~ 					WEnd
+;~ 				Else
+;~ 					$i += 1
+;~ 				EndIf
+;~ 			Else
+;~ 				$i += 1
+;~ 			EndIf
+;~ 			If ReturnHomeMainPage() Then Return
+;~ 			If $i > 5 Then ExitLoop ; if end battle or surrender button are not found in 5*(200)ms + 10*(200)ms or 3 seconds, then give up.
+;~ 			If _Sleep($DELAYRETURNHOME5) Then Return
+;~ 		WEnd
+;~ 	Else
+;~ 		If $g_bDebugSetlog Then Setlog("Battle already over.", $COLOR_DEBUG)
+;~ 	EndIf
+;~ 	If _Sleep($DELAYRETURNHOME2) Then Return ; short wait for return to main
 
 	TrayTip($g_sBotTitle, "", BitOR($TIP_ICONASTERISK, $TIP_NOSOUND)) ; clear village search match found message
 
-	CheckAndroidReboot(False)
+	If CheckAndroidReboot(False) Then Return
 
 	If $GoldChangeCheck Then
-		If IsAttackPage() Then
-			$counter = 0
-			While _ColorCheck(_GetPixelColor($aRtnHomeCheck1[0], $aRtnHomeCheck1[1], True), Hex($aRtnHomeCheck1[2], 6), $aRtnHomeCheck1[3]) = False And _ColorCheck(_GetPixelColor($aRtnHomeCheck2[0], $aRtnHomeCheck2[1], True), Hex($aRtnHomeCheck2[2], 6), $aRtnHomeCheck2[3]) = False ; test for Return Home Button
-				If $g_bDebugSetlog Then SetDebugLog("Wait for Return Home Button to appear #" & $counter)
-				If _Sleep($DELAYRETURNHOME2) Then ExitLoop
-				$counter += 1
-				If $counter > 40 Then ExitLoop
-			WEnd
-		EndIf
-		If _Sleep($DELAYRETURNHOME3) Then Return ; wait for all report details
+		; samm0d - cannot be still at attack page
+;~ 		If IsAttackPage() Then
+;~ 			$counter = 0
+;~ 			While _ColorCheck(_GetPixelColor($aRtnHomeCheck1[0], $aRtnHomeCheck1[1], True), Hex($aRtnHomeCheck1[2], 6), $aRtnHomeCheck1[3]) = False And _ColorCheck(_GetPixelColor($aRtnHomeCheck2[0], $aRtnHomeCheck2[1], True), Hex($aRtnHomeCheck2[2], 6), $aRtnHomeCheck2[3]) = False ; test for Return Home Button
+;~ 				If $g_bDebugSetlog Then SetDebugLog("Wait for Return Home Button to appear #" & $counter)
+;~ 				If _Sleep($DELAYRETURNHOME2) Then ExitLoop
+;~ 				$counter += 1
+;~ 				If $counter > 40 Then ExitLoop
+;~ 			WEnd
+;~ 		EndIf
+;~ 		If _Sleep($DELAYRETURNHOME3) Then Return ; wait for all report details
 		_CaptureRegion()
 		AttackReport()
+		If _Sleep(200) Then Return ; setlog and pause response
 	EndIf
 	If $TakeSS = 1 And $GoldChangeCheck Then
 		SetLog("Taking snapshot of your loot", $COLOR_SUCCESS)
@@ -151,19 +191,22 @@ Func ReturnHome($TakeSS = 1, $GoldChangeCheck = True) ;Return main screen
 	;push images if requested..
 	If $GoldChangeCheck Then PushMsg("LastRaid")
 
-	$i = 0 ; Reset Loop counter
-	While 1
-		If $g_bDebugSetlog Then SetDebugLog("Wait for End Fight Scene to appear #" & $i)
-		If _CheckPixel($aEndFightSceneAvl, $g_bCapturePixel) Then ; check for the gold ribbon in the end of battle data screen
-			If IsReturnHomeBattlePage() Then ClickP($aReturnHomeButton, 1, 0, "#0101") ;Click Return Home Button
-			ExitLoop
-		Else
-			$i += 1
-		EndIf
-		If $i > 10 Then ExitLoop ; if end battle window is not found in 10*200mms or 2 seconds, then give up.
-		If _Sleep($DELAYRETURNHOME5) Then Return
-	WEnd
-	If _Sleep($DELAYRETURNHOME2) Then Return ; short wait for screen to close
+	; samm0d
+	If IsReturnHomeBattlePage() Then ClickP($aReturnHomeButton, 1, 0, "#0101") ;Click Return Home Button
+
+;~ 	$i = 0 ; Reset Loop counter
+;~ 	While 1
+;~ 		If $g_bDebugSetlog Then SetDebugLog("Wait for End Fight Scene to appear #" & $i)
+;~ 		If _CheckPixel($aEndFightSceneAvl, $g_bCapturePixel) Then ; check for the gold ribbon in the end of battle data screen
+;~ 			If IsReturnHomeBattlePage() Then ClickP($aReturnHomeButton, 1, 0, "#0101") ;Click Return Home Button
+;~ 			ExitLoop
+;~ 		Else
+;~ 			$i += 1
+;~ 		EndIf
+;~ 		If $i > 10 Then ExitLoop ; if end battle window is not found in 10*200mms or 2 seconds, then give up.
+;~ 		If _Sleep($DELAYRETURNHOME5) Then Return
+;~ 	WEnd
+;~ 	If _Sleep($DELAYRETURNHOME2) Then Return ; short wait for screen to close
 
 	$counter = 0
 	While 1
@@ -172,7 +215,7 @@ Func ReturnHome($TakeSS = 1, $GoldChangeCheck = True) ;Return main screen
 		If StarBonus() Then SetLog("Star Bonus window closed chief!", $COLOR_INFO) ; Check for Star Bonus window to fill treasury (2016-01) update
 		If ReturnHomeMainPage() Then Return
 		$counter += 1
-		If $counter >= 50 Or isProblemAffect(True) Then
+		If $counter >= 5 Or isProblemAffect(True) Then
 			SetLog("Cannot return home.", $COLOR_ERROR)
 			checkMainScreen()
 			Return

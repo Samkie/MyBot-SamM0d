@@ -1,0 +1,48 @@
+NOTE  |Author: Samkie v1.0.1 - 22.09.2016
+NOTE  |Attack: Human Like - GiBArch 1 Side Farm DE For TH9 Hunt TH8
+NOTE  |Composition Troops: Giant x12, WB x12, Barb x52, Arch x84
+NOTE  |Spells: 1 Heal,1 Rage
+NOTE  |Attack Method: Drop few GiBArch Left and Right Side to clean up, then main troops try break into core with WallBreaker, rage and remain troops with cc, heroes and heal after it.
+
+
+      |EXTR. GOLD |EXTR.ELIXIR|EXTR. DARK |DEPO. GOLD |DEPO.ELIXIR|DEPO. DARK |TOWNHALL   |FORCED SIDE|
+SIDE  |0          |0          |0          |0          |0          |5          |           |           |
+
+      |VECTOR_____|SIDE_______|DROP_POINTS|ADDTILES___|VERSUS_____|RANDOMX_PX_|RANDOMY_PX_|___________|
+MAKE  |A          |FRONT-LEFT |10         |1          |INT-EXT    |3          |4          |           |
+MAKE  |B          |FRONT-RIGHT|10         |1          |INT-EXT    |3          |4          |           |
+MAKE  |C          |FRONT-LEFT |10         |1          |EXT-INT    |3          |4          |           |
+MAKE  |D          |FRONT-RIGHT|10         |1          |EXT-INT    |3          |4          |           |
+MAKE  |E          |FRONT-LEFT |10         |-8         |EXT-INT    |0          |0          |           |
+MAKE  |F          |FRONT-LEFT |10         |-12        |EXT-INT    |0          |0          |           |
+
+      |VECTOR_____|INDEX______|QTY_X_VECT_|TROOPNAME__|DELAY_DROP_|DELAYCHANGE|SLEEPAFTER_|___________|
+DROP  |C          |3-5        |2-3        |giant      |100        |200        |200        |           |
+DROP  |C          |3-5        |5-6        |barb       |100        |200        |200        |           |
+DROP  |C          |2-6        |8-12       |arch       |100        |200        |200        |           |
+DROP  |D          |3-5        |2-3        |giant      |100        |200        |200        |           |
+DROP  |D          |3-5        |5-6        |barb       |100        |200        |200        |           |
+DROP  |D          |2-6        |8-12       |arch       |100        |200        |200        |           |
+DROP  |A-B        |1-2        |8          |giant      |100        |200        |5 00       |           |
+DROP  |C          |4-8        |4-8        |barb       |100        |100        |200        |           |
+DROP  |D          |4-8        |4-8        |barb       |100        |100        |200        |           |
+DROP  |C-D        |8-10       |10-12      |barb       |100        |100        |1000       |           |
+DROP  |A          |1          |2          |wall       |100        |100        |2000       |           |
+DROP  |A          |1          |2          |wall       |100        |100        |200        |           |
+DROP  |E          |10         |1          |Rspell     |0          |0          |100        |           |
+DROP  |C          |3-6        |6-8        |arch       |100        |200        |200        |           |
+DROP  |D          |3-6        |6-8        |arch       |100        |200        |200        |           |
+DROP  |C-D        |7-10       |10-12      |arch       |100        |200        |200        |           |
+DROP  |A          |1          |4          |wall       |50         |100        |3000       |           |
+DROP  |B          |1          |4          |wall       |50         |100        |4000       |           |
+DROP  |B          |1          |1          |CASTLE     |0          |0          |300        |           |  
+DROP  |A          |1          |1          |queen      |0          |0          |300        |           |
+DROP  |A          |1          |1          |warden     |0          |0          |300        |           |
+DROP  |B          |1          |1          |king       |0          |0          |300        |           |
+DROP  |F          |10         |1          |HSpell     |0          |0          |300        |           |
+DROP  |A-B        |1-3        |20         |barb       |100        |200        |200        |           |
+DROP  |A-B        |1-3        |30         |arch       |100        |200        |0          |           |
+
+RECALC|           |           |           |           |           |           |           |           | 
+
+WAIT  |200-400    |           |           |           |           |           |           |           |

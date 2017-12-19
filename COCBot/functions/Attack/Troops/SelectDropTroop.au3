@@ -14,5 +14,7 @@
 ; Example .......: No
 ; ===============================================================================================================================
 Func SelectDropTroop($Troop)
-	If IsAttackPage() Then Click(GetXPosOfArmySlot($Troop, 68), 595 + $g_iBottomOffsetY, 1, 0, "#0111") ;860x780
+	; samm0d
+	If IsAttackPage() Then Click($g_avAttackTroops[$Troop][2], 595 + $g_iBottomOffsetY, 1, 0, "#0111") ;860x780
+	;If IsAttackPage() Then Click(GetXPosOfArmySlot($Troop, 68), 595 + $g_iBottomOffsetY, 1, 0, "#0111") ;860x780
 EndFunc   ;==>SelectDropTroop

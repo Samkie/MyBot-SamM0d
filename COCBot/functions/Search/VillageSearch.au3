@@ -248,8 +248,103 @@ Func _VillageSearch() ;Control for searching a village that meets conditions
 			SetLog($GetResourcesTXT, $COLOR_SUCCESS, "Lucida Console", 7.5)
 			SetLog("      " & "Dead Base Found!", $COLOR_SUCCESS, "Lucida Console", 7.5)
 			$logwrited = True
-			$g_iMatchMode = $DB
-			ExitLoop
+			; SamM0d
+			Local $blnFlagSearchAnotherBase = False
+			If $iChkNoLeague[$DB] = 1 Then
+				If _CheckPixel($aNoLeague, True) Then
+					$blnFlagSearchAnotherBase = False
+				Else
+					SetLog("      " & "Dead Base is in a league, skipping search !", $COLOR_RED, "Lucida Console", 7.5)
+					$match[$DB] = False ; got league skip attack, search another base
+					$blnFlagSearchAnotherBase = True
+				EndIf
+			ElseIf $iChkNoLeague[$DB] = 0 Then
+				$blnFlagSearchAnotherBase = False
+			EndIf
+			If $blnFlagSearchAnotherBase = False Then
+				If $ichkDBMeetCollOutside = 1 Then ; check is that collector  near outside
+					$bIDoScanMineAndElixir = False
+					;$bDoneCenterZoom = True
+					;SearchZoomOut(Default, False)
+
+					If AreCollectorsOutside($iDBMinCollOutsidePercent) Then
+						SetLog("Collectors are outside, match found !", $COLOR_GREEN, "Lucida Console", 7.5)
+						$blnFlagSearchAnotherBase = False
+					Else
+						$blnFlagSearchAnotherBase = True
+						If $ichkSkipCollectorCheckIF = 1 Then
+							If Number($itxtSkipCollectorGold) <> 0 And Number($itxtSkipCollectorElixir) <> 0 And Number($itxtSkipCollectorDark) <> 0 Then
+								If Number($g_iSearchGold) >= Number($itxtSkipCollectorGold) And Number($g_iSearchElixir) >= Number($itxtSkipCollectorElixir) And Number($g_iSearchDark) >= Number($itxtSkipCollectorDark) Then
+									SetLog("Target Resource(G,E,D) over for skip collectors check, Prepare for attack...", $COLOR_GREEN, "Lucida Console", 7.5)
+									$blnFlagSearchAnotherBase = False
+								EndIf
+							ElseIf Number($itxtSkipCollectorGold) <> 0 And Number($itxtSkipCollectorElixir) <> 0 Then
+								If Number($g_iSearchGold) >= Number($itxtSkipCollectorGold) And Number($g_iSearchElixir) >= Number($itxtSkipCollectorElixir) Then
+									SetLog("Target Resource(G,E) over for skip collectors check, Prepare for attack...", $COLOR_GREEN, "Lucida Console", 7.5)
+									$blnFlagSearchAnotherBase = False
+								EndIf
+							ElseIf Number($itxtSkipCollectorGold) <> 0 And Number($itxtSkipCollectorDark) <> 0 Then
+								If Number($g_iSearchGold) >= Number($itxtSkipCollectorGold) And Number($g_iSearchDark) >= Number($itxtSkipCollectorDark) Then
+									SetLog("Target Resource(G,D) over for skip collectors check, Prepare for attack...", $COLOR_GREEN, "Lucida Console", 7.5)
+									$blnFlagSearchAnotherBase = False
+								EndIf
+							ElseIf Number($itxtSkipCollectorElixir) <> 0 And Number($itxtSkipCollectorDark) <> 0 Then
+								If Number($g_iSearchElixir) >= Number($itxtSkipCollectorElixir) And Number($g_iSearchDark) >= Number($itxtSkipCollectorDark) Then
+									SetLog("Target Resource(E,D) over for skip collectors check, Prepare for attack...", $COLOR_GREEN, "Lucida Console", 7.5)
+									$blnFlagSearchAnotherBase = False
+								EndIf
+							ElseIf Number($itxtSkipCollectorGold) <> 0 Then
+								If Number($g_iSearchGold) >= Number($itxtSkipCollectorGold) Then
+									SetLog("Target Resource(G) over for skip collectors check, Prepare for attack...", $COLOR_GREEN, "Lucida Console", 7.5)
+									$blnFlagSearchAnotherBase = False
+								EndIf
+							ElseIf Number($itxtSkipCollectorElixir) <> 0 Then
+								If Number($g_iSearchElixir) >= Number($itxtSkipCollectorElixir) Then
+									SetLog("Target Resource(E) over for skip collectors check, Prepare for attack...", $COLOR_GREEN, "Lucida Console", 7.5)
+									$blnFlagSearchAnotherBase = False
+								EndIf
+							ElseIf Number($itxtSkipCollectorDark) <> 0 Then
+								If Number($g_iSearchDark) >= Number($itxtSkipCollectorDark) Then
+									SetLog("Target Resource(D) over for skip collectors check, Prepare for attack...", $COLOR_GREEN, "Lucida Console", 7.5)
+									$blnFlagSearchAnotherBase = False
+								EndIf
+							EndIf
+							If $blnFlagSearchAnotherBase = True Then
+								SetLog("Collectors are not outside AND Target Resource not match for attack, skipping search !", $COLOR_RED, "Lucida Console", 7.5)
+								;$bDoneCenterZoom = False
+							EndIf
+						Else
+							SetLog("Collectors are not outside, skipping search !", $COLOR_RED, "Lucida Console", 7.5)
+							;$bDoneCenterZoom = False
+						EndIf
+						If $ichkSkipCollectorCheckIFTHLevel Then
+							If $blnFlagSearchAnotherBase Then
+								;FindTownhall(True)
+								If $g_iSearchTH <> "-" Then
+									If Number($g_iSearchTH) <= $itxtIFTHLevel Then
+										SetLog("Target TownHall Level is " & $g_iSearchTH & ", lower than or equal my setting " & $itxtIFTHLevel & ", Prepare for attack...", $COLOR_GREEN, "Lucida Console", 7.5)
+										$blnFlagSearchAnotherBase = False
+									Else
+										SetLog("Collectors are not outside, and TownHall Level is " & $g_iSearchTH & " Over " & $itxtIFTHLevel & ", skipping search !", $COLOR_RED, "Lucida Console", 7.5)
+										;$bDoneCenterZoom = False
+									EndIf
+								Else
+									SetLog("Collectors are not outside, and failded to get townhall level, skipping search !", $COLOR_RED, "Lucida Console", 7.5)
+									;$bDoneCenterZoom = False
+								EndIf
+							EndIf
+						EndIf
+					EndIf
+					$g_iSearchTH = ""
+				Else
+					$blnFlagSearchAnotherBase = False
+				EndIf
+				If $blnFlagSearchAnotherBase = False Then
+					$g_iMatchMode = $DB
+					ExitLoop
+				EndIf
+			EndIf
+			; =====END samm0d====
 		ElseIf $match[$LB] And Not $dbBase Then
 			SetLog($GetResourcesTXT, $COLOR_SUCCESS, "Lucida Console", 7.5)
 			SetLog("      " & "Live Base Found!", $COLOR_SUCCESS, "Lucida Console", 7.5)
@@ -362,7 +457,8 @@ Func _VillageSearch() ;Control for searching a village that meets conditions
 					PushMsg("OoSResources")
 				Else
 					SetLog("Have strange problem Couldn't locate Next button, Restarting CoC and Bot...", $COLOR_ERROR)
-					$g_bIsClientSyncError = False ; disable fast OOS restart if not simple error and try restarting CoC
+					; samm0d
+					;$g_bIsClientSyncError = False ; disable fast OOS restart if not simple error and try restarting CoC
 					CloseCoC(True)
 				EndIf
 				Return

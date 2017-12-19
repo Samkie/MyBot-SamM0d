@@ -52,6 +52,24 @@ Func WaitForClouds()
 
 	While $g_bRestart = False And _CaptureRegions() And _CheckPixel($aNoCloudsAttack) = False ; loop to wait for clouds to disappear
 		If _Sleep($DELAYGETRESOURCES1) Then Return
+
+		; samm0d =================back to main screen?
+		If _CheckPixel($aIsMain) Then
+			SetLog("Something happened that cause back to main screen when searching village for attack.",$COLOR_ERROR)
+			If $bEnabledGUI = True Then
+				SetLog("Disable bot controls after long wait time", $COLOR_SUCCESS)
+				AndroidShieldForceDown(False)
+				DisableGuiControls()
+				SaveConfig()
+				readConfig()
+				applyConfig()
+			EndIf
+			$g_bIsClientSyncError = True
+			$g_bRestart = True
+			Return
+		EndIf
+		;========================
+
 		$iCount += 1
 		If isProblemAffect(True) Then ; check for reload error messages and restart search if needed
 			resetAttackSearch()
@@ -66,7 +84,8 @@ Func WaitForClouds()
 				If $bigCount > $maxLongSearchCount Then ; check maximum wait time
 					$iSearchTime = __TimerDiff($hMinuteTimer) / 60000 ;get time since minute timer start in minutes
 					SetLog("Spent " & $iSearchTime & " minutes in Clouds searching, Restarting CoC and Bot...", $COLOR_ERROR)
-					$g_bIsClientSyncError = False ; disable fast OOS restart if not simple error and restarting CoC
+					; samm0d
+					;$g_bIsClientSyncError = False ; disable fast OOS restart if not simple error and restarting CoC
 					$g_bRestart = True
 					CloseCoC(True)
 					Return
@@ -86,6 +105,15 @@ Func WaitForClouds()
 		If $iSearchTime >= $iLastTime + 1 Then
 			Setlog("Cloud wait time " & StringFormat("%.1f", $iSearchTime) & " minute(s)", $COLOR_INFO)
 			$iLastTime += 1
+
+			; samm0d - everything reset cause of PB
+			If chkAttackSearchPersonalBreak() = True Then
+				checkMainScreen()
+				checkObstacles_ResetSearch()
+				CloseCoC(True)
+				Return
+			EndIf
+
 			; once a minute safety checks for search fail/retry msg and Personal Break events and early detection if CoC app has crashed inside emulator (Bluestacks issue mainly)
 			If chkAttackSearchFail() = 2 Or chkAttackSearchPersonalBreak() = True Or GetAndroidProcessPID() = 0 Then
 				resetAttackSearch()

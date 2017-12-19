@@ -18,6 +18,53 @@
 ;#include "functions\Other\Synchronization.au3" ; now included in LaunchConsole.au3
 #include "functions\Other\OnAutoItErrorRegisterBot.au3"
 
+;===========Samm0d collection==============================
+#include "SamM0d\Functions\SamM0dZap.au3"
+#include "SamM0d\Functions\AreCollectorsNearRedline.au3"
+#include "SamM0d\Functions\HLFClick.au3"
+#include "SamM0d\Functions\getMyOcr.au3"
+#include "SamM0d\Functions\FriendlyChallenge.au3"
+#include "SamM0d\Functions\MySwitch\MySwitch.au3"
+; Mod Train
+;---------------------------------------------------------------
+#include "SamM0d\Functions\ModTrain\ModTrain.au3"
+#include "SamM0d\Functions\ModTrain\DeleteTrainHBitmap.au3"
+#include "SamM0d\Functions\ModTrain\CheckAvailableUnit.au3"
+#include "SamM0d\Functions\ModTrain\CheckOnTrainUnit.au3"
+#include "SamM0d\Functions\ModTrain\CheckAvailableSpellUnit.au3"
+#include "SamM0d\Functions\ModTrain\CheckOnBrewUnit.au3"
+#include "SamM0d\Functions\ModTrain\DoRevampTroops.au3"
+#include "SamM0d\Functions\ModTrain\DoRevampSpells.au3"
+#include "SamM0d\Functions\ModTrain\getArmyAndSpellCapacity.au3"
+#include "SamM0d\Functions\ModTrain\getMyArmyHeroCount.au3"
+#include "SamM0d\Functions\ModTrain\MyNameOfTroop.au3"
+#include "SamM0d\Functions\ModTrain\TrainArmyPageControl.au3"
+#include "SamM0d\Functions\ModTrain\MyTrainClick.au3"
+#include "SamM0d\Functions\ModTrain\CheckAvailableCCUnit.au3"
+#include "SamM0d\Functions\ModTrain\CheckAvailableCCSpellUnit.au3"
+;---------------------------------------------------------------
+#include "SamM0d\Functions\Other\_debugSaveHBitmapToImage.au3"
+#include "SamM0d\Functions\Other\_Wait4Pixel.au3"
+#include "SamM0d\GUI\GUI Control MySwitch Setting.au3"
+#include "SamM0d\GUI\MBR GUI Control Child SamM0d.au3"
+;----------------------------------------------------------------
+#include "SamM0d\MBRMates\AreCollectorsOutside\AreCollectorsOutside.au3"
+#include "SamM0d\MBRMates\AD.au3"
+; Multi Finger by LunaEclipse
+;----------------------------------------------------------------
+#include "SamM0d\MBRMates\Multi Fingers\Vectors\fourFingerStandard.au3"
+#include "SamM0d\MBRMates\Multi Fingers\Vectors\fourFingerSpiralLeft.au3"
+#include "SamM0d\MBRMates\Multi Fingers\Vectors\fourFingerSpiralRight.au3"
+#include "SamM0d\MBRMates\Multi Fingers\Vectors\eightFingerPinWheelLeft.au3"
+#include "SamM0d\MBRMates\Multi Fingers\Vectors\eightFingerPinWheelRight.au3"
+#include "SamM0d\MBRMates\Multi Fingers\Vectors\eightFingerBlossom.au3"
+#include "SamM0d\MBRMates\Multi Fingers\Vectors\eightFingerImplosion.au3"
+#include "SamM0d\MBRMates\Multi Fingers\fourFinger.au3"
+#include "SamM0d\MBRMates\Multi Fingers\eightFinger.au3"
+#include "SamM0d\MBRMates\Multi Fingers\multiFinger.au3"
+#include "SamM0d\MBRMates\Multi Fingers\unitInfo.au3"
+;==========================================================
+
 #include "functions\Attack\AttackReport.au3"
 #include "functions\Attack\BuildingSide.au3"
 #include "functions\Attack\GoldElixirChangeThSnipes.au3"

@@ -29,6 +29,9 @@ Func CreateBotAndroid()
 			GUICtrlSetOnEvent(-1, "cmbCOCDistributors")
 	GUICtrlCreateGroup("", -99, -99, 1, 1)
 
+	; samm0d
+	CreatLocateAdBtn($x + 200, $y)
+
 	$y += $h + 5
 	$y2 = $y
 	$w = $g_iSizeWGrpTab2 - 2
