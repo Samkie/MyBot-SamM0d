@@ -909,12 +909,14 @@ Func CheckDonate(Const $iTroopIndex, Const $sDonateTroopString, Const $sBlacklis
 		If $ichkEnableDonateWhenReady = 1 Then
 			If $iTroopIndex <> 99 Then
 				If  $bTroop Then
+					If $g_iSamM0dDebug = 1 Then SetLog($sName & ": " & Eval("Ready" & $g_asTroopShortNames[$iTroopIndex]))
 					If Eval("Ready" & $g_asTroopShortNames[$iTroopIndex]) = 0 Then
 						SetLog("Pre-Train not ready, skip donate " & $sName, $COLOR_RED)
 						Return False
 					EndIf
 				Else
-					If Eval("Ready" & $g_asSpellShortNames[$iTroopIndex] & "Spell") = 0 Then
+					If $g_iSamM0dDebug = 1 Then SetLog($sName & ": " & Eval("Ready" & $MySpellsButton[$iTroopIndex][0] & "Spell"))
+					If Eval("Ready" & $MySpellsButton[$iTroopIndex][0] & "Spell") = 0 Then
 						SetLog("Pre-Brew not ready, skip donate " & $sName, $COLOR_RED)
 						Return False
 					EndIf
@@ -1219,10 +1221,10 @@ Func DonateSpellType(Const $iSpellIndex, $Quant = 0, Const $Custom = False, Cons
 
 	If $ichkEnableDonateWhenReady = 1 Then
 		If $Custom = False Then
-			If Eval("Ready" & $g_asSpellShortNames[$iSpellIndex] & "Spell") < $g_iDonSpellsQuantity Then
-				SetLog("Unit pre-brew for " & $g_asSpellNames[$iSpellIndex] & " : " & Eval("Ready" & $g_asSpellShortNames[$iSpellIndex] & "Spell"), $COLOR_RED)
-				SetLog("Reduce donate unit to " & Eval("Ready" & $g_asSpellShortNames[$iSpellIndex] & "Spell"), $COLOR_RED)
-				$g_iDonSpellsQuantity = Eval("Ready" & $g_asSpellShortNames[$iSpellIndex] & "Spell")
+			If Eval("Ready" & $MySpellsButton[$iSpellIndex][0] & "Spell") < $g_iDonSpellsQuantity Then
+				SetLog("Unit pre-brew for " & $g_asSpellNames[$iSpellIndex] & " : " & Eval("Ready" & $MySpellsButton[$iSpellIndex][0] & "Spell"), $COLOR_RED)
+				SetLog("Reduce donate unit to " & Eval("Ready" & $MySpellsButton[$iSpellIndex][0] & "Spell"), $COLOR_RED)
+				$g_iDonSpellsQuantity = Eval("Ready" & $MySpellsButton[$iSpellIndex][0] & "Spell")
 			EndIf
 		EndIf
 	EndIf
@@ -1283,7 +1285,7 @@ Func DonateSpellType(Const $iSpellIndex, $Quant = 0, Const $Custom = False, Cons
 			; DonatedSpell($iSpellIndex, $g_iDonSpellsQuantity)
 			$g_aiDonateStatsSpells[$iSpellIndex][0] += $g_iDonSpellsQuantity
 			If $ichkEnableDonateWhenReady = 1 Then
-				Assign("Ready" & $g_asSpellShortNames[$iSpellIndex] & "Spell", Eval("Ready" & $g_asSpellShortNames[$iSpellIndex] & "Spell") - $g_iDonSpellsQuantity)
+				Assign("Ready" & $MySpellsButton[$iSpellIndex][0] & "Spell", Eval("Ready" & $MySpellsButton[$iSpellIndex][0] & "Spell") - $g_iDonSpellsQuantity)
 			EndIf
 ;~ 		EndIf
 
