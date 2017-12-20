@@ -380,7 +380,7 @@ Func DonateCC($Check = False)
 								ElseIf $g_aiDonateCustomTrpNumA[$i][1] > 8 Then
 									$g_aiDonateCustomTrpNumA[$i][1] = 8 ; Number larger than 8 is unnecessary
 								EndIf
-								If Eval("Ready" & $g_asTroopShortNames[$g_aiDonateCustomTrpNumA[$i][0]]) < $MyTroops[$g_aiDonateCustomTrpNumA[$i][0]][3] Then
+								If Eval("Ready" & $g_asTroopShortNames[$g_aiDonateCustomTrpNumA[$i][0]]) < $g_aiDonateCustomTrpNumA[$i][1] Then
 									SetLog("Pre-Train not ready, skip donate " & $g_asTroopNames[$g_aiDonateCustomTrpNumA[$i][0]], $COLOR_RED)
 									$canDonCustomA = False
 								EndIf
@@ -404,7 +404,7 @@ Func DonateCC($Check = False)
 								ElseIf $g_aiDonateCustomTrpNumB[$i][1] > 8 Then
 									$g_aiDonateCustomTrpNumB[$i][1] = 8 ; Number larger than 8 is unnecessary
 								EndIf
-								If Eval("Ready" & $g_asTroopShortNames[$g_aiDonateCustomTrpNumB[$i][0]]) < $MyTroops[$g_aiDonateCustomTrpNumB[$i][0]][3] Then
+								If Eval("Ready" & $g_asTroopShortNames[$g_aiDonateCustomTrpNumB[$i][0]]) < $g_aiDonateCustomTrpNumB[$i][1] Then
 									SetLog("Pre-Train not ready, skip donate " & $g_asTroopNames[$g_aiDonateCustomTrpNumB[$i][0]], $COLOR_RED)
 									$canDonCustomB = False
 								EndIf
@@ -429,7 +429,7 @@ Func DonateCC($Check = False)
 								ElseIf $g_aiDonateCustomTrpNumC[$i][1] > 8 Then
 									$g_aiDonateCustomTrpNumC[$i][1] = 8 ; Number larger than 8 is unnecessary
 								EndIf
-								If Eval("Ready" & $g_asTroopShortNames[$g_aiDonateCustomTrpNumC[$i][0]]) < $MyTroops[$g_aiDonateCustomTrpNumC[$i][0]][3] Then
+								If Eval("Ready" & $g_asTroopShortNames[$g_aiDonateCustomTrpNumC[$i][0]]) < $g_aiDonateCustomTrpNumC[$i][1] Then
 									SetLog("Pre-Train not ready, skip donate " & $g_asTroopNames[$g_aiDonateCustomTrpNumC[$i][0]], $COLOR_RED)
 									$canDonCustomC = False
 								EndIf
@@ -454,7 +454,7 @@ Func DonateCC($Check = False)
 								ElseIf $g_aiDonateCustomTrpNumD[$i][1] > 8 Then
 									$g_aiDonateCustomTrpNumD[$i][1] = 8 ; Number larger than 8 is unnecessary
 								EndIf
-								If Eval("Ready" & $g_asTroopShortNames[$g_aiDonateCustomTrpNumD[$i][0]]) < $MyTroops[$g_aiDonateCustomTrpNumD[$i][0]][3] Then
+								If Eval("Ready" & $g_asTroopShortNames[$g_aiDonateCustomTrpNumD[$i][0]]) < $g_aiDonateCustomTrpNumD[$i][1] Then
 									SetLog("Pre-Train not ready, skip donate " & $g_asTroopNames[$g_aiDonateCustomTrpNumD[$i][0]], $COLOR_RED)
 									$canDonCustomD = False
 								EndIf
@@ -518,7 +518,7 @@ Func DonateCC($Check = False)
 									$g_aiDonateCustomTrpNumA[$i][1] = 8 ; Number larger than 8 is unnecessary
 								EndIf
 								If $ichkEnableDonateWhenReady = 1 Then
-									If Eval("Ready" & $g_asTroopShortNames[$g_aiDonateCustomTrpNumA[$i][0]]) < $MyTroops[$g_aiDonateCustomTrpNumA[$i][0]][3] Then
+									If Eval("Ready" & $g_asTroopShortNames[$g_aiDonateCustomTrpNumA[$i][0]]) < $g_aiDonateCustomTrpNumA[$i][1] Then
 										SetLog("Pre-Train not ready, skip donate " & $g_asTroopNames[$g_aiDonateCustomTrpNumA[$i][0]], $COLOR_RED)
 										$canDonCustomA = False
 									EndIf
@@ -540,7 +540,7 @@ Func DonateCC($Check = False)
 									$g_aiDonateCustomTrpNumB[$i][1] = 8 ; Number larger than 8 is unnecessary
 								EndIf
 								If $ichkEnableDonateWhenReady = 1 Then
-									If Eval("Ready" & $g_asTroopShortNames[$g_aiDonateCustomTrpNumB[$i][0]]) < $MyTroops[$g_aiDonateCustomTrpNumB[$i][0]][3] Then
+									If Eval("Ready" & $g_asTroopShortNames[$g_aiDonateCustomTrpNumB[$i][0]]) < $g_aiDonateCustomTrpNumB[$i][1] Then
 										SetLog("Pre-Train not ready, skip donate " & $g_asTroopNames[$g_aiDonateCustomTrpNumB[$i][0]], $COLOR_RED)
 										$canDonCustomB = False
 									EndIf
@@ -562,7 +562,7 @@ Func DonateCC($Check = False)
 									$g_aiDonateCustomTrpNumC[$i][1] = 8 ; Number larger than 8 is unnecessary
 								EndIf
 								If $ichkEnableDonateWhenReady = 1 Then
-									If Eval("Ready" & $g_asTroopShortNames[$g_aiDonateCustomTrpNumC[$i][0]]) < $MyTroops[$g_aiDonateCustomTrpNumC[$i][0]][3] Then
+									If Eval("Ready" & $g_asTroopShortNames[$g_aiDonateCustomTrpNumC[$i][0]]) < $g_aiDonateCustomTrpNumC[$i][1] Then
 										SetLog("Pre-Train not ready, skip donate " & $g_asTroopNames[$g_aiDonateCustomTrpNumC[$i][0]], $COLOR_RED)
 										$canDonCustomC = False
 									EndIf
@@ -585,7 +585,7 @@ Func DonateCC($Check = False)
 									$g_aiDonateCustomTrpNumD[$i][1] = 8 ; Number larger than 8 is unnecessary
 								EndIf
 								If $ichkEnableDonateWhenReady = 1 Then
-									If Eval("Ready" & $g_asTroopShortNames[$g_aiDonateCustomTrpNumD[$i][0]]) < $MyTroops[$g_aiDonateCustomTrpNumD[$i][0]][3] Then
+									If Eval("Ready" & $g_asTroopShortNames[$g_aiDonateCustomTrpNumD[$i][0]]) < $g_aiDonateCustomTrpNumD[$i][1] Then
 										SetLog("Pre-Train not ready, skip donate " & $g_asTroopNames[$g_aiDonateCustomTrpNumD[$i][0]], $COLOR_RED)
 										$canDonCustomD = False
 									EndIf

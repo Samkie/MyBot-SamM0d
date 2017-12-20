@@ -1217,7 +1217,13 @@ Func btnPushshared_prefs()
 	$g_bRunState = True
 
 	SetLog("Start")
-	PoliteCloseCoC("MySwitch", True)
+	ClickP($aAway,1,0)
+	If _Sleep(300) Then Return
+	If _CheckColorPixel($aIsMain[0], $aIsMain[1], $aIsMain[2], $aIsMain[3], $g_bCapturePixel, "aIsMain") Then
+		PoliteCloseCoC("MySwitch", True)
+	Else
+		CloseCoC()
+	EndIf
 	;If _Sleep(1500) Then Return False
 	Local $lResult
 	Local $sMyProfilePath4shared_prefs = @ScriptDir & "\profiles\" & $g_sProfileCurrentName & "\shared_prefs"
