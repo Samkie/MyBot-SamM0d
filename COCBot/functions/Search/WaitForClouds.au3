@@ -56,17 +56,9 @@ Func WaitForClouds()
 		; samm0d =================back to main screen?
 		If _CheckPixel($aIsMain) Then
 			SetLog("Something happened that cause back to main screen when searching village for attack.",$COLOR_ERROR)
-			If $bEnabledGUI = True Then
-				SetLog("Disable bot controls after long wait time", $COLOR_SUCCESS)
-				AndroidShieldForceDown(False)
-				DisableGuiControls()
-				SaveConfig()
-				readConfig()
-				applyConfig()
-			EndIf
 			$g_bIsClientSyncError = True
 			$g_bRestart = True
-			Return
+			ExitLoop
 		EndIf
 		;========================
 
@@ -110,12 +102,16 @@ Func WaitForClouds()
 			If chkAttackSearchPersonalBreak() = True Then
 				checkMainScreen()
 				checkObstacles_ResetSearch()
-				CloseCoC(True)
-				Return
+				; disable close coc if MySwitch enabled.
+				If $ichkEnableMySwitch = 0 Then
+					CloseCoC(True)
+				EndIf
+				ExitLoop
 			EndIf
 
 			; once a minute safety checks for search fail/retry msg and Personal Break events and early detection if CoC app has crashed inside emulator (Bluestacks issue mainly)
-			If chkAttackSearchFail() = 2 Or chkAttackSearchPersonalBreak() = True Or GetAndroidProcessPID() = 0 Then
+			; samm0d
+			If chkAttackSearchFail() = 2 Or GetAndroidProcessPID() = 0 Then
 				resetAttackSearch()
 				Return
 			EndIf
