@@ -601,7 +601,7 @@ Global Const $g_asTroopShortNames[$eTroopCount] = [ _
 		"Mini", "Hogs", "Valk", "Gole", "Witc", "Lava", "Bowl"]
 
 Global Const $g_aiTroopSpace[$eTroopCount] = [ _
-		1, 1, 5, 1, 2, 5, 4, 14, 20, 25, 10, 5, _
+		1, 1, 5, 1, 2, 5, 4, 14, 20, 25, 10, 6, _
 		2, 5, 8, 30, 12, 30, 6]
 Global Const $g_aiTroopTrainTime[$eTroopCount] = [ _
 		20, 24, 120, 28, 60, 120, 120, 480, 720, 720, 360, 120, _
@@ -627,7 +627,7 @@ Global Const $g_aiTroopCostPerLevel[$eTroopCount][9] = [ _
 		[3, 250, 350, 450], _ 								 	; Witch
 		[4, 390, 450, 510, 570], _  							; Lavahound
 		[3, 130, 150, 170]] 									; Bowler
-Global Const $g_aiTroopDonateXP[$eTroopCount] = [1, 1, 5, 1, 2, 5, 4, 14, 20, 25, 10, 5, 2, 5, 8, 30, 12, 30, 6]
+Global Const $g_aiTroopDonateXP[$eTroopCount] = [1, 1, 5, 1, 2, 5, 4, 14, 20, 25, 10, 6, 2, 5, 8, 30, 12, 30, 6]
 
 ; Spells
 Global Enum $eSpellLightning, $eSpellHeal, $eSpellRage, $eSpellJump, $eSpellFreeze, $eSpellClone, _
