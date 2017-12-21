@@ -272,16 +272,15 @@ Func _checkObstacles($bBuilderBase = False) ;Checks if something is in the way f
 		If _Sleep(1000) Then Return
 		Return False
 	EndIf
-;~ 	For $i = 1 To 7
-;~ 		Local $tempButton = Eval("aButtonClose" & $i)
-;~ 		If _ColorCheck(_GetPixelColor($tempButton[4], $tempButton[5], $g_bNoCapturePixel), Hex($tempButton[6], 6), Number($tempButton[7])) Then
-;~ 			Local $x1, $y1
-;~ 			HMLClickPR($tempButton,$x1,$y1)
-;~ 			HMLPureClick($x1, $y1)
-;~ 			If _Sleep($iDelaycheckObstacles1) Then Return
-;~ 			Return False
-;~ 		EndIf
-;~ 	Next
+
+	; cloud screen
+	If _ColorCheck(_GetPixelColor(273, 393,$g_bNoCapturePixel), Hex(0xFFF5AE, 6), 10) And _
+		_ColorCheck(_GetPixelColor(41, 642,$g_bNoCapturePixel), Hex(0x7E2915, 6), 10) Then
+		$g_bMinorObstacle = True
+		If _Sleep(1000) Then Return False
+		Click(Random(50,70,1),Random(660,680,1),1,0)
+		Return False
+	EndIf
 	;=============================
 
 	Local $bHasTopBlackBar = _ColorCheck(_GetPixelColor(10, 3), Hex(0x000000, 6), 1) And _ColorCheck(_GetPixelColor(300, 6), Hex(0x000000, 6), 1) And _ColorCheck(_GetPixelColor(600, 9), Hex(0x000000, 6), 1)

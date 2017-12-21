@@ -83,12 +83,14 @@ Func resetAttackSearch($bStuck = False)
 	Else
 		If $bStuck Then
 			SetLog("Attack Is Disabled Or Slow connection issues, Restarting CoC and Bot...", $COLOR_ERROR)
+			CloseCoC(True)
 		Else
-			SetLog("Stuck At Search Clouds, Restarting CoC and Bot...", $COLOR_ERROR)
+			SetLog("Stuck At Search Clouds, restarting attack...", $COLOR_ERROR)
+			$g_bRestart = True
 		EndIf
 		; samm0d
 		;$g_bIsClientSyncError = False ; disable fast OOS restart if not simple error and restarting CoC
-		CloseCoC(True)
+		;CloseCoC(True)
 	EndIf
 	Return
 EndFunc   ;==>resetAttackSearch

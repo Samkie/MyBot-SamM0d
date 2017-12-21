@@ -78,7 +78,7 @@ Func WaitForClouds()
 		If $iCount >= $maxSearchCount Then ; If clouds do not clear in alloted time do something
 			If EnableLongSearch() = False Then ; Check if attacking in Champion 1 or higher league with long search that needs to be continued
 				resetAttackSearch()
-				Return
+				ExitLoop
 			Else
 				$bigCount += 1 ; Increment long wait time fail safe timer
 				If $bigCount > $maxLongSearchCount Then ; check maximum wait time
@@ -197,6 +197,7 @@ Func EnableLongSearch()
 					EndIf
 				WEnd
 			EndIf
+			If _Sleep($DELAYSLEEP) Then Return
 			$iCount += 1
 			If $iCount > 30 Then ; wait up to 30 * 100ms = 3 seconds for chat window to be found
 				If chkSurrenderBtn() = True Then Return True ; check if clouds are gone.
