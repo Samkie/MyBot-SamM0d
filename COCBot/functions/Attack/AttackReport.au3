@@ -123,7 +123,7 @@ Func AttackReport()
 		EndIf
 		; samm0d
 		OcrForceCaptureRegion($wasForce)
-		If _Sleep(500) Then Return
+		If _Sleep(600) Then Return
 	WEnd
 
 	$g_iStatsLastAttack[$eLootGold] = $iTempStatsLastAttack[$eLootGold]
