@@ -27,19 +27,19 @@ Func WaitForClouds()
 
 	Switch Int($g_aiCurrentLoot[$eLootTrophy]) ; add randomization to SearchCounters (long cloud keep alive time) for higher leagues
 		Case 3700 To 4099 ; champion 1 league
-			$maxSearchCount = Random(480, 840, 1) ; random range 2-3.5 minutes
+			$maxSearchCount = Random(120, 240, 1) ; random range 2-3.5 minutes
 			$maxLongSearchCount = Random(10, 12, 1) ; random range 20-40 minutes
 		Case 4100 To 4399 ; Titan 3 league
-			$maxSearchCount = Random(480, 840, 1) ; random range 2-3.5 minutes
+			$maxSearchCount = Random(120, 240, 1) ; random range 2-3.5 minutes
 			$maxLongSearchCount = Random(15, 25, 1) ; random range 30-87 minutes
 		Case 4400 To 4699 ; Titan 2 league
-			$maxSearchCount = Random(600, 840, 1) ; random range 2.5-3.5 minutes
+			$maxSearchCount = Random(120, 240, 1) ; random range 2.5-3.5 minutes
 			$maxLongSearchCount = Random(24, 42, 1) ; random range 60-147 minutes
 		Case 4700 To 4999 ; Titan 1 league
-			$maxSearchCount = Random(600, 840, 1) ; random range 2.5-3.5 minutes
+			$maxSearchCount = Random(120, 240, 1) ; random range 2.5-3.5 minutes
 			$maxLongSearchCount = Random(36, 50, 1) ; random range 90-175 minutes
 		Case 5000 To 6500 ; Legend league
-			$maxSearchCount = Random(600, 840, 1) ; random range 2.5-3.5 minutes
+			$maxSearchCount = Random(120, 240, 1) ; random range 2.5-3.5 minutes
 			$maxLongSearchCount = Random(80, 85, 1) ; random range 200-300 minutes
 	EndSwitch
 	If $g_bDebugSetlog Then ; display random values if debug log

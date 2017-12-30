@@ -46,6 +46,8 @@ Func AttackReport()
 	Local $iTempstarsearned, $iTempOldstarsearned
 	Local $starsearned
 	Local $bRedo = True
+
+	$iCount = 0
 	While $bRedo
 		$bRedo = False
 		; samm0d - set ocr farce capture to false
@@ -79,7 +81,7 @@ Func AttackReport()
 
 		If $iTempStatsLastAttack[$eLootTrophy] >= 0 Then
 			$iTempBonusLast = Number(getResourcesBonusPerc(570, 309 + $g_iMidOffsetY))
-			If $iTempBonusLast <> $iTempOldBonusLast Then
+			If ($iTempBonusLast <> $iTempOldBonusLast) Or ($iTempBonusLast = 0) Then
 				$iTempOldBonusLast = $iTempBonusLast
 				$bRedo = True
 			Else
@@ -90,7 +92,6 @@ Func AttackReport()
 						$iTempOldStatsBonusLast[$eLootGold] = $iTempStatsBonusLast[$eLootGold]
 						$bRedo = True
 					EndIf
-
 					$iTempStatsBonusLast[$eLootElixir] = getResourcesBonus(590, 371 + $g_iMidOffsetY)
 					$iTempStatsBonusLast[$eLootElixir] = StringReplace($iTempStatsBonusLast[$eLootElixir], "+", "")
 					If $iTempStatsBonusLast[$eLootElixir] <> $iTempOldStatsBonusLast[$eLootElixir] Then
@@ -123,7 +124,13 @@ Func AttackReport()
 		EndIf
 		; samm0d
 		OcrForceCaptureRegion($wasForce)
-		If _Sleep(600) Then Return
+		If _Sleep(500) Then Return
+
+		$iCount += 1
+		If $iCount > 30 Then
+			Setlog("End of Attack scene read loot value error, attack values my not be correct", $COLOR_INFO)
+			ExitLoop
+		EndIf
 	WEnd
 
 	$g_iStatsLastAttack[$eLootGold] = $iTempStatsLastAttack[$eLootGold]

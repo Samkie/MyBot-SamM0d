@@ -572,6 +572,9 @@ EndFunc
 
 Func DoVillageLoadSucess($iAcc)
 	If $g_iSamM0dDebug = 1 Then SetLog("DoVillageLoadSucess: " & $icmbWithProfile[$iAcc])
+
+	SetLogCentered(" BOT LOG ", Default, Default, True)
+
 	For $i = 0 To UBound($aSwitchList) - 1
 		If $aSwitchList[$i][4] = $iAcc Then
 			$iCurStep = $i

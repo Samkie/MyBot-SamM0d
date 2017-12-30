@@ -225,7 +225,10 @@ EndFunc   ;==>ReturnHome
 
 Func ReturnHomeMainPage()
 	If IsMainPage(1) Then
-		SetLogCentered(" BOT LOG ", Default, Default, True)
+		; samm0d
+		If $ichkEnableMySwitch = 0 Then
+			SetLogCentered(" BOT LOG ", Default, Default, True)
+		EndIf
 		Return True
 	EndIf
 	Return False

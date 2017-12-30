@@ -74,7 +74,7 @@ MainLoop()
 
 Func UpdateBotTitle()
 	Local $sConsoleTitle ; Console title has also Android Emulator Name
-	Local $sTitle = "My Bot " & $g_sBotVersion & " @Samkie M0d v1.3.1 "
+	Local $sTitle = "My Bot " & $g_sBotVersion & " @Samkie M0d v1.3.2 "
 	If $g_sBotTitle = "" Then
 		$g_sBotTitle = $sTitle
 		$sConsoleTitle = $sTitle
@@ -767,7 +767,7 @@ Func runBot() ;Bot that runs everything in order
 				If $g_bRestart = True Then ContinueLoop
 
 				If _Sleep($DELAYRUNBOT1) Then Return
-				checkMainScreen()
+				checkMainScreen(False)
 				If $g_bRestart = True Then ContinueLoop
 
 				If $ichkProfileImage = 1 Then ; check with image is that village load correctly
@@ -793,7 +793,7 @@ Func runBot() ;Bot that runs everything in order
 				If $g_iTownHallLevel = 0 Then BotDetectFirstTime()
 			Else
 				If _Sleep($DELAYRUNBOT1) Then Return
-				checkMainScreen()
+				checkMainScreen(False)
 				If $g_bRestart = True Then ContinueLoop
 			EndIf
 			$iDoPerformAfterSwitch = True
