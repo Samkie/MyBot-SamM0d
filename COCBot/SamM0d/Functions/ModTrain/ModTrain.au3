@@ -276,14 +276,14 @@ Func TroopsAndSpellsChecker($bDisableTrain = True, $bDisableBrewSpell = True, $b
 				If CheckAvailableSpellUnit($g_hHBitmapArmyTab) Then
 					If CheckOnBrewUnit($g_hHBitmapBrewTab) Then
 						Select
-							Case $g_iTotalTrainSpaceSpell >= $g_iMySpellsSize And $g_aiSpellsMaxCamp[0] >= $g_iMySpellsSize
+							Case $g_iCurrentSpells >= $g_iMySpellsSize And $g_aiSpellsMaxCamp[0] >= $g_iMySpellsSize
 								If $g_bDoPrebrewspell = 0 Then
 									SetLog("Pre-brew spell disable by user.",$COLOR_INFO)
 									$tempDisableBrewSpell = True
 								Else
 									DoRevampSpells(True)
 								EndIf
-							Case $g_iTotalTrainSpaceSpell < $g_iMySpellsSize And $g_aiSpellsMaxCamp[0] >= $g_iMySpellsSize
+							Case $g_iCurrentSpells < $g_iMySpellsSize And $g_aiSpellsMaxCamp[0] >= $g_iMySpellsSize
 								If $bForcePreTrain Or $ichkForcePreBrewSpell Then
 									If $g_bDoPrebrewspell = 0 Then
 										SetLog("Pre-brew spell disable by user.",$COLOR_INFO)
@@ -292,7 +292,7 @@ Func TroopsAndSpellsChecker($bDisableTrain = True, $bDisableBrewSpell = True, $b
 										DoRevampSpells(True)
 									EndIf
 								EndIf
-							Case $g_iTotalTrainSpaceSpell < $g_iMySpellsSize And $g_aiSpellsMaxCamp[0] < $g_iMySpellsSize
+							Case $g_iCurrentSpells < $g_iMySpellsSize And $g_aiSpellsMaxCamp[0] < $g_iMySpellsSize
 								DoRevampSpells()
 								If $bForcePreTrain Or $ichkForcePreBrewSpell Then
 									ContinueLoop
@@ -300,7 +300,7 @@ Func TroopsAndSpellsChecker($bDisableTrain = True, $bDisableBrewSpell = True, $b
 							Case Else
 								SetLog("Error: cannot meet any condition to Do Revamp Spells.", $COLOR_RED)
 								If $g_iSamM0dDebug = 1 Then
-									SetLog("$g_iTotalTrainSpaceSpell: " & $g_iTotalTrainSpaceSpell, $COLOR_RED)
+									SetLog("$g_iCurrentSpells: " & $g_iCurrentSpells, $COLOR_RED)
 									SetLog("$g_iMySpellsSize: " & $g_iMySpellsSize, $COLOR_RED)
 									SetLog("$g_aiSpellsMaxCamp[0]: " & $g_aiTroopsMaxCamp[0], $COLOR_RED)
 									SetLog("$g_aiSpellsMaxCamp[1]: " & $g_aiTroopsMaxCamp[1], $COLOR_RED)
