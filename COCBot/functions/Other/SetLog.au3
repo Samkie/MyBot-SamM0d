@@ -24,6 +24,23 @@
 Global $g_oTxtLogInitText = ObjCreate("Scripting.Dictionary")
 Global $g_oTxtAtkLogInitText = ObjCreate("Scripting.Dictionary")
 
+Func LimitLines(ByRef $hRichText, $sDelimiter = @CR, $iMaxLength = 200) ;$iMaxLength
+    Local $asText
+    Local $iFirstLineLen
+    Local $iMax
+    Local $i
+    $asText = StringSplit(_GUICtrlRichEdit_GetText($hRichText), $sDelimiter, 2)
+    If UBound($asText) > ($iMaxLength + 1) Then ; $iMaxLength + 1 cause of 1 empty @CR on last text log
+        $iMax = UBound($asText) - ($iMaxLength + 1)
+        ;_SendMessage($hRichText, $WM_SETREDRAW, False, 0) ; disable redraw so logging has no visiual effect
+        For $i = 1 To $iMax
+            $iFirstLineLen = StringInStr(_GUICtrlRichEdit_GetText($hRichText), $sDelimiter)
+			_GUICtrlRichEdit_SetSel($hRichText, 0, $iFirstLineLen)
+			_GUICtrlRichEdit_ReplaceText($hRichText, "")
+        Next
+        ;_SendMessage($hTxtLog, $WM_SETREDRAW, True, 0) ; enabled RechEdit redraw again
+    EndIf
+EndFunc
 
 Func SetLog($sLogMessage, $iColor = Default, $sFont = Default, $iFontSize = Default, $iStatusbar = Default, $bConsoleWrite = Default) ;Sets the text for the log
 	If $sLogMessage <> "" Then Return _SetLog($sLogMessage, $iColor, $sFont, $iFontSize, $iStatusbar, $bConsoleWrite)
@@ -217,6 +234,11 @@ Func FlushGuiLog(ByRef $hTxtLog, ByRef $oTxtLog, $bUpdateStatus = False, $sLogMu
 
 	Local $iLogs = $oTxtLog.Count
 	$oTxtLog.RemoveAll
+
+	; samm0d
+	If $hTxtLog = $g_hTxtLog And $iLogs Then
+		LimitLines($hTxtLog)
+	EndIf
 
 	If $hTxtLog Then
 		_WinAPI_EnableWindow($hTxtLog, True) ; enabled RichEdit again
