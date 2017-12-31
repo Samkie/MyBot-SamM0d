@@ -1220,6 +1220,8 @@ Func btnPushshared_prefs()
 	$g_bRunState = True
 
 	SetLog("Start")
+	GUICtrlSetState($btnPushshared_prefs, $GUI_DISABLE)
+
 	ClickP($aAway,1,0)
 	If _Sleep(300) Then Return
 	If _CheckColorPixel($aIsMain[0], $aIsMain[1], $aIsMain[2], $aIsMain[3], $g_bCapturePixel, "aIsMain") Then
@@ -1260,6 +1262,7 @@ Func btnPushshared_prefs()
 		SetLog($sMyProfilePath4shared_prefs & "\storage.xml not found.", $COLOR_ERROR)
 	EndIf
 	SetLog("Finish")
+	GUICtrlSetState($btnPushshared_prefs, $GUI_ENABLE)
 	$g_bRunState = $currentRunState
 EndFunc
 

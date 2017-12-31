@@ -24,7 +24,7 @@ Func WaitForClouds()
 
 	; samm0d
 	;===============
-	Local $maxSearchCount = 40 ; $maxSearchCount * 250ms ($DELAYGETRESOURCES1) = seconds wait time before reset in lower leagues: 720*250ms = 3 minutes
+	Local $maxSearchCount = 40 ; 10 seconds for initialize long search, check chat button, after will random 1-2 minutes for checking 1 time
 	Local $maxLongSearchCount = 7 ; $maxLongSearchCount * $maxSearchCount = seconds total wait time in higher leagues: ; 21 minutes, set a value here but is never used unless error
 
 	Switch Int($g_aiCurrentLoot[$eLootTrophy]) ; add randomization to SearchCounters (long cloud keep alive time) for higher leagues
@@ -67,6 +67,7 @@ Func WaitForClouds()
 			Return
 		EndIf
 		If $iCount >= $maxSearchCount Then ; If clouds do not clear in alloted time do something
+			$maxSearchCount = Random(240,480,1) ; $maxSearchCount * 250ms ($DELAYGETRESOURCES1) = seconds wait time before reset in lower leagues: 240*250ms = 1 minutes, 480*250ms = 2 minutes
 			If EnableLongSearch() = False Then ; Check if attacking in Champion 1 or higher league with long search that needs to be continued
 				resetAttackSearch()
 				ExitLoop
@@ -158,14 +159,14 @@ Func EnableLongSearch()
 		While 1
 			If _CheckPixel($aOpenChatTab, $g_bCapturePixel, Default, "OpenChatTab check", $COLOR_DEBUG) Then ; check for open chat tab
 				ClickP($aOpenChatTab, 1, 0, "#0510") ; Open chat tab
-				If _Sleep($DELAYGETRESOURCES1) Then Return
+				If _Sleep($DELAYGETRESOURCES1) Then Return False
 				$jCount = 0 ; initialize safety loop counter #2
 				While 1 ; wait for close chat tab to appear
 					If _CheckPixel($aCloseChat, $g_bCapturePixel, Default, "CloseChatTab check", $COLOR_DEBUG) Then ; check for close chat tab
 						ClickP($aCloseChat, 1, 0, "#0511") ; close chat tab
 						$kCount = 0 ; initialize safety loop counter #3
 						While 1 ; paranoid verification that chat window has closed
-							If _Sleep($DELAYSLEEP) Then Return
+							If _Sleep($DELAYSLEEP) Then Return False
 							$result = getCloudTextShort(260, 349 + $g_iMidOffsetY, "Cloud Search Text: sea=", $COLOR_DEBUG, Default) ; OCR "Searching for oponents..." partially blocked text
 							If _CheckPixel($aCloseChat, $g_bCapturePixel, Default, "CloseChatTab check", $COLOR_DEBUG) Then ; check for close chat tab is still there
 								$kCount += 1
@@ -183,7 +184,7 @@ Func EnableLongSearch()
 							EndIf
 						WEnd
 					EndIf
-					If _Sleep($DELAYSLEEP) Then Return
+					If _Sleep($DELAYSLEEP) Then Return False
 					$jCount += 1
 					If $jCount > 50 Then ; wait up to 50 * 100ms = 5 seconds for chat window to close
 						If chkSurrenderBtn() = True Then Return True ; check if clouds are gone.
@@ -192,7 +193,7 @@ Func EnableLongSearch()
 					EndIf
 				WEnd
 			EndIf
-			If _Sleep($DELAYSLEEP) Then Return
+			If _Sleep($DELAYSLEEP) Then Return False
 			$iCount += 1
 			If $iCount > 30 Then ; wait up to 30 * 100ms = 3 seconds for chat window to be found
 				If chkSurrenderBtn() = True Then Return True ; check if clouds are gone.
