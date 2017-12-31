@@ -604,7 +604,7 @@ EndFunc
 
 Func chkBotLogLineLimit()
 	$ichkBotLogLineLimit = (GUICtrlRead($chkBotLogLineLimit) = $GUI_CHECKED ? 1 : 0)
-	GUICtrlSetState($txtLogLineLimit, ($itxtLogLineLimit = 1 ? $GUI_ENABLE : $GUI_DISABLE))
+	GUICtrlSetState($txtLogLineLimit, ($ichkBotLogLineLimit = 1 ? $GUI_ENABLE : $GUI_DISABLE))
 EndFunc
 
 Func txtLogLineLimit()
