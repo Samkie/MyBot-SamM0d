@@ -18,6 +18,10 @@ Global $iMultiFingerStyle = 0
 ; Multi Finger (LunaEclipse)
 IniReadS($iMultiFingerStyle, $g_sProfileConfigPath, "MultiFinger", "Select", "1")
 
+; bot log
+IniReadS($ichkBotLogLineLimit, $g_sProfileConfigPath, "BotLogLineLimit", "Enable", "0", "Int")
+IniReadS($itxtLogLineLimit, $g_sProfileConfigPath, "BotLogLineLimit", "LimitValue", "200","Int")
+
 ; use Event troop
 IniReadS($ichkEnableUseEventTroop, $g_sProfileConfigPath, "EnableUseEventTroop", "Enable", "0", "Int")
 

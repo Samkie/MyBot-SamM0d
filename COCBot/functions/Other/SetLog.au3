@@ -236,8 +236,10 @@ Func FlushGuiLog(ByRef $hTxtLog, ByRef $oTxtLog, $bUpdateStatus = False, $sLogMu
 	$oTxtLog.RemoveAll
 
 	; samm0d
-	If $hTxtLog = $g_hTxtLog And $iLogs Then
-		LimitLines($hTxtLog)
+	If $ichkBotLogLineLimit Then
+		If $hTxtLog = $g_hTxtLog And $iLogs Then
+			LimitLines($hTxtLog)
+		EndIf
 	EndIf
 
 	If $hTxtLog Then
@@ -322,6 +324,7 @@ EndFunc   ;==>__FileWriteLog
 Func ClearLog($hRichEditCtrl = $g_hTxtLog)
 	Switch $hRichEditCtrl
 		Case $g_hTxtLog
+			If $ichkBotLogLineLimit Then Return
 			$g_oTxtLogInitText($g_oTxtLogInitText.Count + 1) = 0
 		Case $g_hTxtAtkLog
 			$g_oTxtAtkLogInitText($g_oTxtAtkLogInitText.Count + 1) = 0

@@ -602,6 +602,15 @@ EndFunc
 ;~ 	$ichkDisablePauseTrayTip = (GUICtrlRead($chkDisablePauseTrayTip) = $GUI_CHECKED ? 1 : 0)
 ;~ EndFunc
 
+Func chkBotLogLineLimit()
+	$ichkBotLogLineLimit = (GUICtrlRead($chkBotLogLineLimit) = $GUI_CHECKED ? 1 : 0)
+	GUICtrlSetState($txtLogLineLimit, ($itxtLogLineLimit = 1 ? $GUI_ENABLE : $GUI_DISABLE))
+EndFunc
+
+Func txtLogLineLimit()
+	$itxtLogLineLimit = GUICtrlRead($txtLogLineLimit)
+EndFunc
+
 Func chkEnableLogoutLimit()
 	$ichkEnableLogoutLimit = (GUICtrlRead($chkEnableLogoutLimit) = $GUI_CHECKED ? 1 : 0)
 	GUICtrlSetState($txtLogoutLimitTime, ($ichkEnableLogoutLimit = 1 ? $GUI_ENABLE : $GUI_DISABLE))

@@ -287,6 +287,10 @@ Global $ichkEnableDonateWhenReady, $chkEnableDonateWhenReady
 Global $ichkEnableStopBotWhenLowBattery, $chkEnableStopBotWhenLowBattery
 Global $g_bCheckBattery = False
 
+; bot log
+Global $chkBotLogLineLimit, $ichkBotLogLineLimit, $txtLogLineLimit, $itxtLogLineLimit
+
+
 Global $aSwitchList[1][8]
 
 Global $aProfileStats[44][9] = _

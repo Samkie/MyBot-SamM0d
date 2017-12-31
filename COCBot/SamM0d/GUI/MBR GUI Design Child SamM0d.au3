@@ -740,17 +740,17 @@ $chkSmartUpdateWall = GUICtrlCreateCheckbox(GetTranslatedFileIni("sam m0d", 18, 
 	GUICtrlSetState(-1, $GUI_CHECKED)
 
 
-$y += 25
+$y += 20
 GUICtrlCreateLabel(GetTranslatedFileIni("sam m0d", 19, "Delay: "), $x + 30, $y, -1, -1)
 $sTxtTip = "Set the delay between each click of wall. Increase the delay if your PC is slow."
 _GUICtrlSetTip(-1, $sTxtTip)
-$txtClickWallDelay = GUICtrlCreateInput("500", $x + 60, $y, 31, 20, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
+$txtClickWallDelay = GUICtrlCreateInput("500", $x + 60, $y, 31, 18, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
 	_GUICtrlSetTip(-1, $sTxtTip)
 	GUICtrlSetLimit(-1, 3)
 	GUICtrlSetData(-1, 500)
 
 $x = 10
-$y += 25
+$y += 20
 $chkEnableCustomOCR4CCRequest = GUICtrlCreateCheckbox(GetTranslatedFileIni("sam m0d", 20, "Enable custom ocr image to read clan castle request."), $x+10, $y, -1, -1)
 	$sTxtTip = "Using imgloc detect some non latin derived alphabets that normally we use for request cc."
 	GUICtrlSetOnEvent(-1, "chkEnableCustomOCR4CCRequest")
@@ -758,7 +758,7 @@ $chkEnableCustomOCR4CCRequest = GUICtrlCreateCheckbox(GetTranslatedFileIni("sam 
 	GUICtrlSetState(-1, $GUI_UNCHECKED)
 
 $x = 10
-$y += 25
+$y += 20
 $chkCheck4CC = GUICtrlCreateCheckbox(GetTranslatedFileIni("sam m0d", 51, "Custom Donate CC checking time: "), $x+10, $y, 240, 25)
 	$sTxtTip = GetTranslatedFileIni("sam m0d", 53, "When waiting for full army, use how many seconds for check the clan chat if got new message.")
 	_GUICtrlSetTip(-1, $sTxtTip)
@@ -766,7 +766,7 @@ $chkCheck4CC = GUICtrlCreateCheckbox(GetTranslatedFileIni("sam m0d", 51, "Custom
 	GUICtrlSetState(-1, $GUI_UNCHECKED)
 
 
-$txtCheck4CCWaitTime = GUICtrlCreateInput("7", $x + 255, $y+2, 31, 20, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
+$txtCheck4CCWaitTime = GUICtrlCreateInput("7", $x + 255, $y+2, 31, 18, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
 	;$sTxtTip = GetTranslatedFileIni("sam m0d", 53, "When waiting for full army, use how many seconds for check the clan chat if got new message.")
 	_GUICtrlSetTip(-1, $sTxtTip)
 	GUICtrlSetLimit(-1, 2)
@@ -777,14 +777,14 @@ $txtCheck4CCWaitTime = GUICtrlCreateInput("7", $x + 255, $y+2, 31, 20, BitOR($GU
 	_GUICtrlSetTip(-1, $sTxtTip)
 
 $x = 10
-$y += 25
+$y += 20
 $chkIncreaseGlobalDelay = GUICtrlCreateCheckbox(GetTranslatedFileIni("sam m0d", 40, "Increase global delay setting: "), $x+10, $y, 240, 25)
 	$sTxtTip = "Increase delay for all delay setting, more stabilize for slow pc."
 	_GUICtrlSetTip(-1, $sTxtTip)
 	GUICtrlSetOnEvent(-1, "chkIncreaseGlobalDelay")
 	GUICtrlSetState(-1, $GUI_UNCHECKED)
 
-$txtIncreaseGlobalDelay = GUICtrlCreateInput("10", $x + 255, $y+2, 31, 20, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
+$txtIncreaseGlobalDelay = GUICtrlCreateInput("10", $x + 255, $y+2, 31, 18, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
 	_GUICtrlSetTip(-1, $sTxtTip)
 	GUICtrlSetLimit(-1, 3)
 	GUICtrlSetState(-1, $GUI_DISABLE)
@@ -795,19 +795,19 @@ $txtIncreaseGlobalDelay = GUICtrlCreateInput("10", $x + 255, $y+2, 31, 20, BitOR
 
 
 $x = 10
-$y += 25
+$y += 20
 $chkAutoDock = GUICtrlCreateCheckbox(GetTranslatedFileIni("sam m0d", 97, "Auto dock to emulator"), $x+10, $y, -1, -1)
 	GUICtrlSetOnEvent(-1, "chkAutoDock")
 	GUICtrlSetState(-1, $GUI_UNCHECKED)
 
 $x = 10
-$y += 25
+$y += 20
 $chkAutoHideEmulator = GUICtrlCreateCheckbox(GetTranslatedFileIni("sam m0d", "Auto Hide Emulator", "Auto hide emulator after start"), $x+10, $y, -1, -1)
 	GUICtrlSetOnEvent(-1, "chkAutoHideEmulator")
 	GUICtrlSetState(-1, $GUI_UNCHECKED)
 
 $x = 10
-$y += 25
+$y += 20
 $chkAutoMinimizeBot = GUICtrlCreateCheckbox(GetTranslatedFileIni("sam m0d", "Auto Minimize Bot", "Auto minimize bot after start"), $x+10, $y, -1, -1)
 	GUICtrlSetOnEvent(-1, "chkAutoMinimizeBot")
 	GUICtrlSetState(-1, $GUI_UNCHECKED)
@@ -824,40 +824,51 @@ $chkAutoMinimizeBot = GUICtrlCreateCheckbox(GetTranslatedFileIni("sam m0d", "Aut
 ;~ 	GUICtrlSetOnEvent(-1, "chkEnableADBClick")
 ;~ 	GUICtrlSetState(-1, $GUI_UNCHECKED)
 
-$y += 25
+$y += 20
 $chkEnableLimitDonateUnit = GUICtrlCreateCheckbox(GetTranslatedFileIni("sam m0d", "DonateLimit", "Limited units for each round troops donation, Unit(s): "), $x+10, $y, -1, -1)
 _GUICtrlSetTip(-1, GetTranslatedFileIni("sam m0d", "DonateLimitTips", "Prevent over donate the unit you are train for and mess up the troops queue"))
 	GUICtrlSetOnEvent(-1, "chkEnableLimitDonateUnit")
 
-$txtLimitDonateUnit = GUICtrlCreateInput("8", $x + 300, $y+2, 35, 20, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
+$txtLimitDonateUnit = GUICtrlCreateInput("8", $x + 300, $y+2, 35, 18, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
 	_GUICtrlSetTip(-1, GetTranslatedFileIni("sam m0d", "DonateLimitValue", "Please enter the unit number for limited each round of troops donate."))
 	GUICtrlSetLimit(-1, 2)
 	GUICtrlSetOnEvent(-1, "txtLimitDonateUnit")
 
-$y += 25
+$y += 20
 $chkEnableDonateWhenReady = GUICtrlCreateCheckbox(GetTranslatedFileIni("sam m0d", "DonateReady", "Donate pre-train troops or pre-brew spells only"), $x+10, $y, -1, -1)
 ;_GUICtrlSetTip(-1, GetTranslatedFileIni("sam m0d", "DonateReadyTips", "Donate when pre-train troops or pre-brew spells are full ready. If you train 8 giants mean need total 16 giants to trigger donate."))
 	GUICtrlSetOnEvent(-1, "chkEnableDonateWhenReady")
 
-$y += 25
+$y += 20
 $chkEnableLogoutLimit = GUICtrlCreateCheckbox(GetTranslatedFileIni("sam m0d", "LogoutLimit", "Maximum logout time for smart wait for train, second(s): "), $x+10, $y, -1, -1)
 _GUICtrlSetTip(-1, GetTranslatedFileIni("sam m0d", "LogoutLimitTips", "Maximum logout time for smart wait for train, prevent attack by other player."))
 	GUICtrlSetOnEvent(-1, "chkEnableLogoutLimit")
 
-$txtLogoutLimitTime = GUICtrlCreateInput("240", $x + 300, $y+2, 35, 20, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
+$txtLogoutLimitTime = GUICtrlCreateInput("240", $x + 300, $y+2, 35, 18, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
 	_GUICtrlSetTip(-1, GetTranslatedFileIni("sam m0d", "LogoutLimitTime", "Please enter how many seconds for maximum logout time."))
 	GUICtrlSetLimit(-1, 4)
 	GUICtrlSetOnEvent(-1, "txtLogoutLimitTime")
 
-$y += 25
+$y += 20
 $chkEnableUseEventTroop = GUICtrlCreateCheckbox(GetTranslatedFileIni("sam m0d", "Enable use Event troops and spells", "Enable use Event troops and spells - All modes"), $x+10, $y, -1, -1)
 	GUICtrlSetOnEvent(-1, "chkEnableUseEventTroop")
 	GUICtrlSetState(-1, $GUI_UNCHECKED)
 
-$y += 25
+$y += 20
 $chkEnableStopBotWhenLowBattery = GUICtrlCreateCheckbox(GetTranslatedFileIni("sam m0d", "Enable stop bot when battery level critical", "Enable stop bot when battery level critical"), $x+10, $y, -1, -1)
 	GUICtrlSetOnEvent(-1, "chkEnableStopBotWhenLowBattery")
 	GUICtrlSetState(-1, $GUI_UNCHECKED)
+
+
+$y += 20
+$chkBotLogLineLimit = GUICtrlCreateCheckbox(GetTranslatedFileIni("sam m0d", "BotLogLineLimit", "Disable clear bot log, and line limit to: "), $x+10, $y, -1, -1)
+_GUICtrlSetTip(-1, GetTranslatedFileIni("sam m0d", "BotLogLineLimitTips", "Bot log will never clear after battle, and clear bot log will replace will line limit."))
+	GUICtrlSetOnEvent(-1, "chkBotLogLineLimit")
+
+$txtLogLineLimit = GUICtrlCreateInput("240", $x + 300, $y+2, 35, 18, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
+	_GUICtrlSetTip(-1, GetTranslatedFileIni("sam m0d", "BotLogLineLimitValue", "Please enter how many line to limit for the bot log."))
+	GUICtrlSetLimit(-1, 4)
+	GUICtrlSetOnEvent(-1, "txtLogLineLimit")
 
 ;~ $y += 25
 ;~ $chkRemoveSpecialObstacleBB = GUICtrlCreateCheckbox(GetTranslatedFileIni("sam m0d", "Remove Special Obstacle BB", "Remove Special Obstacle at Builder Base"), $x+10, $y, -1, -1)

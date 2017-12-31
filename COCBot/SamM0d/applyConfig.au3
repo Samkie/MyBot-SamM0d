@@ -15,6 +15,9 @@
 
 ;~ ; Pause tray tip
 ;~ GUICtrlSetState($chkDisablePauseTrayTip, ($ichkDisablePauseTrayTip = 1 ? $GUI_CHECKED : $GUI_UNCHECKED))
+; bot log
+GUICtrlSetState($chkBotLogLineLimit, ($ichkBotLogLineLimit = 1 ? $GUI_CHECKED : $GUI_UNCHECKED))
+GUICtrlSetData($txtLogLineLimit, $itxtLogLineLimit)
 
 ; use Event troop
 GUICtrlSetState($chkEnableUseEventTroop, ($ichkEnableUseEventTroop = 1 ? $GUI_CHECKED : $GUI_UNCHECKED))

@@ -16,6 +16,10 @@
 ; Multi Finger (LunaEclipse)
 _Ini_Add("MultiFinger", "Select", _GUICtrlComboBox_GetCurSel($cmbDBMultiFinger))
 
+; bot log
+_Ini_Add("BotLogLineLimit", "Enable", (GUICtrlRead($chkBotLogLineLimit) = $GUI_CHECKED ? 1 : 0 ))
+_Ini_Add("BotLogLineLimit", "LimitValue", GUICtrlRead($txtLogLineLimit))
+
 ; use Event troop
 _Ini_Add("EnableUseEventTroop", "Enable", (GUICtrlRead($chkEnableUseEventTroop) = $GUI_CHECKED ? 1 : 0 ))
 
