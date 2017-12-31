@@ -120,8 +120,8 @@ Func CheckAvailableSpellUnit($hHBitmap)
 		EndIf
 	Next
 
-	If $AvailableCamp <> $g_iTotalSpells Then
-		SetLog("Error: Spells size for all available Unit: " & $AvailableCamp & "  -  Camp: " & $g_iTotalSpells, $COLOR_RED)
+	If $AvailableCamp <> $g_iTotalTrainSpaceSpell Then
+		SetLog("Error: Spells size for all available Unit: " & $AvailableCamp & "  -  Camp: " & $g_iTotalTrainSpaceSpell, $COLOR_RED)
 		$g_bRestartCheckTroop = True
 		Return False
 	Else

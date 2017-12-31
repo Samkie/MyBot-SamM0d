@@ -313,7 +313,7 @@ Func getMySpellCapacityMini($hHBitmap, $bShowLog = True)
 	Local $tmpTotalCamp
 
 	; reset Global Variable
-	$g_iTotalSpells = 0
+	$g_iTotalTrainSpaceSpell = 0
 	$g_iTotalSpellCampSpace = 0
 
 	$sSpellInfo = getMyOcrSpellCap($hHBitmap)
@@ -321,14 +321,14 @@ Func getMySpellCapacityMini($hHBitmap, $bShowLog = True)
 	$aGetSpellSize = StringSplit($sSpellInfo, "#")
 	If IsArray($aGetSpellSize) Then
 		If $aGetSpellSize[0] > 1 Then
-			$g_iTotalSpells = Number($aGetSpellSize[1])
+			$g_iTotalTrainSpaceSpell = Number($aGetSpellSize[1])
 			$g_iTotalSpellCampSpace = Number($aGetSpellSize[2])
 		EndIf
 	EndIf
 	If $g_iTotalSpellCampSpace <> 0 Then
-		If $bShowLog Then SetLog("Spells: " & $g_iTotalSpells & "/" & $g_iTotalSpellCampSpace)
+		If $bShowLog Then SetLog("Spells: " & $g_iTotalTrainSpaceSpell & "/" & $g_iTotalSpellCampSpace)
 	EndIf
-	$g_bFullArmySpells = $g_iTotalSpells >= $g_iMySpellsSize
+	$g_bFullArmySpells = $g_iTotalTrainSpaceSpell >= $g_iMySpellsSize
 EndFunc
 
 Func getBrewSpellCapacityMini($hHBitmap, $bShowLog = True)

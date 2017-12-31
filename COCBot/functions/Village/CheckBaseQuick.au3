@@ -81,7 +81,7 @@ Func CheckBaseQuick($bStopRecursion = False, $sReturnHome = "")
 			ModTrain()
 			If $g_iActiveDonate And $g_bChkDonate Then
 				If $g_bFirstStart Then
-					getArmyCapacity(True, False)
+					getArmyTroopCapacity(True, False)
 					getArmySpellCapacity(False, True)
 				EndIf
 				If SkipDonateNearFullTroops(True) = False And BalanceDonRec(True) Then DonateCC()

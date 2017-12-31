@@ -1250,7 +1250,7 @@ Func QuickAttack()
 	Local $bFlag4IfNeedQuickAttack = ($g_bDropTrophyEnable = True Or $g_aiAttackAlgorithm[$DB] = 2 Or $g_abAttackTypeEnable[$TS] = True) ; only following enable then i open army window for check getArmyCapacity()
 	If $bFlag4IfNeedQuickAttack Then
 
-	getArmyCapacity(True, True)
+	getArmyTroopCapacity(True, True)
 
 	If ($g_aiAttackAlgorithm[$DB] = 2 And IsSearchModeActive($DB)) Or (IsSearchModeActive($TS)) Then
 		VillageReport()
@@ -1318,7 +1318,8 @@ Func _RunFunction($action)
 
 			If $g_iActiveDonate And $g_bChkDonate Then
 				If $g_bFirstStart Then
-					getArmyCapacity(True, False)
+					getArmyTroopCapacity(True, False)
+
 					getArmySpellCapacity(False, True)
 				EndIf
 				If SkipDonateNearFullTroops(True) = False And BalanceDonRec(True) Then DonateCC()
