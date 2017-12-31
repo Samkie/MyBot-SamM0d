@@ -18,6 +18,7 @@
 ; bot log
 GUICtrlSetState($chkBotLogLineLimit, ($ichkBotLogLineLimit = 1 ? $GUI_CHECKED : $GUI_UNCHECKED))
 GUICtrlSetData($txtLogLineLimit, $itxtLogLineLimit)
+chkBotLogLineLimit()
 
 ; use Event troop
 GUICtrlSetState($chkEnableUseEventTroop, ($ichkEnableUseEventTroop = 1 ? $GUI_CHECKED : $GUI_UNCHECKED))

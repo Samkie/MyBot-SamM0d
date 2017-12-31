@@ -238,7 +238,7 @@ Func FlushGuiLog(ByRef $hTxtLog, ByRef $oTxtLog, $bUpdateStatus = False, $sLogMu
 	; samm0d
 	If $ichkBotLogLineLimit Then
 		If $hTxtLog = $g_hTxtLog And $iLogs Then
-			LimitLines($hTxtLog)
+			LimitLines($hTxtLog, @CR, $itxtLogLineLimit)
 		EndIf
 	EndIf
 
