@@ -428,11 +428,7 @@ Func SetScreenBlueStacks()
 	Local $BootParameter = RegRead($REGISTRY_KEY_DIRECTORY, "BootParameters")
 	$BootParameter = StringRegExpReplace($BootParameter, "DPI=\d+", "DPI=160")
 	If @error = 0 And @extended > 0 Then
-		If StringInStr($BootParameter, "DPI=") = 0 Then
-			RegWrite($REGISTRY_KEY_DIRECTORY, "BootParameters", "REG_SZ", $BootParameter & " DPI=160")
-		Else
-			RegWrite($REGISTRY_KEY_DIRECTORY, "BootParameters", "REG_SZ", $BootParameter)
-		EndIf
+		RegWrite($REGISTRY_KEY_DIRECTORY, "BootParameters", "REG_SZ", $BootParameter)
 	Else
 		; DPI=160 was missing
 		RegWrite($REGISTRY_KEY_DIRECTORY, "BootParameters", "REG_SZ", $BootParameter & " DPI=160")
@@ -453,12 +449,8 @@ Func SetScreenBlueStacks2()
 	$REGISTRY_KEY_DIRECTORY = $g_sHKLM & "\SOFTWARE\BlueStacks\Guests\" & $g_sAndroidInstance
 	Local $BootParameter = RegRead($REGISTRY_KEY_DIRECTORY, "BootParameters")
 	$BootParameter = StringRegExpReplace($BootParameter, "DPI=\d+", "DPI=160")
-	If @error = 0 Then
-		If StringInStr($BootParameter, "DPI=") = 0 Then
-			RegWrite($REGISTRY_KEY_DIRECTORY, "BootParameters", "REG_SZ", $BootParameter & " DPI=160")
-		Else
-			RegWrite($REGISTRY_KEY_DIRECTORY, "BootParameters", "REG_SZ", $BootParameter)
-		EndIf
+	If @error = 0 And @extended > 0 Then
+		RegWrite($REGISTRY_KEY_DIRECTORY, "BootParameters", "REG_SZ", $BootParameter)
 	Else
 		RegWrite($REGISTRY_KEY_DIRECTORY, "BootParameters", "REG_SZ", $BootParameter & " DPI=160")
 	EndIf

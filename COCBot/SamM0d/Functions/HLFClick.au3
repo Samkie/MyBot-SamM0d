@@ -97,7 +97,7 @@ Func CheckClickMsg(ByRef $x, ByRef $y, ByRef $times, ByRef $speed, ByRef $MsgCod
 	; return 0, do nothing
 	; return 1, success do randomize and let continue perform click
 	; return 2, use HMLClick or HMLPureClick, cancel the original click (Click, PureClick)
-	If ($x = 1 And $y = 40) Or ($x = 0 And $y = 10) Then
+	If ($x = 1 And $y = 40) Or ($x = 0 And $y = 10) or ($x = 175 And $y = 10) Then
 		; replace the away click
 		Return HMLClickAway($x, $y, $MsgCode)
 	Else
