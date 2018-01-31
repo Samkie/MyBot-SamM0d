@@ -112,7 +112,7 @@ Func DoRevampSpells($bDoPreTrain = False)
 
 					If $ichkEnableMySwitch = 0 Then
 						If $tempSpells[$i][4] = 0 Then
-							$iCost = getMyOcr(0,$g_iTroopButtonX - 55,$g_iTroopButtonY + 26, 68, 16,"troopcost",True,False,True)
+							$iCost = getMyOcr(0,$g_iTroopButtonX - 55,$g_iTroopButtonY + 26, 68, 18,"troopcost",True,False,True)
 							If $iCost = 0 Or $iCost >= $MySpellsCost[Eval("enum" & $tempSpells[$i][0])][0] Then
 								; cannot read train cost, use max level train cost
 								$iCost = $MySpellsCost[Eval("enum" & $tempSpells[$i][0])][0]
@@ -122,7 +122,7 @@ Func DoRevampSpells($bDoPreTrain = False)
 							$iCost = $tempSpells[$i][4]
 						EndIf
 					Else
-						$iCost = getMyOcr(0,$g_iTroopButtonX - 55,$g_iTroopButtonY + 26, 68, 16,"troopcost",True,False,True)
+						$iCost = getMyOcr(0,$g_iTroopButtonX - 55,$g_iTroopButtonY + 26, 68, 18,"troopcost",True,False,True)
 						If $iCost = 0 Or $iCost >= $MySpellsCost[Eval("enum" & $tempSpells[$i][0])][0] Then
 							; cannot read train cost, use max level train cost
 							$iCost = $MySpellsCost[Eval("enum" & $tempSpells[$i][0])][0]

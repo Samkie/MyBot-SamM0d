@@ -111,7 +111,7 @@ Func DoRevampTroops($bDoPreTrain = False)
 
 					If $ichkEnableMySwitch = 0 Then
 						If $tempTroops[$i][4] = 0 Then
-							$iCost = getMyOcr(0,$g_iTroopButtonX - 55,$g_iTroopButtonY + 26, 68, 16,"troopcost",True,False,True)
+							$iCost = getMyOcr(0,$g_iTroopButtonX - 55,$g_iTroopButtonY + 26, 68, 18,"troopcost",True,False,True)
 							If $iCost = 0 Or $iCost >= $MyTroopsCost[Eval("e" & $tempTroops[$i][0])][0] Then
 								; cannot read train cost, use max level train cost
 								$iCost = $MyTroopsCost[Eval("e" & $tempTroops[$i][0])][0]
@@ -121,7 +121,7 @@ Func DoRevampTroops($bDoPreTrain = False)
 							$iCost = $tempTroops[$i][4]
 						EndIf
 					Else
-						$iCost = getMyOcr(0,$g_iTroopButtonX - 55,$g_iTroopButtonY + 26, 68, 16,"troopcost",True,False,True)
+						$iCost = getMyOcr(0,$g_iTroopButtonX - 55,$g_iTroopButtonY + 26, 68, 18,"troopcost",True,False,True)
 						If $iCost = 0 Or $iCost >= $MyTroopsCost[Eval("e" & $tempTroops[$i][0])][0] Then
 							; cannot read train cost, use max level train cost
 							$iCost = $MyTroopsCost[Eval("e" & $tempTroops[$i][0])][0]
