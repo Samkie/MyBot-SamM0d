@@ -94,13 +94,14 @@ Func PrepareAttack($pMatchMode, $Remaining = False, $SRIGHT = False) ;Assigns tr
 			Else ;king, queen, warden and spells
 				$g_avAttackTroops[$i][0] = $troopKind
 				If IsSpecialTroopToBeUsed($pMatchMode, $troopKind) Then
-					$troopsnumber += 1
-					;Setlog ("troopsnumber = " & $troopsnumber & "+1")
 					$g_avAttackTroops[$i][0] = $aTemp[$i][0]
-					$g_avAttackTroops[$i][1] = $aTemp[$i][1]
-					If $g_avAttackTroops[$i][0] = $eKing Or $g_avAttackTroops[$i][0] = $eQueen Or $g_avAttackTroops[$i][0] = $eWarden Then $g_avAttackTroops[$i][1] = 1
-					$troopKind = $g_avAttackTroops[$i][1]
-					$troopsnumber += 1
+					If $g_avAttackTroops[$i][0] = $eKing Or $g_avAttackTroops[$i][0] = $eQueen Or $g_avAttackTroops[$i][0] = $eWarden Then
+						$g_avAttackTroops[$i][1] = 1
+						$troopsnumber += 1
+					Else
+						$g_avAttackTroops[$i][1] = $aTemp[$i][1]
+						If $Remaining = False Then $troopsnumber += 1
+					EndIf
 				Else
 					If $g_bDebugSetlog Then SetDebugLog($aTemp[$i][2] & " » Discard use hero/poison " & $troopKind & " " & NameOfTroop($troopKind), $COLOR_ERROR)
 					$troopKind = -1
