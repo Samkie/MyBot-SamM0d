@@ -6,7 +6,7 @@
 ; Return values .: $TroopBarSlots
 ; Author ........: Trlopes (06-2016)
 ; Modified ......: ProMac (12-2016)
-; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2017
+; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2018
 ;                  MyBot is distributed under the terms of the GNU GPL
 ; Related .......:
 ; Link ..........: https://github.com/MyBotRun/MyBot/wiki
@@ -18,7 +18,7 @@ Func TestImglocTroopBar()
 	$g_bDebugOcr = True
 	$g_bDebugImageSave = True
 
-	Setlog("=========== Imgloc ============")
+	SetLog("=========== Imgloc ============")
 	PrepareAttack($DB)
 	$g_bDebugSetlog = False
 	$g_bDebugOcr = False
@@ -83,14 +83,14 @@ Func AttackBarCheck($Remaining = False, $SRIGHT = False)
 					$aCoordArray[0][0] = -1
 					$aCoordArray[0][1] = -1
 				EndIf
-				If $g_bDebugSetlog Then Setlog($aResult[$i + $iResultAddDup][0] & " | $aCoordArray: " & $aCoordArray[0][0] & "-" & $aCoordArray[0][1])
+				If $g_bDebugSetlog Then SetDebugLog($aResult[$i + $iResultAddDup][0] & " | $aCoordArray: " & $aCoordArray[0][0] & "-" & $aCoordArray[0][1])
 				; Store the coords array as a sub-array
 				$aResult[$i + $iResultAddDup][1] = Number($aCoordArray[0][0])
 				$aResult[$i + $iResultAddDup][2] = Number($aCoordArray[0][1])
 				;;;;;;;; If exist Castle Spell ;;;;;;;
 				Local $iMultipleCoords = UBound($aCoords)
 				If $iMultipleCoords > 1 And StringInStr($aResult[$i + $iResultAddDup][0], "Spell") <> 0 Then
-					If $g_bDebugSetlog Then Setlog($aResult[$i + $iResultAddDup][0] & " detected " & $iMultipleCoords & " times!")
+					If $g_bDebugSetlog Then SetDebugLog($aResult[$i + $iResultAddDup][0] & " detected " & $iMultipleCoords & " times!")
 
 					Local $aCoordsSplit2 = $aCoords[1]
 					If UBound($aCoordsSplit2) = 2 Then
@@ -100,7 +100,7 @@ Func AttackBarCheck($Remaining = False, $SRIGHT = False)
 						$aResult[$i + $iResultAddDup][0] = $aResult[$i + $iResultAddDup - 1][0] ; same objectname
 						$aResult[$i + $iResultAddDup][1] = $aCoordsSplit2[0]
 						$aResult[$i + $iResultAddDup][2] = $aCoordsSplit2[1]
-						If $g_bDebugSetlog Then Setlog($aResult[$i + $iResultAddDup][0] & " | $aCoordArray: " & $aResult[$i + $iResultAddDup][1] & "-" & $aResult[$i + $iResultAddDup][2])
+						If $g_bDebugSetlog Then SetDebugLog($aResult[$i + $iResultAddDup][0] & " | $aCoordArray: " & $aResult[$i + $iResultAddDup][1] & "-" & $aResult[$i + $iResultAddDup][2])
 					Else
 						; don't invalidate anything
 						;$aCoordArray[0][0] = -1
@@ -116,9 +116,9 @@ Func AttackBarCheck($Remaining = False, $SRIGHT = False)
 						_ColorCheck(_GetPixelColor(17, 643, True), Hex(0x434343, 6), 10) ; Slot deployed / Gray / More than 11 Slots
 
 				If $g_bDebugSetlog Then
-					Setlog(" Slot > 12 _ColorCheck 0x478AC6 at (17," & 643 & "): " & $CheckSlot12, $COLOR_DEBUG) ;Debug
+					SetDebugLog(" Slot > 12 _ColorCheck 0x478AC6 at (17," & 643 & "): " & $CheckSlot12, $COLOR_DEBUG) ;Debug
 					Local $CheckSlot12Color = _GetPixelColor(17, 643, $g_bCapturePixel)
-					Setlog(" Slot > 12 _GetPixelColor(17," & 643 & "): " & $CheckSlot12Color, $COLOR_DEBUG) ;Debug
+					SetDebugLog(" Slot > 12 _GetPixelColor(17," & 643 & "): " & $CheckSlot12Color, $COLOR_DEBUG) ;Debug
 				EndIf
 
 				For $i = 0 To UBound($aResult) - 1
@@ -158,23 +158,22 @@ Func AttackBarCheck($Remaining = False, $SRIGHT = False)
 							If StringInStr($aResult[$i][0], "ESpell") <> 0 And $g_bSmartZapEnable = True Then
 								$aResult[$i][5] = getTroopsSpellsLevel(Number($Slottemp[0]) + $iSlotCompensation, 704)
 								If $aResult[$i][5] <> "" Then $g_iESpellLevel = $aResult[$i][5] ; If they aren't empty will store the correct level, or will be level 1 , just in case
-								If $g_bDebugSmartZap = True Then Setlog("EarthQuake Detected with level " & $aResult[$i][5], $COLOR_DEBUG)
+								If $g_bDebugSmartZap = True Then SetLog("EarthQuake Detected with level " & $aResult[$i][5], $COLOR_DEBUG)
 							EndIf
 							If StringInStr($aResult[$i][0], "LSpell") <> 0 And $g_bSmartZapEnable = True Then
 								$aResult[$i][5] = getTroopsSpellsLevel(Number($Slottemp[0]) + $iSlotCompensation, 704)
 								If $aResult[$i][5] <> "" Then $g_iLSpellLevel = $aResult[$i][5] ; If they aren't empty will store the correct level, or will be level 1 , just in case
-								If $g_bDebugSmartZap = True Then Setlog("Lightning Detected with level " & $aResult[$i][5], $COLOR_DEBUG)
+								If $g_bDebugSmartZap = True Then SetLog("Lightning Detected with level " & $aResult[$i][5], $COLOR_DEBUG)
 							EndIf
 						EndIf
 					Else
-						Setlog("Problem with Attack bar detection!", $COLOR_RED)
+						SetLog("Problem with Attack bar detection!", $COLOR_RED)
 						SetLog("Detection : " & $aResult[$i][0] & "|x" & $aResult[$i][1] & "|y" & $aResult[$i][2], $COLOR_DEBUG)
 						$aResult[$i][3] = -1
 						$aResult[$i][4] = -1
 					EndIf
 					; samm0d
 					$strinToReturn &= "|" & TroopIndexLookup($aResult[$i][0]) & "#" & $aResult[$i][4] & "#" & $aResult[$i][3] & "#" & $aResult[$i][1]
-					;$strinToReturn &= "|" & TroopIndexLookup($aResult[$i][0]) & "#" & $aResult[$i][4] & "#" & $aResult[$i][3]
 				EndIf
 			Next
 		EndIf
@@ -205,7 +204,7 @@ Func AttackBarCheck($Remaining = False, $SRIGHT = False)
 
 	$strinToReturn = StringTrimLeft($strinToReturn, 1)
 
-	; Setlog("String: " & $strinToReturn)
+	; SetLog("String: " & $strinToReturn)
 	; Will return [0] = Name , [1] = X , [2] = Y , [3] = Quantities , [4] = Slot Number
 	; Old style is: "|" & Troopa Number & "#" & Slot Number & "#" & Quantities
 	Return $strinToReturn
