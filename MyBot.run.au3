@@ -1294,7 +1294,7 @@ Func QuickAttack()
 			Return False ;ts snipe no restart... no enough army
 		EndIf
 	EndIf
-
+	EndIf
 EndFunc   ;==>QuickAttack
 
 Func _RunFunction($action)

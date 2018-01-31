@@ -13,6 +13,7 @@
 ; Example .......: No
 ; ===============================================================================================================================
 Global $g_hTabMod
+Global $g_hCmbProfile2
 
 #include "functions\ModTrain\Mod Train Global Variables.au3"
 

@@ -32,7 +32,7 @@ Func CreateSplashScreen($iSteps = Default)
 
 	If $iSteps = Default Then
 		; samm0d
-		$g_iSplashTotalSteps = 17
+		$g_iSplashTotalSteps = 18
 	Else
 		$iGuiState = @SW_SHOW
 		$bDisableSplash = False

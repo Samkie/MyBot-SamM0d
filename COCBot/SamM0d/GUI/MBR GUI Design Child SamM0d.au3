@@ -344,6 +344,34 @@ $grpHLFClick = GUICtrlCreateGroup(GetTranslatedFileIni("sam m0d", 11, "Advanced 
 		GUICtrlSetState(-1, $GUI_UNCHECKED)
 		GUICtrlSetOnEvent(-1, "chkEnableHLFClickSetlog")
 
+SplashStep("Loading M0d - My Switch tab...")
+GUICtrlCreateTabItem(GetTranslatedFileIni("sam m0d", "My Switch", "My Switch"))
+; samm0d
+Local $x = 10, $y = 25
+GUICtrlCreateGroup(GetTranslatedFileIni("MBR GUI Design Child Bot - Profiles", "Group_01", "Switch Profiles"), $x, $y, 430, 60)
+		$y += 25
+		$g_hCmbProfile2 = GUICtrlCreateCombo("", $x + 10, $y, 200, 24, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
+			_GUICtrlSetTip(-1, GetTranslatedFileIni("MBR GUI Design Child Bot - Profiles", "CmbProfile_Info_01", "Use this to switch to a different profile")& @CRLF & _
+							   GetTranslatedFileIni("MBR GUI Design Child Bot - Profiles", "CmbProfile_Info_02", "Your profiles can be found in") & ": " & @CRLF & $g_sProfilePath)
+			GUICtrlSetState(-1, $GUI_SHOW)
+			GUICtrlSetOnEvent(-1, "cmbProfile2")
+
+		$btnMakeSwitchADBFolder = GUICtrlCreateButton(GetTranslatedFileIni("sam m0d", 36, "Get shared_prefs"), $x + 230, $y-1, 100, 23)
+			GUICtrlSetOnEvent(-1, "btnMakeSwitchADBFolder")
+			_GUICtrlSetTip(-1, GetTranslatedFileIni("sam m0d",37, "Copy Village save files from Emulator to current profile. Make village name image from profile."))
+
+		$btnPushshared_prefs = GUICtrlCreateButton(GetTranslatedFileIni("sam m0d", "Push", "Push"), $x + 335, $y-1, 80, 23)
+			GUICtrlSetOnEvent(-1, "btnPushshared_prefs")
+			_GUICtrlSetTip(-1, GetTranslatedFileIni("sam m0d","Push shared_prefs", "Push shared_prefs - Copy shared_prefs from profile to emulator."))
+
+; samm0d - my switch
+$y += 35
+$x = 15
+#include "GUI Design MySwitch Setting.au3"
+
+GUICtrlCreateGroup("", -99, -99, 1, 1)
+
+
 SplashStep("Loading M0d - My Troops tab...")
 GUICtrlCreateTabItem(GetTranslatedFileIni("sam m0d", 64, "My Troops"))
 

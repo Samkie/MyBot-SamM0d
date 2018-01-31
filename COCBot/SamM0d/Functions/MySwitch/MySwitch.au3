@@ -1347,8 +1347,8 @@ Func checkProfileCorrect()
 
 			If $bVillagePageFlag = True Then
 				_CaptureRegion(68,125 + $iSecondBaseTabHeight,155,146 + $iSecondBaseTabHeight)
-				Local $result = DllCall($g_hLibImgLoc, "str", "FindTile", "handle", $g_hHBitmap, "str", @ScriptDir & "\profiles\" & $g_sProfileCurrentName & "\village_92.png", "str", "FV", "int", 1)
-				If @error Then _logErrorDLLCall($g_sLibImgLocPath, @error)
+				Local $result = DllCall($g_hLibMyBot, "str", "FindTile", "handle", $g_hHBitmap, "str", @ScriptDir & "\profiles\" & $g_sProfileCurrentName & "\village_92.png", "str", "FV", "int", 1)
+				If @error Then _logErrorDLLCall($g_sLibMyBotPath, @error)
 				If IsArray($result) Then
 					If $g_iSamM0dDebug = 1 Then SetLog("DLL Call succeeded " & $result[0], $COLOR_ERROR)
 					If $result[0] = "0" Or $result[0] = "" Then

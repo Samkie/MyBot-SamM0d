@@ -34,7 +34,8 @@ Func LoadProfile($bSaveCurrentProfile = True)
 
 		; samm0d
 		;======================================================================================================
-		DoCheckSwitchEnable()
+		BuildProfileForSwitch()
+		;DoCheckSwitchEnable()
 		If FileExists(@ScriptDir & "\profiles\" & $g_sProfileCurrentName & "\SamM0d Debug\") Then
 			If Not FileExists(@ScriptDir & "\profiles\" & $g_sProfileCurrentName & "\SamM0d Debug\Images\") Then
 				DirCreate(@ScriptDir & "\profiles\" & $g_sProfileCurrentName & "\SamM0d Debug\Images")
@@ -157,7 +158,18 @@ Func btnRenameConfirm()
 				Return
 			EndIf
 
+			; samm0d - my switch
+			For $i = 0 To 7
+				If $icmbWithProfile[$i] = $g_sProfileCurrentName Then
+					$icmbWithProfile[$i] = $newProfileName
+					IniWrite(@ScriptDir & "\Profiles\MySwitch.ini", "MySwitch", "WithProfile" & $i + 1, $icmbWithProfile[$i])
+					ExitLoop
+				EndIf
+			Next
+
 			$g_sProfileCurrentName = $newProfileName
+
+
 			; Rename the profile.
 			renameProfile()
 			setupProfileComboBox()

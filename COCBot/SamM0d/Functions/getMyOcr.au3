@@ -226,7 +226,7 @@ Func findMultiImage($hBitmap4Find, $directory, $sCocDiamond, $redLines, $minLeve
 	$error = @error ; Store error values as they reset at next function call
 	$extError = @extended
 	If $error Then
-		_logErrorDLLCall($g_sLibImgLocPath, $error)
+		_logErrorDLLCall($g_sLibMyBotPath, $error)
 		If $g_iSamM0dDebug = 1 And $g_iSamM0dDebugOCR = 1 Then SetLog(" imgloc DLL Error : " & $error & " --- " & $extError)
 		SetError(2, $extError, $aCoords) ; Set external error code = 2 for DLL error
 		Return ""

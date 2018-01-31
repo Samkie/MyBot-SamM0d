@@ -132,7 +132,7 @@ Func imglocFindWalls($walllevel, $searcharea = "DCD", $redline = "", $maxreturn 
 	Local $extError = @extended
 
 	If $error Then
-		_logErrorDLLCall($g_sLibImgLocPath, $error)
+		_logErrorDLLCall($g_sLibMyBotPath, $error)
 		SetLog(" imgloc DLL Error imgloc " & $error & " --- " & $extError, $COLOR_RED)
 		SetError(2, $extError, $error) ; Set external error code = 2 for DLL error
 		Return

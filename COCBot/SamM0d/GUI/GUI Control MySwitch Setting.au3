@@ -1,10 +1,13 @@
 Func BuildProfileForSwitch()
+	;SetLog("Rebuild My Switch Accounts list.")
 	Local $sDataFromProfile
 	$sDataFromProfile = _GUICtrlComboBox_GetList($g_hCmbProfile)
 	For $i = 0 To 7
 		GUICtrlSetData($cmbWithProfile[$i],"","")
 		GUICtrlSetData($cmbWithProfile[$i], $sDataFromProfile, "")
 	Next
+	GUICtrlSetData($g_hCmbProfile2,"","")
+	GUICtrlSetData($g_hCmbProfile2, $sDataFromProfile, "")
 	ApplyEnableAcc()
 EndFunc
 
@@ -74,6 +77,7 @@ Func ApplyEnableAcc()
 		_GUICtrlComboBox_SetCurSel($cmbAtkDon[$i],$icmbAtkDon[$i])
 		GUICtrlSetState($chkPriority[$i], ($ichkPriority[$i] = 1 ? $GUI_CHECKED : $GUI_UNCHECKED))
 	Next
+	setCombolistByText($g_hCmbProfile2, GUICtrlRead($g_hCmbProfile))
 	;GUICtrlSetState($chkUseADBLoadVillage, ($ichkUseADBLoadVillage = 1 ? $GUI_CHECKED : $GUI_UNCHECKED))
 	_GUICtrlComboBox_SetCurSel($cmbSwitchMethod,$icmbSwitchMethod)
 	GUICtrlSetState($chkProfileImage, ($ichkProfileImage = 1 ? $GUI_CHECKED : $GUI_UNCHECKED))
@@ -84,6 +88,11 @@ Func ApplyEnableAcc()
 	GUICtrlSetData($txtCanCloseGameTime, $itxtCanCloseGameTime)
 	buildSwitchList()
 	DoCheckSwitchEnable()
+EndFunc
+
+Func cmbProfile2()
+	setCombolistByText($g_hCmbProfile, GUICtrlRead($g_hCmbProfile2))
+	cmbProfile()
 EndFunc
 
 Func cmbSwitchMethod()

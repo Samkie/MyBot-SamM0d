@@ -1,7 +1,7 @@
 
 $y += 5
 ;$grpMySwitch = GUICtrlCreateGroup(GetTranslatedFileIni("sam m0d",25, "Switch Google Account And Profile"), $x-5, $y, 438, 340)
-$grpMySwitch = GUICtrlCreateGroup(GetTranslatedFileIni("sam m0d",25, "Switch Google Account And Profile"), $x-5, $y, 438, 340)
+$grpMySwitch = GUICtrlCreateGroup(GetTranslatedFileIni("sam m0d",25, "Switch Google Account And Profile"), $x-5, $y, 430, 335)
 
 
 $chkEnableMySwitch = GUICtrlCreateCheckbox(GetTranslatedFileIni("sam m0d", 26, "Enable switch account"), $x, $y+20, 180, -1)
@@ -32,7 +32,7 @@ For $i = 0 To 7
 		GUICtrlSetData(-1, "0|5|10|15|30","0")
 		_GUICtrlSetTip(-1, GetTranslatedFileIni("sam m0d", "Setting for Stay how long (minutes) with this account.", "Setting for Stay how long (minutes) with this account."))
 		GUICtrlSetOnEvent(-1, "chkEnableAcc")
-	$chkPriority[$i] = GUICtrlCreateCheckbox(" ", $x + 405, $y + 1, -1, -1)
+	$chkPriority[$i] = GUICtrlCreateCheckbox(" ", $x + 405, $y + 6, 12, 12)
 	_GUICtrlSetTip(-1, GetTranslatedFileIni("sam m0d", "High Priority", "High Priority - Always switch to this account when troops ready."))
 	GUICtrlSetOnEvent(-1, "chkEnableAcc")
 	$y += 23

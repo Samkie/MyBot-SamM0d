@@ -192,6 +192,8 @@ Func DonateCC($bCheckForNewMsg = False)
 		$g_aiDonatePixel = _MultiPixelSearch(202, $y, 224, 660 + $g_iBottomOffsetY, 50, 1, Hex(0x98D057, 6), $aChatDonateBtnColors, 20)
 		If IsArray($g_aiDonatePixel) Then ; if Donate Button found
 			If $g_bDebugSetlog Then SetDebugLog("$g_aiDonatePixel: (" & $g_aiDonatePixel[0] & "," & $g_aiDonatePixel[1] & ")", $COLOR_DEBUG)
+			; samm0d
+			SetLog(_PadStringCenter(" CC Request ", 54, "="), $COLOR_INFO)
 
 			; collect donate users images
 			$donateCCfilter = donateCCWBLUserImageCollect($g_aiDonatePixel[0], $g_aiDonatePixel[1])
@@ -790,6 +792,8 @@ Func DonateCC($bCheckForNewMsg = False)
 			ContinueLoop
 		EndIf
 		$bDonate = False
+		; samm0d
+		SetLog(_PadStringCenter(" Donate End ", 54, "="), $COLOR_INFO)
 	WEnd
 
 	ClickP($aAway, 1, 0, "#0176") ; click away any possible open window
