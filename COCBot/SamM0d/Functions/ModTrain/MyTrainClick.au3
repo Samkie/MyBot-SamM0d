@@ -17,15 +17,8 @@
 ; Example .......: No
 ; ===============================================================================================================================
 
-Func MyTrainClick($TroopButton, $iTimes = 1, $iSpeed = 0, $sdebugtxt="", $bIsBrewSpell = False)
+Func LocateTroopButton($TroopButton, $bIsBrewSpell = False)
 	If IsTrainPage() Then
-		If $g_bDebugClick Then
-			Local $txt = _DecodeDebug($sdebugtxt)
-			Local $x = $TroopButton[0]
-			Local $y = $TroopButton[1]
-			SetLog("MyTrainClick " & $x & "," & $y & "," & $iTimes & "," & $iSpeed & " " & $sdebugtxt & $txt, $COLOR_ORANGE, "Verdana", "7.5", 0)
-		EndIf
-
 		Local $aRegionForScan[4] = [26,411,840,536]
 		Local $aButtonXY
 
@@ -55,23 +48,9 @@ Func MyTrainClick($TroopButton, $iTimes = 1, $iSpeed = 0, $sdebugtxt="", $bIsBre
 		EndIf
 
 		If IsArray($aButtonXY) Then
-			$aButtonXY[0] = $aRegionForScan[0] + $aButtonXY[0]
-			$aButtonXY[1] = $aRegionForScan[1] + $aButtonXY[1]
-			Local $iRandNum = Random($iHLFClickMin-1,$iHLFClickMax-1,1) ;Initialize value (delay awhile after $iRandNum times click)
-			Local $iRandX = Random($aButtonXY[0] - 5,$aButtonXY[0] + 5,1)
-			Local $iRandY = Random($aButtonXY[1] - 5,$aButtonXY[1] + 5,1)
-			If isProblemAffect(True) Then Return
-			For $i = 0 To ($iTimes - 1)
-				HMLPureClick(Random($iRandX-2,$iRandX+2,1), Random($iRandY-2,$iRandY+2,1))
-				If $i >= $iRandNum Then
-					$iRandNum = $iRandNum + Random($iHLFClickMin,$iHLFClickMax,1)
-					$iRandX = Random($aButtonXY[0] - 5,$aButtonXY[0] + 5,1)
-					$iRandY = Random($aButtonXY[1] - 5,$aButtonXY[1] + 5,1)
-					If _Sleep(Random(($isldHLFClickDelayTime*90)/100, ($isldHLFClickDelayTime*110)/100, 1), False) Then ExitLoop
-				Else
-					If _Sleep(Random(($iSpeed*90)/100, ($iSpeed*110)/100, 1), False) Then ExitLoop
-				EndIf
-			Next
+			$g_iTroopButtonX = $aRegionForScan[0] + $aButtonXY[0]
+			$g_iTroopButtonY = $aRegionForScan[1] + $aButtonXY[1]
+			Return True
 		Else
 			Local $iCount = 0
 			If _ColorCheck(_GetPixelColor(24, 370 + $g_iMidOffsetY, True), Hex(0XD3D3CB, 6), 10) Then
@@ -107,7 +86,6 @@ Func MyTrainClick($TroopButton, $iTimes = 1, $iSpeed = 0, $sdebugtxt="", $bIsBre
 				Next
 			Else
 				SetLog("Cannot find image file " & $TroopButton & " for scan", $COLOR_ERROR)
-				Return False
 			EndIf
 
 			_debugSaveHBitmapToImage($g_hHBitmap2, "RegionForScan")
@@ -116,31 +94,32 @@ Func MyTrainClick($TroopButton, $iTimes = 1, $iSpeed = 0, $sdebugtxt="", $bIsBre
 			EndIf
 
 			If IsArray($aButtonXY) Then
-				$aButtonXY[0] = $aRegionForScan[0] + $aButtonXY[0]
-				$aButtonXY[1] = $aRegionForScan[1] + $aButtonXY[1]
-				Local $iRandNum = Random($iHLFClickMin-1,$iHLFClickMax-1,1) ;Initialize value (delay awhile after $iRandNum times click)
-				Local $iRandX = Random($aButtonXY[0] - 5,$aButtonXY[0] + 5,1)
-				Local $iRandY = Random($aButtonXY[1] - 5,$aButtonXY[1] + 5,1)
-				If isProblemAffect(True) Then Return
-				For $i = 0 To ($iTimes - 1)
-					HMLPureClick(Random($iRandX-2,$iRandX+2,1), Random($iRandY-2,$iRandY+2,1))
-					If $i >= $iRandNum Then
-						$iRandNum = $iRandNum + Random($iHLFClickMin,$iHLFClickMax,1)
-						$iRandX = Random($aButtonXY[0] - 5,$aButtonXY[0] + 5,1)
-						$iRandY = Random($aButtonXY[1] - 5,$aButtonXY[1] + 5,1)
-						If _Sleep(Random(($isldHLFClickDelayTime*90)/100, ($isldHLFClickDelayTime*110)/100, 1), False) Then ExitLoop
-					Else
-						If _Sleep(Random(($iSpeed*90)/100, ($iSpeed*110)/100, 1), False) Then ExitLoop
-					EndIf
-				Next
-			Else
-				SetLog("Cannot find button: " & $TroopButton & " for click", $COLOR_ERROR)
-				Return False
+				$g_iTroopButtonX = $aRegionForScan[0] + $aButtonXY[0]
+				$g_iTroopButtonY = $aRegionForScan[1] + $aButtonXY[1]
+				Return True
 			EndIf
 		EndIf
-		Return True
-	Else
-		Return False
+	EndIf
+	Return False
+EndFunc
+
+Func MyTrainClick($x, $y, $iTimes = 1, $iSpeed = 0, $sdebugtxt="", $bIsBrewSpell = False)
+	If IsTrainPage() Then
+			Local $iRandNum = Random($iHLFClickMin-1,$iHLFClickMax-1,1) ;Initialize value (delay awhile after $iRandNum times click)
+			Local $iRandX = Random($x - 5,$x + 5,1)
+			Local $iRandY = Random($y - 5,$y + 5,1)
+			If isProblemAffect(True) Then Return
+			For $i = 0 To ($iTimes - 1)
+				HMLPureClick(Random($iRandX-2,$iRandX+2,1), Random($iRandY-2,$iRandY+2,1))
+				If $i >= $iRandNum Then
+					$iRandNum = $iRandNum + Random($iHLFClickMin,$iHLFClickMax,1)
+					$iRandX = Random($x - 5, $x + 5,1)
+					$iRandY = Random($y - 5, $y + 5,1)
+					If _Sleep(Random(($isldHLFClickDelayTime*90)/100, ($isldHLFClickDelayTime*110)/100, 1), False) Then ExitLoop
+				Else
+					If _Sleep(Random(($iSpeed*90)/100, ($iSpeed*110)/100, 1), False) Then ExitLoop
+				EndIf
+			Next
 	EndIf
 EndFunc   ;==>MyTrainClick
 

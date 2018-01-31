@@ -103,28 +103,31 @@ Func DoRevampTroops($bDoPreTrain = False)
 			For $i = 0 To UBound($tempTroops) - 1
 				Local $Troop4Add = Eval("Add" & $tempTroops[$i][0])
 				If $Troop4Add > 0 And $iRemainTroopsCapacity > 0 Then
-
+					; locate troop button
+					If LocateTroopButton($tempTroops[$i][0]) Then
 					Local $fixRemain = 0
-
-;~ 					; check need swipe
-;~ 					If CheckNeedSwipe(Eval("e" & $tempTroops[$i][0])) = False Then
-;~ 						SetLog("Cannot click drag to select troop: " &  MyNameOfTroop(Eval("e" & $tempTroops[$i][0]), 1) , $COLOR_ERROR)
-;~ 						Return
-;~ 					EndIf
-
 					Local $iCost
 					; check train cost before click, incase use gem
-					If $tempTroops[$i][4] = 0 Then
-						$iCost = getTroopCost($tempTroops[$i][0])
+
+					If $ichkEnableMySwitch = 0 Then
+						If $tempTroops[$i][4] = 0 Then
+							$iCost = getMyOcr(0,$g_iTroopButtonX - 55,$g_iTroopButtonY + 26, 68, 16,"troopcost",True,False,True)
+							If $iCost = 0 Or $iCost >= $MyTroopsCost[Eval("e" & $tempTroops[$i][0])][0] Then
+								; cannot read train cost, use max level train cost
+								$iCost = $MyTroopsCost[Eval("e" & $tempTroops[$i][0])][0]
+							EndIf
+							$MyTroops[Eval("e" & $tempTroops[$i][0])][4] = $iCost
+						Else
+							$iCost = $tempTroops[$i][4]
+						EndIf
+					Else
+						$iCost = getMyOcr(0,$g_iTroopButtonX - 55,$g_iTroopButtonY + 26, 68, 16,"troopcost",True,False,True)
 						If $iCost = 0 Or $iCost >= $MyTroopsCost[Eval("e" & $tempTroops[$i][0])][0] Then
 							; cannot read train cost, use max level train cost
 							$iCost = $MyTroopsCost[Eval("e" & $tempTroops[$i][0])][0]
 						EndIf
-						$tempTroops[$i][4] = $iCost
-						$MyTroops[Eval("e" & $tempTroops[$i][0])][4] = $iCost
 					EndIf
 
-					$iCost = $tempTroops[$i][4]
 					If $g_iSamM0dDebug = 1 Then SetLog("$iCost: " & $iCost)
 					;Local $iBuildCost = (Eval("e" & $tempTroops[$i][0]) > 11 ? getMyOcrCurDEFromTrain() : getMyOcrCurElixirFromTrain())
 					Local $iBuildCost = (Eval("e" & $tempTroops[$i][0]) > 11 ? $iCurDarkElixir : $iCurElixir)
@@ -153,7 +156,7 @@ Func DoRevampTroops($bDoPreTrain = False)
 					SetLog($CustomTrain_MSG_6 & " " & MyNameOfTroop(Eval("e" & $tempTroops[$i][0]),$Troop4Add) & " x" & $Troop4Add & " " & $CustomTrain_MSG_7 & " " & (Eval("e" & $tempTroops[$i][0]) > 11 ? $CustomTrain_MSG_DarkElixir : $CustomTrain_MSG_Elixir) & " : " & ($Troop4Add * $iCost),(Eval("e" & $tempTroops[$i][0]) > 11 ? $COLOR_DARKELIXIR : $COLOR_ELIXIR))
 
 					If ($tempTroops[$i][2] * $Troop4Add) <= $iRemainTroopsCapacity Then
-						If MyTrainClick($tempTroops[$i][0],$Troop4Add,$g_iTrainClickDelay, "#TT01") Then
+						If MyTrainClick($g_iTroopButtonX, $g_iTroopButtonY, $Troop4Add,$g_iTrainClickDelay, "#TT01") Then
 							If Eval("e" & $tempTroops[$i][0]) > 11 Then
 								$iCurDarkElixir -= ($Troop4Add * $iCost)
 							Else
@@ -164,7 +167,7 @@ Func DoRevampTroops($bDoPreTrain = False)
 					Else
 						Local $iReduceCap = Int($iRemainTroopsCapacity / $tempTroops[$i][2])
 						SetLog("troops above cannot fit to max capicity, reduce to train " & MyNameOfTroop(Eval("e" & $tempTroops[$i][0]),$iReduceCap) & " x" & $iReduceCap,$COLOR_ERROR)
-						If MyTrainClick($tempTroops[$i][0],$iReduceCap ,$g_iTrainClickDelay, "#TT01") Then
+						If MyTrainClick($g_iTroopButtonX, $g_iTroopButtonY,$iReduceCap ,$g_iTrainClickDelay, "#TT01") Then
 							If Eval("e" & $tempTroops[$i][0]) > 11 Then
 								$iCurDarkElixir -= ($iReduceCap * $iCost)
 							Else
@@ -177,15 +180,24 @@ Func DoRevampTroops($bDoPreTrain = False)
 					If $fixRemain > 0 Then
 ;~ 						CheckNeedSwipe($eArch)
 						SetLog("still got remain capacity, so train " & MyNameOfTroop(Eval("eArch"),$fixRemain) & " x" & $fixRemain & " to fit it.",$COLOR_ERROR)
-						If MyTrainClick("Arch",$fixRemain,$g_iTrainClickDelay, "#TT01") Then
-							If Eval("e" & $tempTroops[$i][0]) > 11 Then
-								$iCurDarkElixir -= ($fixRemain * $MyTroopsCost[$eArch][0])
-							Else
-								$iCurElixir -= ($fixRemain * $MyTroopsCost[$eArch][0])
+						If LocateTroopButton("Arch") Then
+							If MyTrainClick($g_iTroopButtonX, $g_iTroopButtonY,$fixRemain,$g_iTrainClickDelay, "#TT01") Then
+								If Eval("e" & $tempTroops[$i][0]) > 11 Then
+									$iCurDarkElixir -= ($fixRemain * $MyTroopsCost[$eArch][0])
+								Else
+									$iCurElixir -= ($fixRemain * $MyTroopsCost[$eArch][0])
+								EndIf
+								$iRemainTroopsCapacity -= $fixRemain
 							EndIf
-							$iRemainTroopsCapacity -= $fixRemain
+						Else
+							SetLog("Cannot find button: " & $tempTroops[$i][0] & " for click", $COLOR_ERROR)
 						EndIf
 					EndIf
+
+					Else
+						SetLog("Cannot find button: " & $tempTroops[$i][0] & " for click", $COLOR_ERROR)
+					EndIf
+
 					; reduce some speed
 					If _Sleep(500) Then Return
 				EndIf
@@ -242,7 +254,6 @@ EndFunc
 
 Func CheckNeedSwipe($TrainTroop)
 	; check need swipe
-;~ 	Local $iSwipeNum = 13
 	Local $iSwipeNum = 15
 
 	Local $iCount = 0
@@ -268,8 +279,8 @@ Func CheckNeedSwipe($TrainTroop)
 	Return True
 EndFunc
 
-Func getTroopCost($trooptype)
-	Local $iResult = 0
+;~ Func getTroopCost($trooptype)
+;~ 	Local $iResult = 0
 ;~ 	Switch $trooptype
 ;~ 		Case "Barb"
 ;~ 			$iResult = getMyOcr(0,35,450,60,16,"troopcost",True,False,True)
@@ -319,50 +330,50 @@ Func getTroopCost($trooptype)
 
 ;~ 	EndSwitch
 
-	Switch $trooptype
-		Case "Barb"
-			$iResult = getMyOcr(0,35,450,60,16,"troopcost",True,False,True)
-		Case "Arch"
-			$iResult = getMyOcr(0,35,552,60,16,"troopcost",True,False,True)
-		Case "Giant"
-			$iResult = getMyOcr(0,134,450,60,16,"troopcost",True,False,True)
-		Case "Gobl"
-			$iResult = getMyOcr(0,134,552,60,16,"troopcost",True,False,True)
-		Case "Wall"
-			$iResult = getMyOcr(0,233,450,60,16,"troopcost",True,False,True)
-		Case "Ball"
-			$iResult = getMyOcr(0,233,552,60,16,"troopcost",True,False,True)
-		Case "Wiza"
-			$iResult = getMyOcr(0,332,450,60,16,"troopcost",True,False,True)
-		Case "Heal"
-			$iResult = getMyOcr(0,332,552,60,16,"troopcost",True,False,True)
-		Case "Drag"
-			$iResult = getMyOcr(0,431,450,60,16,"troopcost",True,False,True)
-		Case "Pekk"
-			$iResult = getMyOcr(0,431,552,60,16,"troopcost",True,False,True)
-		Case "BabyD"
-			$iResult = getMyOcr(0,530,450,60,16,"troopcost",True,False,True)
-		Case "Mine"
-			$iResult = getMyOcr(0,530,552,60,16,"troopcost",True,False,True)
+;~ 	Switch $trooptype
+;~ 		Case "Barb"
+;~ 			$iResult = getMyOcr(0,35,450,60,16,"troopcost",True,False,True)
+;~ 		Case "Arch"
+;~ 			$iResult = getMyOcr(0,35,552,60,16,"troopcost",True,False,True)
+;~ 		Case "Giant"
+;~ 			$iResult = getMyOcr(0,134,450,60,16,"troopcost",True,False,True)
+;~ 		Case "Gobl"
+;~ 			$iResult = getMyOcr(0,134,552,60,16,"troopcost",True,False,True)
+;~ 		Case "Wall"
+;~ 			$iResult = getMyOcr(0,233,450,60,16,"troopcost",True,False,True)
+;~ 		Case "Ball"
+;~ 			$iResult = getMyOcr(0,233,552,60,16,"troopcost",True,False,True)
+;~ 		Case "Wiza"
+;~ 			$iResult = getMyOcr(0,332,450,60,16,"troopcost",True,False,True)
+;~ 		Case "Heal"
+;~ 			$iResult = getMyOcr(0,332,552,60,16,"troopcost",True,False,True)
+;~ 		Case "Drag"
+;~ 			$iResult = getMyOcr(0,431,450,60,16,"troopcost",True,False,True)
+;~ 		Case "Pekk"
+;~ 			$iResult = getMyOcr(0,431,552,60,16,"troopcost",True,False,True)
+;~ 		Case "BabyD"
+;~ 			$iResult = getMyOcr(0,530,450,60,16,"troopcost",True,False,True)
+;~ 		Case "Mine"
+;~ 			$iResult = getMyOcr(0,530,552,60,16,"troopcost",True,False,True)
 
-		Case "Mini"
-			$iResult = getMyOcr(0,632,450,60,16,"troopcost",True,False,True)
-		Case "Hogs"
-			$iResult = getMyOcr(0,632,552,60,16,"troopcost",True,False,True)
-		Case "Valk"
-			$iResult = getMyOcr(0,731,450,60,16,"troopcost",True,False,True)
-		Case "Gole"
-			$iResult = getMyOcr(0,731,552,60,16,"troopcost",True,False,True)
-		Case "Witc"
-			$iResult = getMyOcr(0,648,450,60,16,"troopcost",True,False,True)
-		Case "Lava"
-			$iResult = getMyOcr(0,648,552,60,16,"troopcost",True,False,True)
-		Case "Bowl"
-			$iResult = getMyOcr(0,747,450,60,16,"troopcost",True,False,True)
+;~ 		Case "Mini"
+;~ 			$iResult = getMyOcr(0,632,450,60,16,"troopcost",True,False,True)
+;~ 		Case "Hogs"
+;~ 			$iResult = getMyOcr(0,632,552,60,16,"troopcost",True,False,True)
+;~ 		Case "Valk"
+;~ 			$iResult = getMyOcr(0,731,450,60,16,"troopcost",True,False,True)
+;~ 		Case "Gole"
+;~ 			$iResult = getMyOcr(0,731,552,60,16,"troopcost",True,False,True)
+;~ 		Case "Witc"
+;~ 			$iResult = getMyOcr(0,648,450,60,16,"troopcost",True,False,True)
+;~ 		Case "Lava"
+;~ 			$iResult = getMyOcr(0,648,552,60,16,"troopcost",True,False,True)
+;~ 		Case "Bowl"
+;~ 			$iResult = getMyOcr(0,747,450,60,16,"troopcost",True,False,True)
 
-	EndSwitch
+;~ 	EndSwitch
 
-	If $g_iSamM0dDebug = 1 Then SetLog("$iResult: " & $iResult)
-	If $iResult = "" Then $iResult = 0
-	Return $iResult
-EndFunc
+;~ 	If $g_iSamM0dDebug = 1 Then SetLog("$iResult: " & $iResult)
+;~ 	If $iResult = "" Then $iResult = 0
+;~ 	Return $iResult
+;~ EndFunc

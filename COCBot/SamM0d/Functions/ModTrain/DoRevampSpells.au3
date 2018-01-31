@@ -68,6 +68,7 @@ Func DoRevampSpells($bDoPreTrain = False)
 
 	If $bReVampFlag Then
 		If gotoBrewSpells() = False Then Return
+
 			If _sleep(100) Then Return
 			; starttrain
 			Local $iRemainSpellsCapacity = 0
@@ -105,19 +106,41 @@ Func DoRevampSpells($bDoPreTrain = False)
 				Local $tempSpell = Eval("Add" & $tempSpells[$i][0] & "Spell")
 				If $tempSpell > 0 And $iRemainSpellsCapacity > 0 Then
 
+					If LocateTroopButton($tempSpells[$i][0], True) Then
 					Local $iCost
 					; check train cost before click, incase use gem
-					If $tempSpells[$i][4] = 0 Then
-						$iCost = getSpellCost($tempSpells[$i][0])
-						If $iCost = 0 Or $iCost > $MySpellsCost[Eval("enum" & $tempSpells[$i][0])][0] Then
+
+					If $ichkEnableMySwitch = 0 Then
+						If $tempSpells[$i][4] = 0 Then
+							$iCost = getMyOcr(0,$g_iTroopButtonX - 55,$g_iTroopButtonY + 26, 68, 16,"troopcost",True,False,True)
+							If $iCost = 0 Or $iCost >= $MyTroopsCost[Eval("enum" & $tempSpells[$i][0])][0] Then
+								; cannot read train cost, use max level train cost
+								$iCost = $MySpellsCost[Eval("enum" & $tempSpells[$i][0])][0]
+							EndIf
+							$MySpells[Eval("enum" & $tempSpells[$i][0])][4] = $iCost
+						Else
+							$iCost = $tempSpells[$i][4]
+						EndIf
+					Else
+						$iCost = getMyOcr(0,$g_iTroopButtonX - 55,$g_iTroopButtonY + 26, 68, 16,"troopcost",True,False,True)
+						If $iCost = 0 Or $iCost >= $MyTroopsCost[Eval("enum" & $tempSpells[$i][0])][0] Then
 							; cannot read train cost, use max level train cost
-							;$iCost = $MySpellsCost[$i][0]
 							$iCost = $MySpellsCost[Eval("enum" & $tempSpells[$i][0])][0]
 						EndIf
-						$tempSpells[$i][4] = $iCost
-						$MySpells[Eval("enum" & $tempSpells[$i][0])][4] = $iCost
 					EndIf
-					$iCost = $tempSpells[$i][4]
+
+;~ 					If $tempSpells[$i][4] = 0 Then
+;~ 						$iCost = getSpellCost($tempSpells[$i][0])
+;~ 						If $iCost = 0 Or $iCost > $MySpellsCost[Eval("enum" & $tempSpells[$i][0])][0] Then
+;~ 							; cannot read train cost, use max level train cost
+;~ 							;$iCost = $MySpellsCost[$i][0]
+;~ 							$iCost = $MySpellsCost[Eval("enum" & $tempSpells[$i][0])][0]
+;~ 						EndIf
+;~ 						$tempSpells[$i][4] = $iCost
+;~ 						$MySpells[Eval("enum" & $tempSpells[$i][0])][4] = $iCost
+;~ 					EndIf
+;~ 					$iCost = $tempSpells[$i][4]
+
 					If $g_iSamM0dDebug = 1 Then SetLog("$iCost: " & $iCost)
 					;Local $iBuildCost = (Eval("enum" & $tempSpells[$i][0]) > 5 ? getMyOcrCurDEFromTrain() : getMyOcrCurElixirFromTrain())
 					Local $iBuildCost = (Eval("enum" & $tempSpells[$i][0]) > 5 ? $iCurDarkElixir : $iCurElixir)
@@ -147,7 +170,7 @@ Func DoRevampSpells($bDoPreTrain = False)
 					SetLog($CustomTrain_MSG_14 & " " & MyNameOfTroop(Eval("enum" & $tempSpells[$i][0])+23,$tempSpell) & " x" & $tempSpell & " with total " & (Eval("enum" & $tempSpells[$i][0]) > 5 ? $CustomTrain_MSG_DarkElixir : $CustomTrain_MSG_Elixir) & ": " & ($tempSpell * $iCost),(Eval("enum" & $tempSpells[$i][0]) > 5 ? $COLOR_DARKELIXIR : $COLOR_ELIXIR))
 
 					If ($tempSpells[$i][2] * $tempSpell) <= $iRemainSpellsCapacity Then
-						If MyTrainClick($tempSpells[$i][0], $tempSpell, $g_iTrainClickDelay, "#BS01", True) Then
+						If MyTrainClick($g_iTroopButtonX, $g_iTroopButtonY, $tempSpell, $g_iTrainClickDelay, "#BS01", True) Then
 							If Eval("enum" & $tempSpells[$i][0]) > 5 Then
 								$iCurDarkElixir -= ($tempSpell * $iCost)
 							Else
@@ -157,6 +180,10 @@ Func DoRevampSpells($bDoPreTrain = False)
 						EndIf
 					Else
 						SetLog("Error: remaining space cannot fit to brew " & MyNameOfTroop(Eval("enum" & $tempSpells[$i][0])+23,0), $COLOR_ERROR)
+					EndIf
+
+					Else
+						SetLog("Cannot find button: " & $tempSpells[$i][0] & " for click", $COLOR_ERROR)
 					EndIf
 				EndIf
 			Next

@@ -237,6 +237,9 @@ Global $MySpellsCost[10][8] = _
 [95,80,85,90,95,95,95,95], _
 [140,110,120,130,140,140,140,140]]
 
+Global $g_iTroopButtonX = 0
+Global $g_iTroopButtonY = 0
+
 Global $ichkPreLightning = 0
 Global $ichkPreRage = 0
 Global $ichkPreJump = 0
