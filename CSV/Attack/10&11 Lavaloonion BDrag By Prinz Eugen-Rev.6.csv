@@ -31,7 +31,7 @@ MAKE  |H          |FRONT-RIGHT|10         |-24        |INT-EXT    |0          |0
 MAKE  |I          |FRONT-LEFT |10         |-24        |INT-EXT    |0          |0          |           | Haste ; 3rd drop
       |VECTOR_____|INDEX______|QTY_X_VECT_|TROOPNAME__|DELAY_DROP_|DELAYCHANGE|SLEEPAFTER_|___________| Troops
 DROP  |Q-O        |1-6        |7          |Ball       |30-50      |50-80      |10-20      |           |
-DROP  |N-P        |3-8	      |6	  |Ball	      |30-50	  |50-80      |50   	  |	      |
+DROP  |N-P        |3-8	      |7	  |Ball	      |30-50	  |50-80      |50   	  |	      |
 DROP  |A-B        |4          |1          |Lava       |30-50      |30-70      |90         |           | 
 DROP  |A          |1          |1          |castle     |20-30      |10-20      |100-150    |           |
 DROP  |A          |1          |1          |warden     |0          |0          |0          |           |
