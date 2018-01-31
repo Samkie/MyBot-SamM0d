@@ -243,6 +243,20 @@ Func DropTroopFromINI($vectors, $indexStart, $indexEnd, $indexArray, $qtaMin, $q
 							EndIf
 							; assume spells get always dropped: adjust count so CC spells can be used without recalc
 							If UBound($g_avAttackTroops) > $troopPosition And $g_avAttackTroops[$troopPosition][1] > 0 Then $g_avAttackTroops[$troopPosition][1] -= 1
+						; samm0d ===================
+						Case 51 To 52
+							If $debug = True Then
+								Setlog("Event Troop AttackClick( " & $pixel[0] & ", " & $pixel[1] & " , " & $qty2 & ", " & $delayPoint & ",#0666)")
+							Else
+								AttackClick($pixel[0], $pixel[1], $qty2, $delayPoint, $delayDropLast, "#0666")
+							EndIf
+						Case 61 To 62
+							If $debug = True Then
+								Setlog("Event Spell AttackClick( " & $pixel[0] & ", " & $pixel[1] & " , " & $qty2 & ", " & $delayPoint & ",#0666)")
+							Else
+								AttackClick($pixel[0], $pixel[1], $qty2, $delayPoint, $delayDropLast, "#0667")
+							EndIf
+						; ==========================
 						Case Else
 							SetLog("Error parsing line")
 					EndSwitch
