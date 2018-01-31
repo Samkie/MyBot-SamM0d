@@ -146,70 +146,85 @@ Func checkAttackDisable($iSource, $Result = "")
 	$g_bIsSearchLimit = False ; reset search limit flag
 	$g_bRestart = True ; Set flag to restart the process at the bot main code when it returns
 
-	; TODO: Check if you are using Switch account ,
-	;       adding 18 minutes to Remain train Time and goes to next available Account
-	If ProfileSwitchAccountEnabled() Then
-		SetLog("Adding the PB time to remain time of the current account.", $COLOR_INFO)
-		; I think both are minutes and integer !!
-		If $g_aiRemainTrainTime[$g_iCurAccount] < $g_iSinglePBForcedLogoffTime Then
-			$g_aiRemainTrainTime[$g_iCurAccount] = $g_iSinglePBForcedLogoffTime
-			$g_abPBActive[$g_iCurAccount] = True
-		EndIf
-		Local $iAllcounts = 0, $iAllAccountsPBactive = 0
-		For $i = 0 To $g_iTotalAcc
-			If $g_abAccountNo[$i] = True Then
-				If SwitchAccountEnabled($i) Then
-					$iAllcounts +=1
-					If $g_abPBActive[$i] = True Then $iAllAccountsPBactive+=1
-				EndIf
-			EndIf
-		Next
-
-		If $iAllcounts <> $iAllAccountsPBactive Then
-			checkSwitchAcc()
-			Return
-		Else
-			SetLog("All Accounts are in PB Time!!", $COLOR_INFO)
-		EndIf
-	EndIf
 	SetLog("Time for break, exit now..", $COLOR_INFO)
 
-	If TestCapture() Then
-		SetLog("checkAttackDisable: PoliteCloseCoC")
-	Else
-		PoliteCloseCoC("AttackDisable_")
-	EndIf
-
-	If _Sleep(1000) Then Return ; short wait for CoC to exit
-	PushMsg("TakeBreak")
-
-	; CoC is closed >>
-	If $iModSource = $g_iTaBChkTime And $g_asShieldStatus[0] <> "guard" Then
-		SetLog("Personal Break Reset log off: " & $g_iSinglePBForcedLogoffTime & " Minutes", $COLOR_INFO)
-		If TestCapture() Then
-			SetLog("checkAttackDisable: WaitnOpenCoC")
-		Else
-			WaitnOpenCoC($g_iSinglePBForcedLogoffTime * 60 * 1000, True) ; Log off CoC for user set time in expert tab
+	;samm0d
+	If $ichkEnableMySwitch Then
+		If $iCurActiveAcc <> -1 Then
+			For $i = 0 To UBound($aSwitchList) - 1
+				If $aSwitchList[$i][4] = $iCurActiveAcc Then
+					; $aSwitchList[$i][5] mark as PB, never switch to this profile until $aSwitchList[$i][5] reset 0 by getNextSwitchList()
+					$aSwitchList[$i][5] = 1
+					$aSwitchList[$i][0] = _DateAdd('n', $g_iSinglePBForcedLogoffTime, _NowCalc())
+					$aSwitchList[$i][1] = TimerInit()
+					$g_bRestart = True
+					Return
+				EndIf
+			Next
 		EndIf
 	Else
-		If TestCapture() Then
-			SetLog("checkAttackDisable: WaitnOpenCoC")
-		Else
-			WaitnOpenCoC(20000, True) ; close CoC for 20 seconds to ensure server logoff, True=call checkmainscreen to clean up if needed
-		EndIf
-	EndIf
-	$g_sPBStartTime = "" ; reset Personal Break global time value to get update
-	For $i = 0 To UBound($g_asShieldStatus) - 1
-		$g_asShieldStatus[$i] = "" ; reset global shield info array
-	Next
-
-	For $i = 0 To $g_iTotalAcc ; Reset all enable accounts PB time
-		If $g_abAccountNo[$i] = True Then
-			If SwitchAccountEnabled($i) Then
-				$g_abPBActive[$i] = False
+		; TODO: Check if you are using Switch account ,
+		;       adding 18 minutes to Remain train Time and goes to next available Account
+		If ProfileSwitchAccountEnabled() Then
+			SetLog("Adding the PB time to remain time of the current account.", $COLOR_INFO)
+			; I think both are minutes and integer !!
+			If $g_aiRemainTrainTime[$g_iCurAccount] < $g_iSinglePBForcedLogoffTime Then
+				$g_aiRemainTrainTime[$g_iCurAccount] = $g_iSinglePBForcedLogoffTime
+				$g_abPBActive[$g_iCurAccount] = True
 			EndIf
-		EndIF
-	Next
+			Local $iAllcounts = 0, $iAllAccountsPBactive = 0
+			For $i = 0 To $g_iTotalAcc
+				If $g_abAccountNo[$i] = True Then
+					If SwitchAccountEnabled($i) Then
+						$iAllcounts +=1
+						If $g_abPBActive[$i] = True Then $iAllAccountsPBactive+=1
+					EndIf
+				EndIf
+			Next
+			If $iAllcounts <> $iAllAccountsPBactive Then
+				checkSwitchAcc()
+				Return
+			Else
+				SetLog("All Accounts are in PB Time!!", $COLOR_INFO)
+			EndIf
+		EndIf
 
+		If TestCapture() Then
+			SetLog("checkAttackDisable: PoliteCloseCoC")
+		Else
+			PoliteCloseCoC("AttackDisable_")
+		EndIf
+
+		If _Sleep(1000) Then Return ; short wait for CoC to exit
+		PushMsg("TakeBreak")
+
+		; CoC is closed >>
+		If $iModSource = $g_iTaBChkTime And $g_asShieldStatus[0] <> "guard" Then
+			SetLog("Personal Break Reset log off: " & $g_iSinglePBForcedLogoffTime & " Minutes", $COLOR_INFO)
+			If TestCapture() Then
+				SetLog("checkAttackDisable: WaitnOpenCoC")
+			Else
+				WaitnOpenCoC($g_iSinglePBForcedLogoffTime * 60 * 1000, True) ; Log off CoC for user set time in expert tab
+			EndIf
+		Else
+			If TestCapture() Then
+				SetLog("checkAttackDisable: WaitnOpenCoC")
+			Else
+				WaitnOpenCoC(20000, True) ; close CoC for 20 seconds to ensure server logoff, True=call checkmainscreen to clean up if needed
+			EndIf
+		EndIf
+		$g_sPBStartTime = "" ; reset Personal Break global time value to get update
+		For $i = 0 To UBound($g_asShieldStatus) - 1
+			$g_asShieldStatus[$i] = "" ; reset global shield info array
+		Next
+
+		For $i = 0 To $g_iTotalAcc ; Reset all enable accounts PB time
+			If $g_abAccountNo[$i] = True Then
+				If SwitchAccountEnabled($i) Then
+					$g_abPBActive[$i] = False
+				EndIf
+			EndIF
+		Next
+	EndIf
 EndFunc   ;==>checkAttackDisable
 
