@@ -1335,6 +1335,7 @@ Func _RunFunction($action)
 				EndIf
 				If SkipDonateNearFullTroops(True) = False And BalanceDonRec(True) Then DonateCC()
 			EndIf
+
 			If _Sleep($DELAYRUNBOT1) = False Then checkMainScreen(False)
 
 			If $ichkModTrain = 1 Then
@@ -1358,9 +1359,8 @@ Func _RunFunction($action)
 						getArmyHeroCount(False, True)
 					EndIf
 				Else
+					If $g_bDebugSetlogTrain Then SetLog("Halt mode - training disabled", $COLOR_DEBUG)
 				EndIf
-			Else
-				If $g_bDebugSetlogTrain Then SetLog("Halt mode - training disabled", $COLOR_DEBUG)
 			EndIf
 		Case "BoostBarracks"
 			BoostBarracks()
