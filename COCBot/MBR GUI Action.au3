@@ -6,7 +6,7 @@
 ; Return values .: None
 ; Author ........: cosote (2016)
 ; Modified ......: CodeSlinger69 (2017)
-; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2017
+; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2018
 ;                  MyBot is distributed under the terms of the GNU GPL
 ; Related .......:
 ; Link ..........: https://github.com/MyBotRun/MyBot/wiki
@@ -148,6 +148,9 @@ Func BotStop()
 	; release bot slot
 	LockBotSlot(False)
 
+	; release other switch accounts
+	releaseProfilesMutex()
+	
 	ResumeAndroid()
 
 	$g_bRunState = False
@@ -161,7 +164,7 @@ Func BotStop()
 
 	EnableGuiControls()
 
-	DistributorsBotStopEvent()
+	DistributorsUpdateGUI()
 	AndroidBotStopEvent() ; signal android that bot is now stopping
 	AndroidShield("btnStop", Default)
 
@@ -240,7 +243,7 @@ Func BotSearchMode()
 		VillageSearch()
 		If _Sleep(100) Then Return
 	Else
-		Setlog("Your Army is not prepared, check the Attack/train options")
+		SetLog("Your Army is not prepared, check the Attack/train options")
 	EndIf
 	btnStop()
 EndFunc   ;==>BotSearchMode

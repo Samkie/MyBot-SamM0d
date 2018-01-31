@@ -6,7 +6,7 @@
 ; Return values .: None
 ; Author ........: GKevinOD (2014)
 ; Modified ......: DkEd, Hervidero (2015), CodeSlinger69 (01-2017)
-; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2017
+; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2018
 ;                  MyBot is distributed under the terms of the GNU GPL
 ; Related .......:
 ; Link ..........: https://github.com/MyBotRun/MyBot/wiki
@@ -378,6 +378,7 @@ Func CreateMainGUIControls($bGuiModeUpdate = False)
 	; samm0d
 	SplashStep(GetTranslatedFileIni("Sam M0d", "Loading Bot tab", "Loading Bot tab..."))
 	#include "SamM0d\GUI\MBR GUI Design Child SamM0d.au3"
+	If Not $bGuiModeUpdate Then DistributorsUpdateGUI() ; Now loading Distributors (during GUI switch it must be called outside CreateMainGUIControls()!)
 
 	SplashStep(GetTranslatedFileIni("MBR GUI Design - Loading", "SplashStep_07", "Loading About Us tab..."))
 	CreateAboutTab()
@@ -525,7 +526,7 @@ Func CheckDpiAwareness($bCheckOnlyIfAlreadyAware = False, $bForceDpiAware = Fals
 	Local $bDpiAware = False
 	Local $bChanged = False
 
-	If $sbDpiAlreadyChecked = True Or ($g_iBotLaunchTime = 0 And $bForceDpiAware2 = False) Then Return $bChanged
+	If $sbDpiAlreadyChecked = True Or (Not IsBotLaunched() And $bForceDpiAware2 = False) Then Return $bChanged
 
 	If $g_iDpiAwarenessMode <> 0 And RegRead("HKCU\Control Panel\Desktop\WindowMetrics", "AppliedDPI") <> 96 Then
 		; DPI is different, check if awareness needs to be set
