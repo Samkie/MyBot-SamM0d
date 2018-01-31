@@ -131,9 +131,8 @@ Global $aWonThreeStarAtkRprt[4] = [534, 180 + $g_iMidOffsetY, 0xC8CAC7, 30] ; Ce
 Global $NextBtn[4] = [780, 546 + $g_iBottomOffsetY, 0xD34300, 20] ;  Next Button
 ; Someone asking troops : Color 0xD0E978 in x = 121
 
-; 1 - Green : available | 2 - Dark gray : request already made | 3 - Light gray : Castle filled/No Castle
-; samm0d
-Global $aRequestTroopsAO[6] = [802, 593, 0x82CB2C, 0xE0F985, 0xA4A4A4, 15] ; Button Request Troops in Army Overview  (x,y,can request, request already made, army full/no clan)
+; 1 - Dark Gray : Castle filled/No Castle | 2 - Dark Green : Available or Already made | 3 - White : Available or Castle filled/No Castle
+Global $aRequestTroopsAO[6] = [754, 580, 0x919191, 0x6DB630, 0xFFFFFE, 15] ; Button Request Troops in Army Overview  (x,y, Gray - Full/No Castle, Green - Available or Already, White - Available or Full)
 
 Global Const $aOpenChatTab[4] = [19, 335 + $g_iMidOffsetY, 0xE88D27, 20]
 Global Const $aCloseChat[4] = [331, 330 + $g_iMidOffsetY, 0xF0951D, 20] ; duplicate with $aChatTab above, need to rename and fix all code to use one?

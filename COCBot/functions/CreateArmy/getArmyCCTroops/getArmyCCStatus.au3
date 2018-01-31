@@ -15,6 +15,7 @@
 
 Func getArmyCCStatus($bOpenArmyWindow = False, $bCloseArmyWindow = False, $CheckWindow = True, $bSetLog = True, $bNeedCapture = True)
 
+
 	If $g_bDebugSetlogTrain Or $g_bDebugSetlog Then SetLog("Begin getArmyCCStatus:", $COLOR_DEBUG1)
 
 	$g_iCCRemainTime = 0 ; reset global time
@@ -33,20 +34,20 @@ Func getArmyCCStatus($bOpenArmyWindow = False, $bCloseArmyWindow = False, $Check
 	EndIf
 
 	;verify can make requestCC and update global flag
-	$g_bCanRequestCC = _ColorCheck(_GetPixelColor($aRequestTroopsAO[0], $aRequestTroopsAO[1], $bNeedCapture), Hex($aRequestTroopsAO[2], 6), $aRequestTroopsAO[5])
+	$g_bCanRequestCC = _ColorCheck(_GetPixelColor($aRequestTroopsAO[0], $aRequestTroopsAO[1] + 20, $bNeedCapture), Hex($aRequestTroopsAO[3], 6), $aRequestTroopsAO[5]) And _ColorCheck(_GetPixelColor($aRequestTroopsAO[0], $aRequestTroopsAO[1], $bNeedCapture), Hex($aRequestTroopsAO[4], 6), $aRequestTroopsAO[5])
 	If $g_bDebugSetlogTrain Then SetLog("Can Request CC: " & $g_bCanRequestCC, $COLOR_DEBUG)
 
 	If Not $g_bCanRequestCC Then
-		If _ColorCheck(_GetPixelColor($aRequestTroopsAO[0], $aRequestTroopsAO[1], $bNeedCapture), Hex($aRequestTroopsAO[3], 6), $aRequestTroopsAO[5]) Then
-			If $bSetLog Then Setlog(" - Clan castle request already made.", $COLOR_INFO)
+		If _ColorCheck(_GetPixelColor($aRequestTroopsAO[0], $aRequestTroopsAO[1] + 20, $bNeedCapture), Hex($aRequestTroopsAO[3], 6), $aRequestTroopsAO[5]) And Not _ColorCheck(_GetPixelColor($aRequestTroopsAO[0], $aRequestTroopsAO[1], $bNeedCapture), Hex($aRequestTroopsAO[4], 6), $aRequestTroopsAO[5]) Then
+			If $bSetLog Then SetLog(" - Clan Castle request already made.", $COLOR_INFO)
 		EndIf
-		If _ColorCheck(_GetPixelColor($aRequestTroopsAO[0], $aRequestTroopsAO[1], $bNeedCapture), Hex($aRequestTroopsAO[4], 6), $aRequestTroopsAO[5]) Then
-			If $bSetLog Then Setlog("Clan castle full or no clan.", $COLOR_INFO)
+		If _ColorCheck(_GetPixelColor($aRequestTroopsAO[0], $aRequestTroopsAO[1] + 20, $bNeedCapture), Hex($aRequestTroopsAO[2], 6), $aRequestTroopsAO[5]) And _ColorCheck(_GetPixelColor($aRequestTroopsAO[0], $aRequestTroopsAO[1], $bNeedCapture), Hex($aRequestTroopsAO[4], 6), $aRequestTroopsAO[5]) Then
+			If $bSetLog Then SetLog("Clan Castle Full/No Clan.", $COLOR_INFO)
 		EndIf
 	EndIf
 
 	; check if waiting for request to expire to udpate time
-	If _ColorCheck(_GetPixelColor($aRequestTroopsAO[0], $aRequestTroopsAO[1], $bNeedCapture), Hex($aRequestTroopsAO[3], 6), $aRequestTroopsAO[5]) Then
+	If _ColorCheck(_GetPixelColor($aRequestTroopsAO[0], $aRequestTroopsAO[1] + 20, $bNeedCapture), Hex($aRequestTroopsAO[3], 6), $aRequestTroopsAO[5]) And Not _ColorCheck(_GetPixelColor($aRequestTroopsAO[0], $aRequestTroopsAO[1], $bNeedCapture), Hex($aRequestTroopsAO[4], 6), $aRequestTroopsAO[5]) Then
 		Local $iRemainTrainCCTimer = 0, $sResultCCMinutes = "", $aResult
 
 		Local $sResultCC = getRequestRemainTime($aArmyCCRemainTime[0], $aArmyCCRemainTime[1])
