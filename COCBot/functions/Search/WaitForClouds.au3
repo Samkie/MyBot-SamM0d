@@ -57,15 +57,6 @@ Func WaitForClouds()
 	While $g_bRestart = False And _CaptureRegions() And _CheckPixel($aNoCloudsAttack) = False ; loop to wait for clouds to disappear
 		If _Sleep($DELAYGETRESOURCES1) Then Return
 
-		; samm0d =================back to main screen?
-		If _CheckPixel($aIsMain) Then
-			SetLog("Something happened that cause back to main screen when searching village for attack.",$COLOR_ERROR)
-			$g_bIsClientSyncError = True
-			$g_bRestart = True
-			ExitLoop
-		EndIf
-		;========================
-
 		$iCount += 1
 		If isProblemAffect(True) Then ; check for reload error messages and restart search if needed
 			resetAttackSearch()
@@ -125,7 +116,8 @@ Func WaitForClouds()
 				SetLog("Strange error detected! 'WaitforClouds' returned to main base unexpectedly, OOS restart initiated", $COLOR_ERROR)
 				$g_bRestart = True ; Set flag for OOS restart condition
 				resetAttackSearch()
-				Return
+				; samm0d - replace return to exitloop to check $bEnabledGUI is that enable.
+				ExitLoop
 			EndIf
 			; attempt to enable GUI during long wait?
 			If $iSearchTime > 2 And Not $bEnabledGUI Then
@@ -135,7 +127,6 @@ Func WaitForClouds()
 				$bEnabledGUI = True
 			EndIf
 		EndIf
-
 		ForceCaptureRegion() ; ensure screenshots are not cached
 	WEnd
 
