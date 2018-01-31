@@ -30,6 +30,10 @@ Func checkObstacles($bBuilderBase = False) ;Checks if something is in the way fo
 	If $checkObstaclesActive = True Then Return FuncReturn(True)
 	Local $wasForce = OcrForceCaptureRegion(False)
 	$checkObstaclesActive = True
+
+	; samm0d
+	_CaptureRegions()
+
 	Local $Result = _checkObstacles($bBuilderBase)
 	OcrForceCaptureRegion($wasForce)
 	$checkObstaclesActive = False
@@ -40,7 +44,7 @@ Func _checkObstacles($bBuilderBase = False) ;Checks if something is in the way f
 	Local $msg, $x, $y, $Result
 	$g_bMinorObstacle = False
 
-	_CaptureRegions()
+	;_CaptureRegions()
 
 	If checkObstacles_Network() Then Return True
 	If checkObstacles_GfxError() Then Return True
@@ -220,12 +224,72 @@ Func _checkObstacles($bBuilderBase = False) ;Checks if something is in the way f
 		; CoC not running
 		Return checkObstacles_ReloadCoC() ; just start CoC (but first close it!)
 	EndIf
+
+	;samm0d for my switch problem prevention
+	;=======================================
+	If _ColorCheck(_GetPixelColor(160, 380,$g_bNoCapturePixel), Hex(0xFFFFFF, 6),5) And _ColorCheck(_GetPixelColor(699, 380,$g_bNoCapturePixel), Hex(0xFFFFFF, 6),5) Then
+		AndroidBackButton()
+		$g_bMinorObstacle = True
+		If _Sleep(1000) Then Return False
+		Return False
+	EndIf
+
+	;If $bNowWaitingConfirm = False Then
+		If _ColorCheck(_GetPixelColor($aButtonVillageCancel[4], $aButtonVillageCancel[5],$g_bNoCapturePixel), Hex($aButtonVillageCancel[6], 6), $aButtonVillageCancel[7]) And _
+			_ColorCheck(_GetPixelColor($aButtonVillageLoad[4], $aButtonVillageLoad[5],$g_bNoCapturePixel), Hex($aButtonVillageLoad[6], 6), $aButtonVillageLoad[7]) Then
+			If $icmbSwitchMethod = 0 Then
+				If $ichkProfileImage = 1 Then
+					Local $iResult
+					$iResult = DoLoadVillage()
+					If $iResult <> 1 And $iResult <> 2 Then Return False
+					If _Sleep(500) Then Return False
+					If $g_iSamM0dDebug = 1 Then SetLog("$iResult: " & $iResult)
+					If _Sleep(5) Then Return False
+					If $iResult = 1 Then
+						If DoConfirmVillage() = False Then Return False
+					Else
+						ClickP($aAway,1,0)
+					EndIf
+					Wait4Main()
+				Else
+					Click($aButtonVillageCancel[0],$aButtonVillageCancel[1],1,0,"#VL01")
+				EndIf
+			Else
+				Click($aButtonVillageCancel[0],$aButtonVillageCancel[1],1,0,"#VL01")
+			EndIf
+			$g_bMinorObstacle = True
+			If _Sleep(500) Then Return False
+			Return False
+		EndIf
+	;EndIf
+
+	; prevent close train page failed, and get builder failed
+	If _CheckPixel($aIsTrainPgChk1, $g_bNoCapturePixel) Then
+		AndroidBackButton()
+		$g_bMinorObstacle = True
+		If _Sleep(1000) Then Return
+		Return False
+	EndIf
+
+	; cloud screen
+	If _ColorCheck(_GetPixelColor(273, 393,$g_bNoCapturePixel), Hex(0xFFF5AE, 6), 10) And _
+		_ColorCheck(_GetPixelColor(41, 642,$g_bNoCapturePixel), Hex(0x7E2915, 6), 10) Then
+		$g_bMinorObstacle = True
+		If _Sleep(1000) Then Return False
+		Click(Random(50,70,1),Random(660,680,1),1,0)
+		Return False
+	EndIf
+	;=============================
+
+
 	Local $bHasTopBlackBar = _ColorCheck(_GetPixelColor(10, 3), Hex(0x000000, 6), 1) And _ColorCheck(_GetPixelColor(300, 6), Hex(0x000000, 6), 1) And _ColorCheck(_GetPixelColor(600, 9), Hex(0x000000, 6), 1)
 	If _ColorCheck(_GetPixelColor(235, 209 + $g_iMidOffsetY), Hex(0x9E3826, 6), 20) Then
 		SetDebugLog("checkObstacles: Found Window to close")
 		PureClick(429, 493 + $g_iMidOffsetY, 1, 0, "#0132") ;See if village was attacked, clicks Okay
-		$g_abNotNeedAllTime[0] = True
-		$g_abNotNeedAllTime[1] = True
+		; samm0d
+		checkObstacles_ResetSearch()
+		;$g_abNotNeedAllTime[0] = True
+		;$g_abNotNeedAllTime[1] = True
 		$g_bMinorObstacle = True
 		If _Sleep($DELAYCHECKOBSTACLES1) Then Return
 		Return False
