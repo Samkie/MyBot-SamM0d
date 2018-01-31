@@ -9,7 +9,7 @@
 ; Return values .: None
 ; Author ........: KnowJack (08-2015)
 ; Modified ......: TheMaster (2015), MonkeyHunter (12-2015/01-2016), Hervidero (12-2015)
-; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2017
+; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2018
 ;                  MyBot is distributed under the terms of the GNU GPL
 ; Related .......:
 ; Link ..........: https://github.com/MyBotRun/MyBot/wiki
@@ -27,10 +27,11 @@ Func checkAttackDisable($iSource, $Result = "")
 
 	If $g_bForceSinglePBLogoff And _DateIsValid($g_sPBStartTime) Then
 		Local $iTimeTillPBTstartSec = Int(_DateDiff('s', $g_sPBStartTime, _NowCalc())) ; time in seconds
-		If $g_bDebugSetlog Then Setlog("PB starts in: " & $iTimeTillPBTstartSec & " Seconds", $COLOR_DEBUG)
+		If $g_bDebugSetlog Then SetDebugLog("PB starts in: " & $iTimeTillPBTstartSec & " Seconds", $COLOR_DEBUG)
 		If $iTimeTillPBTstartSec >= 0 Then ; test if PBT date/time in past (positive value) or future (negative value
 			$iModSource = $g_iTaBChkTime
 		Else
+			$g_abPBActive[$g_iCurAccount] = False
 			Return
 		EndIf
 	Else
@@ -45,10 +46,10 @@ Func checkAttackDisable($iSource, $Result = "")
 				$Result = getAttackDisable(346, 182) ; Grab Ocr for TakeABreak if not found due slow PC
 				If $i >= 3 Then ExitLoop
 			WEnd
-			If $g_bDebugSetlog Then Setlog("Attack Personal Break OCR result = " & $Result, $COLOR_DEBUG)
+			If $g_bDebugSetlog Then SetDebugLog("Attack Personal Break OCR result = " & $Result, $COLOR_DEBUG)
 			If $Result <> "" Then ; fast test to see if have Take-A-Break
 				If StringInStr($Result, "disable") <> 0 Or StringInStr($Result, "for") <> 0 Or StringInStr($Result, "after") <> 0 Or StringInStr($Result, "have") <> 0 Then ; verify we have right text strings, 'after' added for Personal Break
-					Setlog("Attacking disabled, Personal Break detected...", $COLOR_ERROR)
+					SetLog("Attacking disabled, Personal Break detected...", $COLOR_ERROR)
 					If _CheckPixel($aSurrenderButton, $g_bCapturePixel) Then ; village search requires end battle 1s, so check for surrender/endbattle button
 						If TestCapture() Then
 							SetLog("checkAttackDisable: ReturnHome")
@@ -63,7 +64,7 @@ Func checkAttackDisable($iSource, $Result = "")
 						EndIf
 					EndIf
 				Else
-					If $g_bDebugSetlog Then Setlog("wrong text string", $COLOR_DEBUG)
+					If $g_bDebugSetlog Then SetDebugLog("wrong text string", $COLOR_DEBUG)
 					If TestCapture() Then Return "wrong text string"
 					Return ; exit function, wrong string found
 				EndIf
@@ -75,18 +76,20 @@ Func checkAttackDisable($iSource, $Result = "")
 			If $Result = "" Then $Result = getAttackDisable(180, 156 + $g_iMidOffsetY) ; change to 180, 186 for 860x780
 			If _Sleep($DELAYATTACKDISABLE500) Then Return ; short wait to not delay to much
 			If $Result = "" Or (StringLen($Result) < 3) Then $Result = getAttackDisable(180, 156 + $g_iMidOffsetY) ; Grab Ocr for "Have Been" 2nd time if not found due slow PC
-			If $g_bDebugSetlog Then Setlog("Personal Break OCR result = " & $Result, $COLOR_DEBUG)
+			If $g_bDebugSetlog Then SetDebugLog("Personal Break OCR result = " & $Result, $COLOR_DEBUG)
 			If $Result <> "" Then ; fast test to see if have Take-A-Break
 				If StringInStr($Result, "been") <> 0 Or StringInStr($Result, "after") <> 0 Or StringInStr($Result, "have") <> 0 Then ; verify we have right text string, 'after' added for Personal Break
-					Setlog("Online too long, Personal Break detected....", $COLOR_ERROR)
+					SetLog("Online too long, Personal Break detected....", $COLOR_ERROR)
 					checkMainScreen()
 				Else
-					If $g_bDebugSetlog Then Setlog("wrong text string", $COLOR_DEBUG)
+					If $g_bDebugSetlog Then SetDebugLog("wrong text string", $COLOR_DEBUG)
 					If TestCapture() Then Return "wrong text string #2"
+					$g_abPBActive[$g_iCurAccount] = False
 					Return ; exit function, wrong string found
 				EndIf
 			Else
 				If TestCapture() Then Return "take a break text not found #2"
+				$g_abPBActive[$g_iCurAccount] = False
 				Return ; exit function, take a break text not found
 			EndIf
 		Case $g_iTaBChkTime
@@ -96,7 +99,7 @@ Func checkAttackDisable($iSource, $Result = "")
 				While _CheckPixel($aIsAttackPage, $g_bCapturePixel) = False ; Wait for attack page ready
 					If _Sleep($DELAYATTACKDISABLE500) Then Return
 					$iCount += 1
-					If $g_bDebugSetlog Then setlog("wait end battle button " & $iCount, $COLOR_DEBUG)
+					If $g_bDebugSetlog Then SetDebugLog("wait end battle button " & $iCount, $COLOR_DEBUG)
 					If $iCount > 40 Or isProblemAffect(True) Then ; wait 20 seconds and give up.
 						checkObstacles()
 						ExitLoop
@@ -115,7 +118,7 @@ Func checkAttackDisable($iSource, $Result = "")
 					If _Sleep($DELAYATTACKDISABLE500) Then Return
 					ClickP($aAway, 1, 0, "#0000") ;Click Away to close Topen page
 					$iCount += 1
-					If $g_bDebugSetlog Then setlog("wait main page" & $iCount, $COLOR_DEBUG)
+					If $g_bDebugSetlog Then SetDebugLog("wait main page" & $iCount, $COLOR_DEBUG)
 					If $iCount > 5 Or isProblemAffect(True) Then ; wait 2.5 seconds, give up, let checkobstacles try to clear page
 						checkObstacles()
 						ExitLoop
@@ -128,10 +131,10 @@ Func checkAttackDisable($iSource, $Result = "")
 				; samm0d
 				BreakPersonalShield()
 			Else
-				Setlog("Forcing Early Personal Break Now!!", $COLOR_SUCCESS)
+				SetLog("Forcing Early Personal Break Now!!", $COLOR_SUCCESS)
 			EndIf
 		Case Else
-			Setlog("Misformed $sSource parameter, silly programmer made a mistake!", $COLOR_DEBUG)
+			SetLog("Misformed $sSource parameter, silly programmer made a mistake!", $COLOR_DEBUG)
 			Return False
 	EndSwitch
 
@@ -143,23 +146,34 @@ Func checkAttackDisable($iSource, $Result = "")
 	$g_bIsSearchLimit = False ; reset search limit flag
 	$g_bRestart = True ; Set flag to restart the process at the bot main code when it returns
 
-	Setlog("Time for break, exit now..", $COLOR_INFO)
-
-	;samm0d
-	If $ichkEnableMySwitch Then
-		If $iCurActiveAcc <> -1 Then
-			For $i = 0 To UBound($aSwitchList) - 1
-				If $aSwitchList[$i][4] = $iCurActiveAcc Then
-					; $aSwitchList[$i][5] mark as PB, never switch to this profile until $aSwitchList[$i][5] reset 0 by getNextSwitchList()
-					$aSwitchList[$i][5] = 1
-					$aSwitchList[$i][0] = _DateAdd('n', $g_iSinglePBForcedLogoffTime, _NowCalc())
-					$aSwitchList[$i][1] = TimerInit()
-					$g_bRestart = True
-					Return
-				EndIf
-			Next
+	; TODO: Check if you are using Switch account ,
+	;       adding 18 minutes to Remain train Time and goes to next available Account
+	If ProfileSwitchAccountEnabled() Then
+		SetLog("Adding the PB time to remain time of the current account.", $COLOR_INFO)
+		; I think both are minutes and integer !!
+		If $g_aiRemainTrainTime[$g_iCurAccount] < $g_iSinglePBForcedLogoffTime Then
+			$g_aiRemainTrainTime[$g_iCurAccount] = $g_iSinglePBForcedLogoffTime
+			$g_abPBActive[$g_iCurAccount] = True
 		EndIf
-	Else
+		Local $iAllcounts = 0, $iAllAccountsPBactive = 0
+		For $i = 0 To $g_iTotalAcc
+			If $g_abAccountNo[$i] = True Then
+				If SwitchAccountEnabled($i) Then
+					$iAllcounts +=1
+					If $g_abPBActive[$i] = True Then $iAllAccountsPBactive+=1
+				EndIf
+			EndIf
+		Next
+
+		If $iAllcounts <> $iAllAccountsPBactive Then
+			checkSwitchAcc()
+			Return
+		Else
+			SetLog("All Accounts are in PB Time!!", $COLOR_INFO)
+		EndIf
+	EndIf
+	SetLog("Time for break, exit now..", $COLOR_INFO)
+
 	If TestCapture() Then
 		SetLog("checkAttackDisable: PoliteCloseCoC")
 	Else
@@ -171,7 +185,7 @@ Func checkAttackDisable($iSource, $Result = "")
 
 	; CoC is closed >>
 	If $iModSource = $g_iTaBChkTime And $g_asShieldStatus[0] <> "guard" Then
-		Setlog("Personal Break Reset log off: " & $g_iSinglePBForcedLogoffTime & " Minutes", $COLOR_INFO)
+		SetLog("Personal Break Reset log off: " & $g_iSinglePBForcedLogoffTime & " Minutes", $COLOR_INFO)
 		If TestCapture() Then
 			SetLog("checkAttackDisable: WaitnOpenCoC")
 		Else
@@ -188,6 +202,14 @@ Func checkAttackDisable($iSource, $Result = "")
 	For $i = 0 To UBound($g_asShieldStatus) - 1
 		$g_asShieldStatus[$i] = "" ; reset global shield info array
 	Next
-	EndIf
+
+	For $i = 0 To $g_iTotalAcc ; Reset all enable accounts PB time
+		If $g_abAccountNo[$i] = True Then
+			If SwitchAccountEnabled($i) Then
+				$g_abPBActive[$i] = False
+			EndIf
+		EndIF
+	Next
+
 EndFunc   ;==>checkAttackDisable
 
