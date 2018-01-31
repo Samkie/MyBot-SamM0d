@@ -48,31 +48,47 @@ Func CheckBaseQuick($bStopRecursion = False, $sReturnHome = "")
 			Return
 		EndIf
 
-		DonateCC() ; donate troops
-		If _Sleep($DELAYRUNBOT1) Then Return
-		checkMainScreen(False) ; required here due to many possible function exits
-		If $g_bRestart = True Then
-			If $bStopRecursion = True Then $g_bDisableBreakCheck = False
-			Return
-		EndIf
-
-		CheckOverviewFullArmy(True) ; Check if army needs to be trained due donations
-		If Not ($g_bFullArmy) And $g_bTrainEnabled = True Then
-			If $g_iActualTrainSkip < $g_iMaxTrainSkip Then
-				; Train()
-				TrainRevamp()
-				If $g_bRestart Then Return
-			Else
-				If $g_bDebugSetlogTrain Then SetLog("skip train. " & $g_iActualTrainSkip + 1 & "/" & $g_iMaxTrainSkip, $color_purple)
-				$g_iActualTrainSkip = $g_iActualTrainSkip + 1
-				CheckOverviewFullArmy(True, False) ; use true parameter to open train overview window
-				getArmySpells()
-				getArmyHeroCount(False, True) ; true to close the window
-				If $g_iActualTrainSkip >= $g_iMaxTrainSkip Then
-					$g_iActualTrainSkip = 0
-				EndIf
+		; samm0d
+		If $ichkModTrain = 0 Then
+			DonateCC() ; donate troops
+			If _Sleep($DELAYRUNBOT1) Then Return
+			checkMainScreen(False) ; required here due to many possible function exits
+			If $g_bRestart = True Then
 				If $bStopRecursion = True Then $g_bDisableBreakCheck = False
 				Return
+			EndIf
+
+			CheckOverviewFullArmy(True) ; Check if army needs to be trained due donations
+			If Not ($g_bFullArmy) And $g_bTrainEnabled = True Then
+				If $g_iActualTrainSkip < $g_iMaxTrainSkip Then
+					; Train()
+					TrainRevamp()
+					If $g_bRestart Then Return
+				Else
+					If $g_bDebugSetlogTrain Then SetLog("skip train. " & $g_iActualTrainSkip + 1 & "/" & $g_iMaxTrainSkip, $color_purple)
+					$g_iActualTrainSkip = $g_iActualTrainSkip + 1
+					CheckOverviewFullArmy(True, False) ; use true parameter to open train overview window
+					getArmySpells()
+					getArmyHeroCount(False, True) ; true to close the window
+					If $g_iActualTrainSkip >= $g_iMaxTrainSkip Then
+						$g_iActualTrainSkip = 0
+					EndIf
+					If $bStopRecursion = True Then $g_bDisableBreakCheck = False
+					Return
+				EndIf
+			EndIf
+		Else
+			ModTrain()
+			If $g_iActiveDonate And $g_bChkDonate Then
+				If $g_bFirstStart Then
+					getArmyTroopCapacity(True, False)
+					getArmySpellCapacity(False, True)
+				EndIf
+				If SkipDonateNearFullTroops(True) = False And BalanceDonRec(True) Then DonateCC()
+			EndIf
+			If _Sleep($DELAYRUNBOT1) = False Then checkMainScreen(False)
+			If $bJustMakeDonate Then
+				ModTrain()
 			EndIf
 		EndIf
 
