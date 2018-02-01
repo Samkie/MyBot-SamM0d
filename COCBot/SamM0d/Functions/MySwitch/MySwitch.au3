@@ -1215,9 +1215,9 @@ Func btnMakeSwitchADBFolder()
 	$g_bRunState = $currentRunState
 EndFunc
 
-Func Pushshared_prefs()
+Func Pushshared_prefs($Profilename)
 	Local $iResult
-	Local $sMyProfilePath4shared_prefs = @ScriptDir & "\profiles\" & $g_sProfileCurrentName & "\shared_prefs"
+	Local $sMyProfilePath4shared_prefs = @ScriptDir & "\profiles\" & $Profilename & "\shared_prefs"
 	Local $hostPath = $g_sAndroidPicturesHostPath & $g_sAndroidPicturesHostFolder & "shared_prefs"
 	Local $androidPath = $g_sAndroidPicturesPath & StringReplace($g_sAndroidPicturesHostFolder, "\", "/") & "shared_prefs/"
 	Local $bSuccess
@@ -1233,11 +1233,11 @@ Func Pushshared_prefs()
 			"find -name '*.bak' -type f -exec rm -f {} +; " & _
 			"exit; exit'" & Chr(34), "", @SW_HIDE)
 			$bSuccess = False
-			If @error Then
-				SetLog("shell command failed on copy shared_prefs to game folder, Result= " & $iResult, $COLOR_ERROR)
-			Else
+			If @error = 0 And $iResult = 0 Then
 				SetLog("shared_prefs copy to emulator should be okay.", $COLOR_INFO)
 				$bSuccess = True
+			Else
+				SetLog("shell command failed on copy shared_prefs to game folder, Result= " & $iResult, $COLOR_ERROR)
 			EndIf
 			$iResult = DirRemove($hostPath, 1)
 			If $iResult <> 1 Then
@@ -1283,8 +1283,7 @@ Func btnPushshared_prefs()
 			Else
 				CloseCoC()
 			EndIf
-
-			Pushshared_prefs()
+			Pushshared_prefs($g_sProfileCurrentName)
 			OpenCoC()
 			Wait4Main()
 		Case 0
@@ -1318,7 +1317,7 @@ EndFunc
 
 Func loadVillageFrom($Profilename)
 	PoliteCloseCoC("MySwitch", True)
-	If Pushshared_prefs() Then
+	If Pushshared_prefs($Profilename) Then
 		If $iMySwitchSmartWaitTime > 0 Then
 			SmartWait4TrainMini($iMySwitchSmartWaitTime, 1)
 			$iMySwitchSmartWaitTime = 0
