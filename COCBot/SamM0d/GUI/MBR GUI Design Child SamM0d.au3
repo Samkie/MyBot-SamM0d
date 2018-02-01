@@ -360,9 +360,9 @@ GUICtrlCreateGroup(GetTranslatedFileIni("MBR GUI Design Child Bot - Profiles", "
 			GUICtrlSetOnEvent(-1, "btnMakeSwitchADBFolder")
 			_GUICtrlSetTip(-1, GetTranslatedFileIni("sam m0d",37, "Copy Village save files from Emulator to current profile. Make village name image from profile."))
 
-		$btnPushshared_prefs = GUICtrlCreateButton(GetTranslatedFileIni("sam m0d", "Push", "Push"), $x + 335, $y-1, 80, 23)
+		$btnPushshared_prefs = GUICtrlCreateButton(GetTranslatedFileIni("sam m0d", "Switch Acc", "Switch Acc."), $x + 335, $y-1, 80, 23)
 			GUICtrlSetOnEvent(-1, "btnPushshared_prefs")
-			_GUICtrlSetTip(-1, GetTranslatedFileIni("sam m0d","Push shared_prefs", "Push shared_prefs - Copy shared_prefs from profile to emulator."))
+			_GUICtrlSetTip(-1, GetTranslatedFileIni("sam m0d","Switch Acc Tip", "Select profile from left side combo list, then click here for switch to the account with selected switch method."))
 
 ; samm0d - my switch
 $y += 35

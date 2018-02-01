@@ -439,7 +439,7 @@ Func btnTestTrain()
 	$tempDisableBrewSpell=False
     ModTrain()
 
-	SetLog("Elapsed: " & Round(__TimerDiff($hTimer) / 1000, 2))
+	SetLog("Elapsed: " & Round(__TimerDiff($hTimer) / 1000, 2) & "s")
 	SetLog("===END===")
 
 	$g_bRunState = $currentRunState

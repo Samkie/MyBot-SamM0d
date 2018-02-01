@@ -1166,26 +1166,26 @@ Func btnMakeSwitchADBFolder()
 			EndIf
 		EndIf
 
-		Local $lResult
+		Local $iResult
 
 		PoliteCloseCoC("MySwitch", True)
 		;If _Sleep(1500) Then Return False
 
 		If $g_iSamM0dDebug = 1 Then SetLog("$g_sEmulatorInfo4MySwitch: " & $g_sEmulatorInfo4MySwitch)
 
-		$lResult = RunWait($g_sAndroidAdbPath & " -s " & $g_sAndroidAdbDevice & " shell "& Chr(34) & "su -c 'chmod 777 /data/data/" & $g_sAndroidGamePackage & "/shared_prefs; mkdir /sdcard/tempshared; cp /data/data/" & $g_sAndroidGamePackage & _
+		$iResult = RunWait($g_sAndroidAdbPath & " -s " & $g_sAndroidAdbDevice & " shell "& Chr(34) & "su -c 'chmod 777 /data/data/" & $g_sAndroidGamePackage & "/shared_prefs; mkdir /sdcard/tempshared; cp /data/data/" & $g_sAndroidGamePackage & _
 		"/shared_prefs/* /sdcard/tempshared; exit; exit'" & Chr(34), "", @SW_HIDE)
-		If $lResult = 0 Then
-			$lResult = RunWait($g_sAndroidAdbPath & " -s " & $g_sAndroidAdbDevice & " pull /sdcard/tempshared " & Chr(34) & $sMyProfilePath4shared_prefs & Chr(34), "", @SW_HIDE)
-			If $lResult = 0 Then
-				$lResult = RunWait($g_sAndroidAdbPath & " -s " & $g_sAndroidAdbDevice & " shell "& Chr(34) & "su -c 'rm -r /sdcard/tempshared; exit; exit'" & Chr(34), "", @SW_HIDE)
+		If $iResult = 0 Then
+			$iResult = RunWait($g_sAndroidAdbPath & " -s " & $g_sAndroidAdbDevice & " pull /sdcard/tempshared " & Chr(34) & $sMyProfilePath4shared_prefs & Chr(34), "", @SW_HIDE)
+			If $iResult = 0 Then
+				$iResult = RunWait($g_sAndroidAdbPath & " -s " & $g_sAndroidAdbDevice & " shell "& Chr(34) & "su -c 'rm -r /sdcard/tempshared; exit; exit'" & Chr(34), "", @SW_HIDE)
 			EndIf
 		EndIf
 
 		If @error Then
 			SetLog("Failed to run adb command.", $COLOR_ERROR)
 		Else
-			If $lResult = 0 Then
+			If $iResult = 0 Then
 				If FileExists($sMyProfilePath4shared_prefs & "\storage.xml") Then
 					SetLog("shared_prefs captured.", $COLOR_INFO)
 					$bFileFlag = BitOR($bFileFlag, 1)
@@ -1215,85 +1215,110 @@ Func btnMakeSwitchADBFolder()
 	$g_bRunState = $currentRunState
 EndFunc
 
-Func btnPushshared_prefs()
-	Local $currentRunState = $g_bRunState
-	$g_bRunState = True
-
-	SetLog("Start")
-	GUICtrlSetState($btnPushshared_prefs, $GUI_DISABLE)
-
-	ClickP($aAway,1,0)
-	If _Sleep(300) Then Return
-	If _CheckColorPixel($aIsMain[0], $aIsMain[1], $aIsMain[2], $aIsMain[3], $g_bCapturePixel, "aIsMain") Then
-		PoliteCloseCoC("MySwitch", True)
-	Else
-		CloseCoC()
-	EndIf
-	;If _Sleep(1500) Then Return False
-	Local $lResult
+Func Pushshared_prefs()
+	Local $iResult
 	Local $sMyProfilePath4shared_prefs = @ScriptDir & "\profiles\" & $g_sProfileCurrentName & "\shared_prefs"
 	Local $hostPath = $g_sAndroidPicturesHostPath & $g_sAndroidPicturesHostFolder & "shared_prefs"
 	Local $androidPath = $g_sAndroidPicturesPath & StringReplace($g_sAndroidPicturesHostFolder, "\", "/") & "shared_prefs/"
+	Local $bSuccess
 
 	If FileExists($sMyProfilePath4shared_prefs & "\storage.xml") Then
-		$lResult = DirCopy($sMyProfilePath4shared_prefs, $hostPath, 1)
-		If $lResult = 1 Then
-			$lResult = RunWait($g_sAndroidAdbPath & " -s " & $g_sAndroidAdbDevice & " shell "& Chr(34) & "su -c 'chmod 777 /data/data/" & $g_sAndroidGamePackage & "/shared_prefs; " & _
+		$iResult = DirCopy($sMyProfilePath4shared_prefs, $hostPath, 1)
+		If $iResult = 1 Then
+			$iResult = RunWait($g_sAndroidAdbPath & " -s " & $g_sAndroidAdbDevice & " shell "& Chr(34) & "su -c 'chmod 777 /data/data/" & $g_sAndroidGamePackage & "/shared_prefs; " & _
 			"cp -r " & $androidPath & "* /data/data/" & $g_sAndroidGamePackage & "/shared_prefs; cd /data/data/" & $g_sAndroidGamePackage & "/shared_prefs; " & _
 			"find -name 'com.facebook.internal.preferences.APP_SETTINGS.xml' -type f -exec rm -f {} +; " & _
 			"find -name 'com.google.android.gcm.xml' -type f -exec rm -f {} +; " & _
 			"find -name 'com.mobileapptracking.xml' -type f -exec rm -f {} +; " & _
 			"find -name '*.bak' -type f -exec rm -f {} +; " & _
 			"exit; exit'" & Chr(34), "", @SW_HIDE)
-
-			;"find -name 'HSJsonData.xml' -type f -exec rm -f {} +; " & _
-			;"find -name 'mat_queue.xml' -type f -exec rm -f {} +; " & _
-			;"find -name 'openudid_prefs.xml' -type f -exec rm -f {} +; " & _
-			;"find -name 'localPrefs.xml' -type f -exec rm -f {} +; " & _
-
-			DirRemove($hostPath, 1)
-		EndIf
-		If $lResult = 0 Then
-			SetLog("shared_prefs copy to emulator should be okay.", $COLOR_INFO)
-			OpenCoC()
-			Wait4Main()
+			$bSuccess = False
+			If @error Then
+				SetLog("shell command failed on copy shared_prefs to game folder, Result= " & $iResult, $COLOR_ERROR)
+			Else
+				SetLog("shared_prefs copy to emulator should be okay.", $COLOR_INFO)
+				$bSuccess = True
+			EndIf
+			$iResult = DirRemove($hostPath, 1)
+			If $iResult <> 1 Then
+				SetLog("Failed to remove directory " & $hostPath & ", Result= " & $iResult, $COLOR_ERROR)
+			EndIf
+			If $bSuccess Then Return True
+		Else
+			SetLog("Failed to copy directory from " & $sMyProfilePath4shared_prefs & " to " & $hostPath & ", Result= " & $iResult, $COLOR_ERROR)
 		EndIf
 	Else
 		SetLog($sMyProfilePath4shared_prefs & "\storage.xml not found.", $COLOR_ERROR)
 	EndIf
-	SetLog("Finish")
+	Return False
+EndFunc
+
+Func btnPushshared_prefs()
+	Local $currentRunState = $g_bRunState
+	$g_bRunState = True
+
+	GUICtrlSetState($btnPushshared_prefs, $GUI_DISABLE)
+
+	Local $hTimer = __TimerInit()
+
+	Switch $icmbSwitchMethod
+		Case 2
+			SetLog("Start game client switch")
+			If _CheckColorPixel($aIsMain[0], $aIsMain[1], $aIsMain[2], $aIsMain[3], $g_bCapturePixel, "aIsMain") Or _CheckColorPixel($aIsMainGrayed[0], $aIsMainGrayed[1], $aIsMainGrayed[2], $aIsMainGrayed[3], $g_bCapturePixel, "aIsMainGrayed") Then
+				ClickP($aAway,1,0)
+				If _Sleep(300) Then Return
+				PoliteCloseCoC("MySwitch", True)
+			Else
+				CloseCoC()
+			EndIf
+
+			OpenCoC()
+			Wait4Main()
+		Case 1
+			SetLog("Start shared_prefs switch")
+			If _CheckColorPixel($aIsMain[0], $aIsMain[1], $aIsMain[2], $aIsMain[3], $g_bCapturePixel, "aIsMain") Or _CheckColorPixel($aIsMainGrayed[0], $aIsMainGrayed[1], $aIsMainGrayed[2], $aIsMainGrayed[3], $g_bCapturePixel, "aIsMainGrayed") Then
+				ClickP($aAway,1,0)
+				If _Sleep(300) Then Return
+				PoliteCloseCoC("MySwitch", True)
+			Else
+				CloseCoC()
+			EndIf
+
+			Pushshared_prefs()
+			OpenCoC()
+			Wait4Main()
+		Case 0
+			SetLog("Start google switch")
+			If _CheckColorPixel($aIsMain[0], $aIsMain[1], $aIsMain[2], $aIsMain[3], $g_bCapturePixel, "aIsMain") Or _CheckColorPixel($aIsMainGrayed[0], $aIsMainGrayed[1], $aIsMainGrayed[2], $aIsMainGrayed[3], $g_bCapturePixel, "aIsMainGrayed") Then
+				ClickP($aAway,1,0)
+				If _Sleep(300) Then Return
+			Else
+				CloseCoC(True)
+				Wait4Main()
+			EndIf
+
+			Local $i
+			Local $sProfile = GUICtrlRead($g_hCmbProfile2)
+			Local $iSlot4Switch = -1
+			For $i = 0 To 7
+				If $icmbWithProfile[$i] = $sProfile Then
+						$iSlot4Switch = $i
+					ExitLoop
+				EndIf
+			Next
+			If $iSlot4Switch <> -1 Then
+				SelectGoogleAccount($iSlot4Switch)
+			EndIf
+	EndSwitch
+
+	SetLog("Switch finished, elapsed: " & Round(__TimerDiff($hTimer) / 1000, 2) & "s")
 	GUICtrlSetState($btnPushshared_prefs, $GUI_ENABLE)
 	$g_bRunState = $currentRunState
 EndFunc
 
 Func loadVillageFrom($Profilename)
 	PoliteCloseCoC("MySwitch", True)
-	;If _Sleep(1500) Then Return False
-	Local $lResult
-	Local $sMyProfilePath4shared_prefs = @ScriptDir & "\profiles\" & $Profilename & "\shared_prefs"
-	Local $hostPath = $g_sAndroidPicturesHostPath & $g_sAndroidPicturesHostFolder & "shared_prefs"
-	Local $androidPath = $g_sAndroidPicturesPath & StringReplace($g_sAndroidPicturesHostFolder, "\", "/") & "shared_prefs/"
-
-	$lResult = DirCopy($sMyProfilePath4shared_prefs, $hostPath, 1)
-	If $lResult = 1 Then
-		$lResult = RunWait($g_sAndroidAdbPath & " -s " & $g_sAndroidAdbDevice & " shell "& Chr(34) & "su -c 'chmod 777 /data/data/" & $g_sAndroidGamePackage & "/shared_prefs; " & _
-		"cp -r " & $androidPath & "* /data/data/" & $g_sAndroidGamePackage & "/shared_prefs; cd /data/data/" & $g_sAndroidGamePackage & "/shared_prefs; " & _
-		"find -name 'com.facebook.internal.preferences.APP_SETTINGS.xml' -type f -exec rm -f {} +; " & _
-		"find -name 'com.google.android.gcm.xml' -type f -exec rm -f {} +; " & _
-		"find -name 'com.mobileapptracking.xml' -type f -exec rm -f {} +; " & _
-		"find -name '*.bak' -type f -exec rm -f {} +; " & _
-		"exit; exit'" & Chr(34), "", @SW_HIDE)
-
-		;"find -name 'HSJsonData.xml' -type f -exec rm -f {} +; " & _
-		;"find -name 'mat_queue.xml' -type f -exec rm -f {} +; " & _
-		;"find -name 'openudid_prefs.xml' -type f -exec rm -f {} +; " & _
-		;"find -name 'localPrefs.xml' -type f -exec rm -f {} +; " & _
-
-		DirRemove($hostPath, 1)
-	EndIf
-
-	If $lResult = 0 Then
-		SetLog("shared_prefs copy to emulator should be okay.", $COLOR_INFO)
+	If Pushshared_prefs() Then
 		If $iMySwitchSmartWaitTime > 0 Then
 			SmartWait4TrainMini($iMySwitchSmartWaitTime, 1)
 			$iMySwitchSmartWaitTime = 0
@@ -1303,7 +1328,6 @@ Func loadVillageFrom($Profilename)
 		EndIf
 		Return True
 	EndIf
-
 	Return False
 EndFunc
 

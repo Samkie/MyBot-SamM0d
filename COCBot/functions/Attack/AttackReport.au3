@@ -24,20 +24,18 @@ Func AttackReport()
 		$iCount += 1
 		If _Sleep($DELAYATTACKREPORT1) Then Return
 		If $g_bDebugSetlog Then SetDebugLog("Waiting Attack Report Ready, " & ($iCount / 2) & " Seconds.", $COLOR_DEBUG)
-		If $iCount > 30 Then ExitLoop ; wait 30*500ms = 15 seconds max for the window to render
-	WEnd
-	If $iCount > 30 Then SetLog("End of Attack scene slow to appear, attack values my not be correct", $COLOR_INFO)
-
-	$iCount = 0 ; reset loop counter
-	While getResourcesLoot(290, 289 + $g_iMidOffsetY) = "" ; check for gold value to be non-zero before reading other values as a secondary timer to make sure all values are available
-		$iCount += 1
-		If _Sleep($DELAYATTACKREPORT1) Then Return
-		If $g_bDebugSetlog Then SetDebugLog("Waiting Attack Report Ready, " & ($iCount / 2) & " Seconds.", $COLOR_DEBUG)
 		If $iCount > 20 Then ExitLoop ; wait 20*500ms = 10 seconds max before we have call the OCR read an error
 	WEnd
+	If $iCount > 20 Then SetLog("End of Attack scene slow to appear, attack values my not be correct", $COLOR_INFO)
 
-	If $iCount > 20 Then Setlog("End of Attack scene read gold error, attack values my not be correct", $COLOR_INFO)
-
+;~ 	$iCount = 0 ; reset loop counter
+;~ 	While getResourcesLoot(290, 289 + $g_iMidOffsetY) = "" ; check for gold value to be non-zero before reading other values as a secondary timer to make sure all values are available
+;~ 		$iCount += 1
+;~ 		If _Sleep($DELAYATTACKREPORT1) Then Return
+;~ 		If $g_bDebugSetlog Then SetDebugLog("Waiting Attack Report Ready, " & ($iCount / 2) & " Seconds.", $COLOR_DEBUG)
+;~ 		If $iCount > 20 Then ExitLoop ; wait 20*500ms = 10 seconds max before we have call the OCR read an error
+;~ 	WEnd
+;~ 	If $iCount > 20 Then Setlog("End of Attack scene read gold error, attack values my not be correct", $COLOR_INFO)
 
 	Local $iTempStatsLastAttack[UBound($g_iStatsLastAttack)]
 	Local $iTempOldStatsLastAttack[UBound($g_iStatsLastAttack)]
@@ -125,11 +123,11 @@ Func AttackReport()
 		EndIf
 		; samm0d
 		OcrForceCaptureRegion($wasForce)
-		If _Sleep(500) Then Return
+		If _Sleep($DELAYATTACKREPORT1) Then Return ; delay 500ms
 
 		$iCount += 1
 		If $iCount > 30 Then
-			Setlog("End of Attack scene read loot value error, attack values may not be correct", $COLOR_INFO)
+			Setlog("Return Home scene read loot value error, attack values may not be correct", $COLOR_INFO)
 			ExitLoop
 		EndIf
 	WEnd
