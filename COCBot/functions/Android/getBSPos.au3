@@ -285,6 +285,12 @@ Func getAndroidPos($FastCheck = False, $RetryCount1 = 0, $RetryCount2 = 0, $bWid
 								Else
 									SetLog($g_sAndroidEmulator & " window resize didn't work, screen is " & $aControlSize[2] & " x " & $aControlSize[3], $COLOR_ERROR)
 								EndIf
+								; samm0d
+								$g_iScreenSizeErrorCount += 1
+								If $g_iScreenSizeErrorCount > 5 Then
+									$g_iScreenSizeErrorCount = 0
+									RebootAndroid()
+								EndIf
 								If $RetryCount1 > 0 And $RetryCount1 < 6 And $RetryCount2 = 0 Then
 									; early abort when cannot be resized
 									Local $bXinc = $aControlSize[0] > $asControlSize[$RetryCount1][0] And $asControlSize[$RetryCount1][0] > $asControlSize[$RetryCount1 - 1][0]

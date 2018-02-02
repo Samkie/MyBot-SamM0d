@@ -14,7 +14,7 @@
 ; ===============================================================================================================================
 Global $g_hTabMod
 Global $g_hCmbProfile2
-
+Global $g_iScreenSizeErrorCount = 0
 #include "functions\ModTrain\Mod Train Global Variables.au3"
 
 ;===============SamM0d Global Translate Variables====================
