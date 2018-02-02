@@ -452,6 +452,7 @@ Func SetScreenBlueStacks2()
 	If @error = 0 And @extended > 0 Then
 		RegWrite($REGISTRY_KEY_DIRECTORY, "BootParameters", "REG_SZ", $BootParameter)
 	Else
+		; DPI=160 was missing
 		RegWrite($REGISTRY_KEY_DIRECTORY, "BootParameters", "REG_SZ", $BootParameter & " DPI=160")
 	EndIf
 EndFunc   ;==>SetScreenBlueStacks2
