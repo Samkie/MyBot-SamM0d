@@ -431,6 +431,7 @@ Func btnTestTrain()
 	$g_bRunState = True
 
 	_GUICtrlTab_ClickTab($g_hTabMain, 0)
+
 	SetLog("===START===")
 	Local $hTimer = __TimerInit()
 

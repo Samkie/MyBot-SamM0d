@@ -211,6 +211,9 @@ Func CreateBotDebug()
 
 ;~ 		$g_hBtnTestUpgradeWindow = GUICtrlCreateButton(GetTranslatedFileIni("MBR GUI Design Child Bot - Debug", "TestUpgradeWindow", "Test Upgrade Window"), $x + 20, $y, 120, 25)
 ;~ 	$y -= $yNext
+
+;~ 		$g_hBtnConsoleWindow = GUICtrlCreateButton(GetTranslatedFileIni("MBR GUI Design Child Bot - Debug", "ConsoleWindow", "Show/hide Console"), $x + 20, $y, 120, 25)
+;~ 	$y -= $yNext
 	GUICtrlCreateGroup("", -99, -99, 1, 1)
 
 EndFunc   ;==>CreateBotDebug
