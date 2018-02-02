@@ -91,7 +91,7 @@
 ![Ii]mgxml/deadbase/elix/*.png
 ![Ii]mgxml/deadbase/elix/50/*.png
 ![Ii]mgxml/deadbase/elix/100/*.png
-
+![Ii]mgxml/Resources/BuildersBase/AutoUpgrade/NewBuildings/Shop/*.png
 
 # ignore test strategies
 [Ss]trategies/[Tt]est*.ini
