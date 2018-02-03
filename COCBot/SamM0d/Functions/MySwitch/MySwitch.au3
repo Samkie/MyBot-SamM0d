@@ -39,7 +39,7 @@ EndFunc
 
 Func SelectGoogleAccount($iSlot)
 	; open setting page
-	Click($aButtonSetting[0],$aButtonSetting[1],1,0,"#Setting")
+	Click($aButtonSMSetting[0],$aButtonSMSetting[1],1,0,"#Setting")
 
 	Local $iCount
 
@@ -50,7 +50,7 @@ Func SelectGoogleAccount($iSlot)
 		Return False
 	EndIf
 
-;~  	Click($aButtonSettingTabSetting[0],$aButtonSettingTabSetting[1],1,0,"#TabSettings")
+;~  	Click($aButtonSMSettingTabSetting[0],$aButtonSMSettingTabSetting[1],1,0,"#TabSettings")
 ;~  	If _Sleep(500) Then Return False
 
 	If _Sleep(250) Then Return False
@@ -120,7 +120,7 @@ Func DoLoadVillage()
 	Local $iCount = 0
 	$iCount = 0
 ;	$bNowWaitingConfirm = True
-	While Not _CheckColorPixel($aButtonVillageLoad[4], $aButtonVillageLoad[5], $aButtonVillageLoad[6], $aButtonVillageLoad[7], $g_bCapturePixel, "aButtonVillageLoad")
+	While Not _CheckColorPixel($aButtonSMVillageLoad[4], $aButtonSMVillageLoad[5], $aButtonSMVillageLoad[6], $aButtonSMVillageLoad[7], $g_bCapturePixel, "aButtonSMVillageLoad")
 		;If $g_iSamM0dDebug = 1 Then SetLog("village load button Color: " & _GetPixelColor(160, 380,True))
 		$iCount += 1
 		If $iCount = 90 Then
@@ -136,7 +136,7 @@ Func DoLoadVillage()
 		EndIf
 		If _Sleep(1000) Then Return 0
 	WEnd
-	Click($aButtonVillageLoad[0],$aButtonVillageLoad[1],1,0,"#GALo")
+	Click($aButtonSMVillageLoad[0],$aButtonSMVillageLoad[1],1,0,"#GALo")
 	Return 1
 EndFunc
 
@@ -534,7 +534,7 @@ Func DoSwitchAcc()
 					SmartWait4TrainMini($iMySwitchSmartWaitTime)
 					$iMySwitchSmartWaitTime = 0
 				EndIf
-				If _CheckColorPixel($aButtonSetting[4], $aButtonSetting[5], $aButtonSetting[6], $aButtonSetting[7], $g_bCapturePixel, "aButtonSetting") Then
+				If _CheckColorPixel($aButtonSMSetting[4], $aButtonSMSetting[5], $aButtonSMSetting[6], $aButtonSMSetting[7], $g_bCapturePixel, "aButtonSetting") Then
 					If SelectGoogleAccount($iNextAcc) = True Then
 						$iCurActiveAcc = $iNextAcc
 						DoVillageLoadSucess($iCurActiveAcc)
@@ -1148,7 +1148,7 @@ Func btnMakeSwitchADBFolder()
 		If $g_sAndroidGameDistributor = $g_sGoogle Then
 			ClickP($aAway,1,0)
 			If _Sleep(250) Then Return False
-			Click($aButtonSetting[0],$aButtonSetting[1],1,0,"#Setting")
+			Click($aButtonSMSetting[0],$aButtonSMSetting[1],1,0,"#Setting")
 			If Not _Wait4Pixel($aButtonClose2[4], $aButtonClose2[5], $aButtonClose2[6], $aButtonClose2[7], 1500, 100) Then
 				SetLog("Cannot load setting page, restart game...", $COLOR_RED)
 			EndIf

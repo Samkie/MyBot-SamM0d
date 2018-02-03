@@ -236,7 +236,7 @@ Func _checkObstacles($bBuilderBase = False) ;Checks if something is in the way f
 
 	;If $bNowWaitingConfirm = False Then
 		If _ColorCheck(_GetPixelColor($aButtonVillageCancel[4], $aButtonVillageCancel[5],$g_bNoCapturePixel), Hex($aButtonVillageCancel[6], 6), $aButtonVillageCancel[7]) And _
-			_ColorCheck(_GetPixelColor($aButtonVillageLoad[4], $aButtonVillageLoad[5],$g_bNoCapturePixel), Hex($aButtonVillageLoad[6], 6), $aButtonVillageLoad[7]) Then
+			_ColorCheck(_GetPixelColor($aButtonSMVillageLoad[4], $aButtonSMVillageLoad[5],$g_bNoCapturePixel), Hex($aButtonSMVillageLoad[6], 6), $aButtonSMVillageLoad[7]) Then
 			If $icmbSwitchMethod = 0 Then
 				If $ichkProfileImage = 1 Then
 					Local $iResult
