@@ -435,10 +435,17 @@ Func btnTestTrain()
 	SetLog("===START===")
 	Local $hTimer = __TimerInit()
 
+	checkMainScreen()
+
 	$g_bRestart = False
 	$tempDisableTrain=False
 	$tempDisableBrewSpell=False
     ModTrain()
+
+	PrepareDonateCC()
+	DonateCC()
+
+	FriendlyChallenge()
 
 	SetLog("Elapsed: " & Round(__TimerDiff($hTimer) / 1000, 2) & "s")
 	SetLog("===END===")

@@ -243,9 +243,9 @@ Func DonateCC($bCheckForNewMsg = False)
 				If $g_bChkExtraChinese Then
 					SetLog("Using OCR to read the Chinese alphabet..", $COLOR_ACTION)
 					If $ClanString = "" Then
-						$ClanString = getChatStringChinese(30, $g_aiDonatePixel[1] - 24)
+						$ClanString = getChatStringChinese(30, $g_aiDonatePixel[1] - 26)
 					Else
-						$ClanString &= " " & getChatStringChinese(30, $g_aiDonatePixel[1] - 24)
+						$ClanString &= " " & getChatStringChinese(30, $g_aiDonatePixel[1] - 26)
 					EndIf
 					If _Sleep($DELAYDONATECC2) Then ExitLoop
 				EndIf
@@ -269,14 +269,13 @@ Func DonateCC($bCheckForNewMsg = False)
 					EndIf
 					If _Sleep($DELAYDONATECC2) Then ExitLoop
 				EndIf
-
 				; samm0d
 				If $ichkEnableCustomOCR4CCRequest = 1 Then
 					Setlog("Using custom OCR to read cc request message..", $COLOR_ACTION)
 					If $ClanString = "" Then
-						$ClanString = getMyOcr(0,30, $g_aiDonatePixel[1] - 24,160,14,"ccrequest",False,True)
+						$ClanString = getMyOcr(0,30, $g_aiDonatePixel[1] - 26,160,14,"ccrequest",False,True)
 					Else
-						$ClanString &= " " & getMyOcr(0,30, $g_aiDonatePixel[1] - 24,160,14,"ccrequest",False,True)
+						$ClanString &= " " & getMyOcr(0,30, $g_aiDonatePixel[1] - 26,160,14,"ccrequest",False,True)
 					EndIf
 					If _Sleep($DELAYRESPOND) Then ExitLoop
 				EndIf
