@@ -205,8 +205,8 @@ Global $grpHLFClick, $lblHLFClickDelay, $lblDesc1, $chkEnableHLFClick, $lblHLFCl
 Global $ichkSmartUpdateWall = 1
 Global $itxtClickWallDelay = 500
 Global $aBaseNode[2] = [-1,-1] ;first found with core
-Global $iFaceDirection = 1
 Global $aLastWall[2] = [-1,-1]
+Global $iFaceDirection = -1
 
 Global $grpStatsMisc, $chkSmartUpdateWall,$txtClickWallDelay, $chkEnableCustomOCR4CCRequest, $chkCheck4CC, $txtCheck4CCWaitTime, $chkIncreaseGlobalDelay, $txtIncreaseGlobalDelay, _
 $chkAutoDock

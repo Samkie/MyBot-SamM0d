@@ -191,6 +191,7 @@ Func DonateCC($bCheckForNewMsg = False)
 
 		;$g_aiDonatePixel = _MultiPixelSearch(202, $y, 224, 660 + $g_iBottomOffsetY, 50, 1, Hex(0x98D057, 6), $aChatDonateBtnColors, 20)
 		$g_aiDonatePixel = _MultiPixelSearch(200, $y, 230, 660 + $g_iBottomOffsetY, -2, 1, Hex(0x6da725, 6), $aChatDonateBtnColors, 20)
+		If IsArray($g_aiDonatePixel) Then ; if Donate Button found
 			If $g_bDebugSetlog Then SetDebugLog("$g_aiDonatePixel: (" & $g_aiDonatePixel[0] & "," & $g_aiDonatePixel[1] & ")", $COLOR_DEBUG)
 			; samm0d
 			SetLog(_PadStringCenter(" CC Request ", 54, "="), $COLOR_INFO)

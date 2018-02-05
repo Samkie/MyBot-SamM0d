@@ -18,7 +18,7 @@ Func imglocCheckWall()
 
 	Local $bProcessFindWall = False
 	If $ichkSmartUpdateWall = 1 Then ; Use smart wall update
-		If $aBaseNode[0] = -1 Then
+		If $iFaceDirection = -1 Then
 			$bProcessFindWall = True ; check got node or not, if not then process find wall
 		Else
 			$bProcessFindWall = GetWallPositionForUpdate()
@@ -56,7 +56,6 @@ Func imglocCheckWall()
 	If ($FoundWalls[0] = "") Then ; nothing found
 		SetLog("No wall(s) level: " & $levelWall & " found.", $COLOR_ERROR)
 	Else
-
 		Local $iErrorCount = 0
 		Local $aResult
 
@@ -83,12 +82,19 @@ Func imglocCheckWall()
 						If $ichkSmartUpdateWall = 1 Then
 							$aBaseNode[0] = $aCoord[0]
 							$aBaseNode[1] = $aCoord[1]
+							$aLastWall[0] = $aBaseNode[0] + 8
+							$aLastWall[1] = $aBaseNode[1] - 6
+							$iFaceDirection = 1
+;~ 							SetLog("=-=-=-=-=-Advanced update for wall-=-=-=-=-=")
+;~ 							SetLog("Base Node android pos X,Y: " & $aBaseNode[0] & "," & $aBaseNode[1])
+;~ 							SetLog("Next Update Wall android pos X,Y: " & $aLastWall[0] & "," & $aLastWall[1])
 							ConvertFromVillagePos($aBaseNode[0],$aBaseNode[1])
-							If $g_bDebugSetlog Then Setlog("BaseNode1: " & $aBaseNode[0] & "," & $aBaseNode[1])
-							SetLog("=-=-=-=-=-Advanced update for wall-=-=-=-=-=")
-							SetLog("Base Node X,Y: " & $aBaseNode[0] & "," & $aBaseNode[1])
-							SetLog("Last Update Wall X,Y: " & $aLastWall[0] & "," & $aLastWall[1])
-							SetLog("Face Direction: " & $iFaceDirection)
+							ConvertFromVillagePos($aLastWall[0],$aLastWall[1])
+;~ 							SetLog("--------------------------------------------")
+;~ 							SetLog("Base Node village pos X,Y: " & $aBaseNode[0] & "," & $aBaseNode[1])
+;~ 							SetLog("Next Update Wall village pos X,Y: " & $aLastWall[0] & "," & $aLastWall[1])
+;~ 							SetLog("Face Direction: " & $iFaceDirection)
+;~ 							SetLog("=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=")
 						EndIf
 						Return True
 					Else
@@ -117,24 +123,19 @@ Func imglocCheckWall()
 	Return False
 EndFunc   ;==>imglocCheckWall
 
-
 Func imglocFindWalls($walllevel, $searcharea = "DCD", $redline = "", $maxreturn = 0)
 	; Will find maxreturn Wall in specified diamond
 
 	;name , level , coords
 	Local $FoundWalls[1] = [""] ;
 
-	Local $directory = @ScriptDir & "\imgxml\Walls"
 	Local $redLines = $redline
 	Local $minLevel = $walllevel
 	Local $maxLevel = $walllevel
 	Local $maxReturnPoints = $maxreturn
 
-	; Capture the screen for comparison
-	_CaptureRegion2()
-
 	; Perform the search
-	Local $result = DllCallMyBot("SearchMultipleTilesBetweenLevels", "handle", $g_hHBitmap2, "str", $directory, "str", $searcharea, "Int", $maxReturnPoints, "str", $redLines, "Int", $minLevel, "Int", $maxLevel)
+	Local $result = DllCallMyBot("SearchMultipleTilesBetweenLevels", "handle", $g_hHBitmap2, "str", $g_sImgCheckWallDir, "str", $searcharea, "Int", $maxReturnPoints, "str", $redLines, "Int", $minLevel, "Int", $maxLevel)
 	Local $error = @error ; Store error values as they reset at next function call
 	Local $extError = @extended
 
@@ -145,14 +146,14 @@ Func imglocFindWalls($walllevel, $searcharea = "DCD", $redline = "", $maxreturn 
 		Return
 	EndIf
 
-	If checkImglocError($result, "imglocFindWalls") = True Then
+	If checkImglocError($result, "imglocFindWalls", $g_sImgCheckWallDir) = True Then
 		Return $FoundWalls
 	EndIf
 
 	; Process results
 	If $result[0] <> "" Then
 		; Get the keys for the dictionary item.
-		If $g_bDebugSetlog Then SetLog(" imglocFindMyWall search returned : " & $result[0])
+		If $g_bDebugSetlog Then SetDebugLog(" imglocFindMyWall search returned : " & $result[0])
 		Local $aKeys = StringSplit($result[0], "|", $STR_NOCOUNT)
 		; Loop through the array
 		ReDim $FoundWalls[UBound($aKeys)]
@@ -164,19 +165,16 @@ Func imglocFindWalls($walllevel, $searcharea = "DCD", $redline = "", $maxreturn 
 		Next
 	EndIf
 	Return $FoundWalls
-EndFunc   ;==>
+EndFunc   ;==>imglocFindWalls
 
 Func GetWallPositionForUpdate()
-	If $aLastWall[0] = -1 Then ; if last wall position x is -1, mean this is just after image search of wall, initialize direction and wall position for click later.
-		$iFaceDirection = 1
-		$aLastWall[0] = $aBaseNode[0] + 8
-		$aLastWall[1] = $aBaseNode[1] - 6
-	EndIf
 	Local $iCount = 0
+	Local $iCountRecorrect = 0
+	ConvertToVillagePos($aLastWall[0], $aLastWall[1])
 	While 1
 		If $g_bDebugSetlog Then SetLog($iFaceDirection & " click and check x,y:" & $aLastWall[0] & "," & $aLastWall[1])
-		BuildingClick($aLastWall[0], $aLastWall[1]) ; click the wall
-
+		SetLog("Click position " & $aLastWall[0] & "," & $aLastWall[1] & " for check wall", $COLOR_INFO)
+		GemClick($aLastWall[0],$aLastWall[1]) ; click the wall
 		If _Sleep($itxtClickWallDelay) Then Return True; delay
 		Local $iCheckWallReturn = CheckWallLevel() ; check the ocr after click, is that a wall and the level we need to update?
 
@@ -195,30 +193,54 @@ Func GetWallPositionForUpdate()
 				$aLastWall[1] -= 6
 		EndSwitch
 
-		If $iCheckWallReturn = 1 Then ; return of CheckWallLevel(), if 1 mean we found the wall need to update
-			If $g_bDebugSetlog Then SetLog($iFaceDirection & " wall need update")
-			SetLog("=-=-=-=-=-Advanced update for wall-=-=-=-=-=")
-			SetLog("Base Node X,Y: " & $aBaseNode[0] & "," & $aBaseNode[1])
-			SetLog("Last Update Wall X,Y: " & $aLastWall[0] & "," & $aLastWall[1])
-			SetLog("Face Direction: " & $iFaceDirection)
-			ConvertFromVillagePos($aLastWall[0],$aLastWall[1])
-			Return False ; return false for no need use the DllCall to find wall again. and let the process continue update wall with gold or elixir
-		ElseIf $iCheckWallReturn = 0 Then ; return of CheckWallLevel(), if 0 mean we found nothing related about wall.
-			; change another direction start again at node
-			$aLastWall[0] = $aBaseNode[0]
-			$aLastWall[1] = $aBaseNode[1]
-			If $iFaceDirection = 4 Then ; if 4 directions process finish, reset all data, and let the image search engine find wall again.
-				$aLastWall[0] = -1
-				$aLastWall[1] = -1
-				$aBaseNode[0] = -1
-				$aBaseNode[1] = -1
-				$iFaceDirection = 1
-				If $g_bDebugSetlog Then SetLog("RESET Node and let the DllCall for find wall again")
-				ExitLoop
-			Else
-				$iFaceDirection += 1
-			EndIf
-		EndIf
+		Switch $iCheckWallReturn
+			Case 0
+				; change another direction start again at node
+				Setlog("Position is not a wall.", $COLOR_INFO)
+				If $iCountRecorrect > 1 Then
+					$iCountRecorrect = 0
+					If $iFaceDirection = 4 Then ; if 4 directions process finish, reset all data, and let the image search engine find wall again.
+						$aLastWall[0] = -1
+						$aLastWall[1] = -1
+						$aBaseNode[0] = -1
+						$aBaseNode[1] = -1
+						$iFaceDirection = -1
+						If $g_bDebugSetlog Then SetLog("RESET Node and let the DllCall for find wall again")
+						Return True
+					Else
+						$iFaceDirection += 1
+						Setlog("Change direction: " & $iFaceDirection, $COLOR_INFO)
+						$aLastWall[0] = $aBaseNode[0]
+						$aLastWall[1] = $aBaseNode[1]
+						Switch $iFaceDirection ; after check wall, prepare the click for next click use
+							Case 2
+								$aLastWall[0] += 8
+								$aLastWall[1] += 6
+							Case 3
+								$aLastWall[0] -= 8
+								$aLastWall[1] += 6
+							Case 4
+								$aLastWall[0] -= 8
+								$aLastWall[1] -= 6
+						EndSwitch
+						ConvertToVillagePos($aLastWall[0], $aLastWall[1])
+					EndIf
+				Else
+					$iCountRecorrect += 1
+				EndIf
+			Case 1
+				Setlog("Position is a Wall Level: " & $g_iCmbUpgradeWallsLevel + 4, $COLOR_INFO)
+;~ 				SetLog("=-=-=-=-=-Advanced update for wall-=-=-=-=-=")
+;~ 				SetLog("Next Update Wall android pos X,Y: " & $aLastWall[0] & "," & $aLastWall[1])
+;~ 				SetLog("--------------------------------------------")
+				ConvertFromVillagePos($aLastWall[0],$aLastWall[1])
+;~ 				SetLog("Next Update Wall village pos X,Y: " & $aLastWall[0] & "," & $aLastWall[1])
+;~ 				SetLog("Face Direction: " & $iFaceDirection)
+;~ 				SetLog("=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=")
+				Return False ; return false for no need use the DllCall to find wall again. and let the process continue update wall with gold or elixir
+			Case 101 To 115
+				Setlog("Position is a wall but Level: " & ($iCheckWallReturn - 100), $COLOR_INFO)
+		EndSwitch
 		; else we continue looping and looking for next click
 
 		; some prevention for Endless loop
@@ -227,6 +249,8 @@ Func GetWallPositionForUpdate()
 			ExitLoop
 		EndIf
 	WEnd
+
+	ConvertFromVillagePos($aLastWall[0], $aLastWall[1])
 	Return True
 EndFunc
 
@@ -237,7 +261,7 @@ Func CheckWallLevel()
 			If Number($aResult[2]) = ($g_iCmbUpgradeWallsLevel + 4) Then ; we found a wall
 				Return 1 ; return 1 the wall level we need update
 			Else
-				Return 2 ; return 2 is wall but the level not is we need for update
+				Return 100 + Number($aResult[2]) ; return 2 is wall but the level not is we need for update
 			EndIf
 		EndIf
 	EndIf
