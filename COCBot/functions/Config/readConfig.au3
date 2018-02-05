@@ -145,6 +145,9 @@ EndFunc   ;==>ReadBuildingConfig
 Func ReadRegularConfig()
 	SetDebugLog("Read Config " & $g_sProfileConfigPath)
 
+	; <><><><> Bot / Debug <><><><>
+	ReadConfig_Debug()
+
 	IniReadS($g_iThreads, $g_sProfileConfigPath, "general", "threads", $g_iThreads, "int")
 	If $g_iThreads < 0 Then $g_iThreads = 0
 	IniReadS($g_iBotDesignFlags, $g_sProfileConfigPath, "general", "botDesignFlags", 0, "int") ; Default for existing profiles is 0, for new is 3
@@ -182,8 +185,6 @@ Func ReadRegularConfig()
 
 	; <><><><> Bot / Android <><><><>
 	ReadConfig_Android()
-	; <><><><> Bot / Debug <><><><>
-	ReadConfig_Debug()
 	; <><><><> Log window <><><><>
 	ReadConfig_600_1()
 	; <><><><> Village / Misc <><><><>

@@ -98,6 +98,22 @@ Func InitializeBot()
 
 	ProcessCommandLine()
 
+	; samm0d - always enable debug mode
+	$g_bDevMode = True
+
+	If FileExists(@ScriptDir & "\EnableMBRDebug.txt") Then ; Set developer mode
+		$g_bDevMode = True
+		Local $aText = FileReadToArray(@ScriptDir & "\EnableMBRDebug.txt") ; check if special debug flags set inside EnableMBRDebug.txt file
+		If Not @error Then
+			For $l = 0 To UBound($aText) - 1
+				If StringInStr($aText[$l], "DISABLEWATCHDOG", $STR_NOCASESENSEBASIC) <> 0 Then
+					$g_bBotLaunchOption_NoWatchdog = True
+					SetDebugLog("Watch Dog disabled by Developer Mode File Command", $COLOR_INFO)
+				EndIf
+			Next
+		EndIf
+	EndIf
+
 	SetupProfileFolder() ; Setup profile folders
 
 	SetLogCentered(" BOT LOG ") ; Initial text for log
@@ -126,24 +142,7 @@ Func InitializeBot()
 	_Crypt_Startup()
 	__GDIPlus_Startup() ; Start GDI+ Engine (incl. a new thread)
 
-	InitAndroidConfig()
-
-	; samm0d - always enable debug mode
-	$g_bDevMode = True
-
-	If FileExists(@ScriptDir & "\EnableMBRDebug.txt") Then ; Set developer mode
-		$g_bDevMode = True
-		Local $aText = FileReadToArray(@ScriptDir & "\EnableMBRDebug.txt") ; check if special debug flags set inside EnableMBRDebug.txt file
-		If Not @error Then
-			For $l = 0 To UBound($aText) - 1
-				If StringInStr($aText[$l], "DISABLEWATCHDOG", $STR_NOCASESENSEBASIC) <> 0 Then
-					$g_bBotLaunchOption_NoWatchdog = True
-					SetDebugLog("Watch Dog disabled by Developer Mode File Command", $COLOR_INFO)
-				EndIf
-			Next
-		EndIf
-	EndIf
-
+	;InitAndroidConfig()
 	CreateMainGUI() ; Just create the main window
 	CreateSplashScreen() ; Create splash window
 

@@ -32,6 +32,17 @@ Func imglocCheckWall()
 	If _Sleep(500) Then Return
 
 	Local $levelWall = $g_iCmbUpgradeWallsLevel + 4
+	Local $iXClickOffset = 0
+	Local $iYClickOffset = 0
+
+	Switch $levelWall
+		Case 8
+			$iXClickOffset = 1
+			$iYClickOffset = -1
+		Case 10
+			$iXClickOffset = 2
+			$iYClickOffset = 2
+	EndSwitch
 
 	_CaptureRegion2()
 	SetLog("Searching for Wall(s) level: " & $levelWall & ". Using imgloc: ", $COLOR_SUCCESS)
@@ -60,23 +71,19 @@ Func imglocCheckWall()
 				SetLog("Found: " & $FoundWalls[$i] & " possible Wall position: " & $WallCoordsArray[$fc], $COLOR_SUCCESS)
 				SetLog("Checking if found position is a Wall and of desired level.", $COLOR_SUCCESS)
 				;try click
+				$aCoord[0] = $aCoord[0] + $iXClickOffset
+				$aCoord[1] = $aCoord[1] + $iYClickOffset
 				GemClick($aCoord[0],$aCoord[1])
 				If _Sleep($itxtClickWallDelay) Then Return True; delay
 				$aResult = BuildingInfo(245, 520 + $g_iBottomOffsetY) ; Get building name and level with OCR
 				If $aResult[0] = 2 Then ; We found a valid building name
-					If (StringInStr($aResult[1], "wall") = True Or StringInStr($aResult[1], "W ll") = True) And Number($aResult[2]) = ($g_iCmbUpgradeWallsLevel + 4) Then ; we found a wall
-						Setlog("Position : " &  $WallCoordsArray[$fc] & " is a Wall Level: " & $g_iCmbUpgradeWallsLevel + 4  & ".")
+					If (StringInStr($aResult[1], "wall") = True Or StringInStr($aResult[1], "W ll") = True) And Number($aResult[2]) = ($levelWall) Then ; we found a wall
+						Setlog("Position : " &  $WallCoordsArray[$fc] & " is a Wall Level: " & $levelWall  & ".")
 						; so far i only test on wall level 10 update to 11, and i not sure the x,y result for other level of wall need adjust offset or not.
 						If $ichkSmartUpdateWall = 1 Then
-							Switch $g_iCmbUpgradeWallsLevel + 4
-								Case 8
-									$aBaseNode[0] = $aCoord[0] + 1
-									$aBaseNode[1] = $aCoord[1] - 1
-								Case Else
-									$aBaseNode[0] = $aCoord[0] ;reserved for maybe need adjust some offset
-									$aBaseNode[1] = $aCoord[1] ;reserved for maybe need adjust some offset
-							EndSwitch
-							ConvertToVillagePos($aBaseNode[0],$aBaseNode[1])
+							$aBaseNode[0] = $aCoord[0]
+							$aBaseNode[1] = $aCoord[1]
+							ConvertFromVillagePos($aBaseNode[0],$aBaseNode[1])
 							If $g_bDebugSetlog Then Setlog("BaseNode1: " & $aBaseNode[0] & "," & $aBaseNode[1])
 							SetLog("=-=-=-=-=-Advanced update for wall-=-=-=-=-=")
 							SetLog("Base Node X,Y: " & $aBaseNode[0] & "," & $aBaseNode[1])
@@ -87,10 +94,10 @@ Func imglocCheckWall()
 					Else
 						If $g_bDebugSetlog Then
 							ClickP($aAway, 1, 0, "#0931") ;Click Away
-							Setlog("Position : " &  $WallCoordsArray[$fc] & " is not a Wall Level: " & $g_iCmbUpgradeWallsLevel + 4 & ". It was: " & $aResult[1] & ", " & $aResult[2] & " !", $COLOR_DEBUG) ;debug
+							Setlog("Position : " &  $WallCoordsArray[$fc] & " is not a Wall Level: " & $levelWall & ". It was: " & $aResult[1] & ", " & $aResult[2] & " !", $COLOR_DEBUG) ;debug
 						Else
 							ClickP($aAway, 1, 0, "#0932") ;Click Away
-							Setlog("Position : " &  $WallCoordsArray[$fc] & " is not a Wall Level: " & $g_iCmbUpgradeWallsLevel + 4 & ".", $COLOR_ERROR)
+							Setlog("Position : " &  $WallCoordsArray[$fc] & " is not a Wall Level: " & $levelWall & ".", $COLOR_ERROR)
 						EndIf
 					EndIf
 				Else
@@ -169,30 +176,32 @@ Func GetWallPositionForUpdate()
 	While 1
 		If $g_bDebugSetlog Then SetLog($iFaceDirection & " click and check x,y:" & $aLastWall[0] & "," & $aLastWall[1])
 		BuildingClick($aLastWall[0], $aLastWall[1]) ; click the wall
+
 		If _Sleep($itxtClickWallDelay) Then Return True; delay
 		Local $iCheckWallReturn = CheckWallLevel() ; check the ocr after click, is that a wall and the level we need to update?
-		Local $aWallOffset[2] = [8,6]
-		ConvertToVillagePos($aWallOffset[0], $aWallOffset[1])
+
 		Switch $iFaceDirection ; after check wall, prepare the click for next click use
 			Case 1
-				$aLastWall[0] += $aWallOffset[0]
-				$aLastWall[1] -= $aWallOffset[1]
+				$aLastWall[0] += 8
+				$aLastWall[1] -= 6
 			Case 2
-				$aLastWall[0] += $aWallOffset[0]
-				$aLastWall[1] += $aWallOffset[1]
+				$aLastWall[0] += 8
+				$aLastWall[1] += 6
 			Case 3
-				$aLastWall[0] -= $aWallOffset[0]
-				$aLastWall[1] += $aWallOffset[1]
+				$aLastWall[0] -= 8
+				$aLastWall[1] += 6
 			Case 4
-				$aLastWall[0] -= $aWallOffset[0]
-				$aLastWall[1] -= $aWallOffset[1]
+				$aLastWall[0] -= 8
+				$aLastWall[1] -= 6
 		EndSwitch
+
 		If $iCheckWallReturn = 1 Then ; return of CheckWallLevel(), if 1 mean we found the wall need to update
 			If $g_bDebugSetlog Then SetLog($iFaceDirection & " wall need update")
 			SetLog("=-=-=-=-=-Advanced update for wall-=-=-=-=-=")
 			SetLog("Base Node X,Y: " & $aBaseNode[0] & "," & $aBaseNode[1])
 			SetLog("Last Update Wall X,Y: " & $aLastWall[0] & "," & $aLastWall[1])
 			SetLog("Face Direction: " & $iFaceDirection)
+			ConvertFromVillagePos($aLastWall[0],$aLastWall[1])
 			Return False ; return false for no need use the DllCall to find wall again. and let the process continue update wall with gold or elixir
 		ElseIf $iCheckWallReturn = 0 Then ; return of CheckWallLevel(), if 0 mean we found nothing related about wall.
 			; change another direction start again at node
