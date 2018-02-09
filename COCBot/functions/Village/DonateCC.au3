@@ -116,8 +116,9 @@ Func DonateCC($bCheckForNewMsg = False)
 		EndIf
 		;If Global tab is selected.
 		If _ColorCheck(_GetPixelColor(189, 24, True), Hex(0x383828, 6), 20) Then ; Darker gray
-			If _Sleep($DELAYDONATECC1) Then Return ;small delay to allow tab to completely open
+			; samm0d - reverse click and sleep, not sleep and click
 			ClickP($aClanTab, 1, 0, "#0169") ; clicking clan tab
+			If _Sleep($DELAYDONATECC1) Then Return ;small delay to allow tab to completely open
 			ExitLoop
 		EndIf
 		;counter for time approx 3 sec max allowed for tab to open
@@ -144,12 +145,9 @@ Func DonateCC($bCheckForNewMsg = False)
 	; add scroll here
 	While 1
 		ForceCaptureRegion()
-		$y = 90
-		$Scroll = _PixelSearch(293, 8 + $y, 295, 23 + $y, Hex(0xFFFFFF, 6), 20)
-		If IsArray($Scroll) And _ColorCheck(_GetPixelColor(300, 110, True), Hex(0x509808, 6), 20) Then ; a second pixel for the green
+		If _CheckColorPixel(295,100,0xFFFFFF,10) And _CheckColorPixel(301,111,0x5DA515,20) Then
 			$bDonate = True
-			Click($Scroll[0], $Scroll[1], 1, 0, "#0172")
-			$y = 90
+			Click($aButtonClanDonateScrollUp[0], $aButtonClanDonateScrollUp[1], 1, 0, "#0172")
 			If _Sleep($DELAYDONATECC2 + 100) Then ExitLoop
 			ContinueLoop
 		EndIf
@@ -781,14 +779,10 @@ Func DonateCC($bCheckForNewMsg = False)
 
 		ForceCaptureRegion()
 
-		$Scroll = _PixelSearch(293, 687 - 30, 295, 693 - 30, Hex(0xFFFFFF, 6), 20)
-
-
-		If IsArray($Scroll) Then
+		If _CheckColorPixel(295,655,0xFFFFFF,10) And _CheckColorPixel(301,662,0x5DA515,20) Then
 			$bDonate = True
-			Click($Scroll[0], $Scroll[1], 1, 0, "#0172")
+			Click($aButtonClanDonateScrollDown[0], $aButtonClanDonateScrollDown[1], 1, 0, "#0172")
 			$y = 600
-
 			If _Sleep($DELAYDONATECC2) Then ExitLoop
 			ContinueLoop
 		EndIf

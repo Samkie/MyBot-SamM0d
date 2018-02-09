@@ -41,8 +41,8 @@ Global Const $aButtonOpenLaunchAttack[9] 		  = [30 , 610 + $g_iMidOffsetY, 90 , 
 Global Const $aButtonClanWindowOpen[9]   	      = [8  , 325 + $g_iMidOffsetY, 28 , 380 + $g_iMidOffsetY, 16 , 380 + $g_iMidOffsetY, 	0xC55115, 20, "=-= Open Chat Window"] ; main page, clan chat Button
 Global Const $aButtonClanWindowClose[9]  	      = [321, 325 + $g_iMidOffsetY, 342, 380 + $g_iMidOffsetY, 330, 380 + $g_iMidOffsetY, 	0xC55115, 20, "=-= Close Chat Window"] ; main page, clan chat Button
 Global Const $aButtonClanChatTab[9]    	  	  = [175, 14               , 275, 30               , 280, 30               ,    0x706C50, 20, "=-= Switch to Clan Channel"] ; Chat page, ClanChat Tab
-Global Const $aButtonClanDonateScrollUp[9] 	  = [289, 69  + $g_iMidOffsetY, 299, 83  + $g_iMidOffsetY, 293, 73  + $g_iMidOffsetY,  	0xFFFFFF, 10, "=-= Donate Scroll Up"] ; Donate / Chat Page, Scroll up Button
-Global Const $aButtonClanDonateScrollDown[9] 	  = [289, 620 + $g_iMidOffsetY, 299, 636 + $g_iMidOffsetY, 294, 625 + $g_iMidOffsetY, 	0xFFFFFF, 10, "=-= Donate Scroll Down"] ; Donate / Chat Page, Scroll Down Button
+Global Const $aButtonClanDonateScrollUp[9] 	  = [290, 100, 300, 112 , 295, 100,  	0xFFFFFF, 10, "=-= Donate Scroll Up"] ; Donate / Chat Page, Scroll up Button
+Global Const $aButtonClanDonateScrollDown[9] 	  = [290, 650, 300, 662, 295, 655, 	0xFFFFFF, 10, "=-= Donate Scroll Down"] ; Donate / Chat Page, Scroll Down Button
 
 Global Const $aButtonAttackReturnHome[9]     	  = [385, 528 + $g_iMidOffsetY, 480, 568 + $g_iMidOffsetY, 440, 558 + $g_iMidOffsetY, 	0x60B010, 20, "=-= Return Home"] ; IsReturnHomeBattlePage, ReturnHome Button
 Global Const $aButtonAttackSurrender[9]      	  = [25 , 555 + $g_iMidOffsetY, 110, 579 + $g_iMidOffsetY, 66 , 576 + $g_iMidOffsetY, 	0xC00000, 20, "=-= Surrender Battle"] ; Attack Page, Surrender Button
