@@ -161,25 +161,16 @@ Func PoliteCloseCoC($sSource = "Unknown_", $bPoliteCloseCoC = $g_bPoliteCloseCoC
 	If $bPoliteCloseCoC Then
 		; polite close
 		If $g_sAndroidGameDistributor = $g_sGoogle Then
-			Local $i = 0 ; Reset Loop counter
-			While 1
-				checkObstacles()
-				AndroidBackButton()
-				; samm0d
-				If _Wait4Pixel(465,445,0x6CBB1F,10,1000,100,"PoliteCloseCoC") = True Then
-					PureClick(514, 427, 1, 50, "#0117") ; Click Okay Button
-					ExitLoop
-				EndIf
-				;If _Sleep($DELAYCLOSEOPEN1000) Then Return ; wait for window to open
-				;If ClickOkay("ExitOkay_" & $sSource, True) = True Then ExitLoop ; Confirm okay to exit
-				If $i > 10 Then
-					SetLog("Can not find Okay button to exit CoC, Forcefully Closing CoC", $COLOR_ERROR)
-					If $g_bDebugImageSave Then DebugImageSave($sSource)
-					CloseCoC()
-					ExitLoop
-				EndIf
-				$i += 1
-			WEnd
+			checkObstacles()
+			AndroidBackButton()
+			; samm0d
+			If _Wait4Pixel(465,445,0x6CBB1F,10,2000,100,"PoliteCloseCoC") = True Then
+				PureClick(514, 427, 1, 50, "#0117") ; Click Okay Button
+			Else
+				SetLog("Can not find Okay button to exit CoC, Forcefully Closing CoC", $COLOR_ERROR)
+				If $g_bDebugImageSave Then DebugImageSave($sSource)
+				CloseCoC()
+			EndIf
 		Else
 			Local $btnExit
 			Local $i = 0 ; Reset Loop counter
@@ -240,6 +231,16 @@ Func PoliteCloseCoC($sSource = "Unknown_", $bPoliteCloseCoC = $g_bPoliteCloseCoC
 		; force-kill Game
 		CloseCoC()
 	EndIf
+
+	; samm0d last check for game client total close
+	Local $j = 0
+	While GetAndroidProcessPID(Default, False) <> 0
+		$j += 1
+		If $j > 20 Then ExitLoop
+		If _Sleep(100) Then $j = 20
+	WEnd
+	If $j > 20 Then CloseCoC()
+
 	ResetAndroidProcess()
 	ReduceBotMemory()
 EndFunc   ;==>PoliteCloseCoC
