@@ -42,6 +42,9 @@ Func imglocCheckWall()
 		Case 10
 			$iXClickOffset = 2
 			$iYClickOffset = 2
+		Case 11
+			$iXClickOffset = 1
+			$iYClickOffset = -2
 	EndSwitch
 
 	_CaptureRegion2()

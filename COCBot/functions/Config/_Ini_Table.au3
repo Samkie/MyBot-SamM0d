@@ -18,7 +18,7 @@
 ; ===============================================================================================================================
 #include-once
 ; samm0d
-Global Const $g_iIniLinesMax = 1160 ; As of 2017-02-24, the number of active config.ini lines is 685
+Global Const $g_iIniLinesMax = 1200 ; As of 2017-02-24, the number of active config.ini lines is 685
 Global $g_asIniTable[$g_iIniLinesMax][2] ; section|key, value
 Global $g_iIniLineCount = 0
 
@@ -102,7 +102,7 @@ Func _Ini_Save($filename)
 			If $g_sProfileSecondaryOutputFileName <> "" Then
 				; samm0d
 				Local $bStrategiesFileFlag = CheckSamM0dStrategiesSection($sCurrentSection)
-				If $sCurrentSection = "search" Or _
+				If $bStrategiesFileFlag Or $sCurrentSection = "search" Or _
 						$sCurrentSection = "attack" Or _
 						$sCurrentSection = "troop" Or _
 						$sCurrentSection = "spells" Or _
@@ -123,7 +123,7 @@ Func _Ini_Save($filename)
 		If $g_sProfileSecondaryOutputFileName <> "" Then
 			; samm0d
 			Local $bStrategiesFileFlag = CheckSamM0dStrategiesSection($sCurrentSection)
-			If $sCurrentSection = "search" Or _
+			If $bStrategiesFileFlag Or $sCurrentSection = "search" Or _
 					$sCurrentSection = "attack" Or _
 					$sCurrentSection = "troop" Or _
 					$sCurrentSection = "spells" Or _

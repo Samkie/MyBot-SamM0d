@@ -5,7 +5,7 @@
 	; Parameters ....:
 	; Return values .: True					more collectors near redline
 	;				 : False				less collectors outside than specified
-	; Author ........: Samkie (7 FEB 2017)
+	; Author ........: Samkie (19 FEB 2018)
 	; Modified ......:
 	; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2016
 	;                  MyBot is distributed under the terms of the GNU GPL
@@ -30,11 +30,11 @@ Func AreCollectorsNearRedline($percent)
 	SuspendAndroid()
 	$g_aiPixelMine = GetLocationMine()
 	If (IsArray($g_aiPixelMine)) Then
-		_ArrayAdd($g_aiPixelNearCollector, $g_aiPixelMine)
+		_ArrayAdd($g_aiPixelNearCollector, $g_aiPixelMine, 0, "|", @CRLF, $ARRAYFILL_FORCE_STRING)
 	EndIf
 	$g_aiPixelElixir = GetLocationElixir()
 	If (IsArray($g_aiPixelElixir)) Then
-		_ArrayAdd($g_aiPixelNearCollector, $g_aiPixelElixir)
+		_ArrayAdd($g_aiPixelNearCollector, $g_aiPixelElixir, 0, "|", @CRLF, $ARRAYFILL_FORCE_STRING)
 	EndIf
 	ResumeAndroid()
 

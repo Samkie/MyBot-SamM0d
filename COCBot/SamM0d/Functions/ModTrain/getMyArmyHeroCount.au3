@@ -60,24 +60,36 @@ Func getMyArmyHeroCount($bSetLog = True)
 							$tmpUpgradingHeroes[$i] = $eHeroKing
 							; safety code to warn user when wait for hero found while being upgraded to reduce stupid user posts for not attacking
 							If BitAND($g_aiAttackUseHeroes[$DB], $g_aiSearchHeroWaitEnable[$DB], $eHeroKing) = $eHeroKing Or BitAND($g_aiAttackUseHeroes[$LB], $g_aiSearchHeroWaitEnable[$LB], $eHeroKing) = $eHeroKing Then ; check wait for hero status
+								If $g_iSearchNotWaitHeroesEnable Then
+									$g_iHeroAvailable = BitOR($g_iHeroAvailable, $eHeroKing)
+								Else
+									SetLog("Warning: King Upgrading & Wait enabled, Disable Wait for King or may never attack!", $COLOR_ERROR)
+								EndIf
 								_GUI_Value_STATE("SHOW", $groupKingSleeping) ; Show king sleeping icon
-								SetLog("Warning: King Upgrading & Wait enabled, Disable Wait for King or may never attack!", $COLOR_ERROR)
 							EndIf
 						Case 1
 							$sMessage = " - Archer Queen"
 							$tmpUpgradingHeroes[$i] = $eHeroQueen
 							; safety code
 							If BitAND($g_aiAttackUseHeroes[$DB], $g_aiSearchHeroWaitEnable[$DB], $eHeroQueen) = $eHeroQueen Or BitAND($g_aiAttackUseHeroes[$LB], $g_aiSearchHeroWaitEnable[$LB], $eHeroQueen) = $eHeroQueen Then
+								If $g_iSearchNotWaitHeroesEnable Then
+									$g_iHeroAvailable = BitOR($g_iHeroAvailable, $eHeroQueen)
+								Else
+									SetLog("Warning: Queen Upgrading & Wait enabled, Disable Wait for Queen or may never attack!", $COLOR_ERROR)
+								EndIf
 								_GUI_Value_STATE("SHOW", $groupQueenSleeping)
-								SetLog("Warning: Queen Upgrading & Wait enabled, Disable Wait for Queen or may never attack!", $COLOR_ERROR)
 							EndIf
 						Case 2
 							$sMessage = " - Grand Warden"
 							$tmpUpgradingHeroes[$i] = $eHeroWarden
 							; safety code
 							If BitAND($g_aiAttackUseHeroes[$DB], $g_aiSearchHeroWaitEnable[$DB], $eHeroWarden) = $eHeroWarden Or BitAND($g_aiAttackUseHeroes[$LB], $g_aiSearchHeroWaitEnable[$LB], $eHeroWarden) = $eHeroWarden Then
+								If $g_iSearchNotWaitHeroesEnable Then
+									$g_iHeroAvailable = BitOR($g_iHeroAvailable, $eHeroWarden)
+								Else
+									SetLog("Warning: Warden Upgrading & Wait enabled, Disable Wait for Warden or may never attack!", $COLOR_ERROR)
+								EndIf
 								_GUI_Value_STATE("SHOW", $groupWardenSleeping)
-								SetLog("Warning: Warden Upgrading & Wait enabled, Disable Wait for Warden or may never attack!", $COLOR_ERROR)
 							EndIf
 						Case Else
 							$sMessage = " - Need to Get Monkey"

@@ -6,7 +6,7 @@
 	; Return values .: True					more collectors outside than specified
 	;				 : False				less collectors outside than specified
 	; Author ........: McSlither (Jan-2016)
-	; Modified ......: TheRevenor (Jul 2016), Samkie (13 Jan 2017)
+	; Modified ......: TheRevenor (Jul 2016), Samkie (19 Feb 2018)
 	; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2016
 	;                  MyBot is distributed under the terms of the GNU GPL
 	; Related .......:
@@ -30,11 +30,11 @@ Func AreCollectorsOutside($percent)
 	SuspendAndroid()
 	$g_aiPixelMine = GetLocationMine()
 	If (IsArray($g_aiPixelMine)) Then
-		_ArrayAdd($g_aiPixelNearCollector, $g_aiPixelMine)
+		_ArrayAdd($g_aiPixelNearCollector, $g_aiPixelMine, 0, "|", @CRLF, $ARRAYFILL_FORCE_STRING)
 	EndIf
 	$g_aiPixelElixir = GetLocationElixir()
 	If (IsArray($g_aiPixelElixir)) Then
-		_ArrayAdd($g_aiPixelNearCollector, $g_aiPixelElixir)
+		_ArrayAdd($g_aiPixelNearCollector, $g_aiPixelElixir, 0, "|", @CRLF, $ARRAYFILL_FORCE_STRING)
 	EndIf
 	ResumeAndroid()
 
