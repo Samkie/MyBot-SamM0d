@@ -102,7 +102,16 @@ Func _Ini_Save($filename)
 			If $g_sProfileSecondaryOutputFileName <> "" Then
 				; samm0d
 				Local $bStrategiesFileFlag = CheckSamM0dStrategiesSection($sCurrentSection)
-				If $bStrategiesFileFlag = True Or $sCurrentSection = "search" Or $sCurrentSection = "attack" Or $sCurrentSection = "troop" Or $sCurrentSection = "spells" Or $sCurrentSection = "milkingattack" Or $sCurrentSection = "endbattle" Or $sCurrentSection = "collectors" then
+				If $sCurrentSection = "search" Or _
+						$sCurrentSection = "attack" Or _
+						$sCurrentSection = "troop" Or _
+						$sCurrentSection = "spells" Or _
+						$sCurrentSection = "milkingattack" Or _
+						$sCurrentSection = "endbattle" Or _
+						$sCurrentSection = "collectors" Or _
+						$sCurrentSection = "DropOrder" Or _
+						$sCurrentSection = "SmartZap" Or _
+						$sCurrentSection = "planned" Then
 					FileWriteLine($g_sProfileSecondaryOutputFileName, "[" & $sCurrentSection & "]")
 				EndIF
 			EndIf
@@ -114,7 +123,16 @@ Func _Ini_Save($filename)
 		If $g_sProfileSecondaryOutputFileName <> "" Then
 			; samm0d
 			Local $bStrategiesFileFlag = CheckSamM0dStrategiesSection($sCurrentSection)
-			If $bStrategiesFileFlag = True Or $sCurrentSection = "search" Or $sCurrentSection = "attack" Or $sCurrentSection = "troop" Or $sCurrentSection = "spells" Or $sCurrentSection = "milkingattack" Or $sCurrentSection = "endbattle" Or $sCurrentSection = "collectors" Then
+			If $sCurrentSection = "search" Or _
+					$sCurrentSection = "attack" Or _
+					$sCurrentSection = "troop" Or _
+					$sCurrentSection = "spells" Or _
+					$sCurrentSection = "milkingattack" Or _
+					$sCurrentSection = "endbattle" Or _
+					$sCurrentSection = "collectors" Or _
+					$sCurrentSection = "DropOrder" Or _
+					$sCurrentSection = "SmartZap" Or _
+					$sCurrentSection = "planned" Then
 				FileWriteLine($g_sProfileSecondaryOutputFileName, $asParts[2] & "=" & $g_asIniTable[$i][1])
 			EndIf
 		EndIf
