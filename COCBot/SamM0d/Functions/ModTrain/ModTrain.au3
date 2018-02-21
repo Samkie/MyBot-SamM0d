@@ -129,6 +129,9 @@ Func ModTrain($ForcePreTrain = False)
 				If $aSwitchList[$i][4] = $iCurActiveAcc Then
 					;$aSwitchList[$i][0] = _DateAdd('n', $iKTime[0], _NowCalc())
 					$aSwitchList[$i][0] = _DateAdd('n', $iMaxV, _NowCalc())
+					If $iMaxV Then
+						SetLog("Army Ready Time: " & $aSwitchList[$i][0], $COLOR_INFO)
+					EndIf
 					If $aSwitchList[$i][2] <> 1 Then
 						$bIsAttackType = True
 					EndIf

@@ -64,6 +64,8 @@ Func getPBTime()
 				SetError(1, "Bad OCR of PB time value ")
 				ClickP($aAway, 1, 0, "#9999") ; close window
 				If _Sleep($DELAYPERSONALSHIELD2) Then Return ; wait for close
+				; samm0d
+				$g_bRestart = True
 				Return
 			EndIf
 		EndIf

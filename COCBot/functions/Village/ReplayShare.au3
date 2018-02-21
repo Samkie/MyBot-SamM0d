@@ -14,12 +14,12 @@
 ; ===============================================================================================================================
 #include-once
 
-Func ReplayShare($bShareLastReplay)
+Func ReplayShare($bShareLastReplay, $bForce = False)
 	If Not $g_bShareAttackEnable Or Not $bShareLastReplay Then Return
 
 	Local Static $sLastTimeShared = ""
 
-	If $sLastTimeShared = "" Or _DateDiff("m", $sLastTimeShared, _NowCalc()) > 30  Then ; Go into here when Function got called the first time or Cooldown between shares is already over
+	If $sLastTimeShared = "" Or _DateDiff("m", $sLastTimeShared, _NowCalc()) > 30 Or $bForce Then ; Go into here when Function got called the first time or Cooldown between shares is already over
 		SetLog("Going to share the last Attack!")
 
 		ClickP($aAway, 1, 0, "#0235") ;Click away any open Windows
@@ -65,6 +65,8 @@ Func ReplayShare($bShareLastReplay)
 			If _Sleep($DELAYREPLAYSHARE1) Then Return
 			Click(530, 210 + $g_iMidOffsetY, 1, 0, "#0240") ;Click the Send Button
 			$sLastTimeShared = _NowCalc ; Update the Date where the last Replay got shared
+			; samm0d
+			$g_bShareAttackEnableNow = False
 		ElseIf _CheckPixel($aGrayShareReplayButton, True) Then ; Is the Share Button for the Replay not available?
 			SetLog("Sharing latest Attack is not enabled right now, storing it and share later!") ; Cooldown is not over yet! Probably User shared a Replay and started Bot afterwards
 			ClickP($aAway, 1, 0, "#0235")

@@ -457,6 +457,7 @@ Func btnTestTrain()
 	$tempDisableBrewSpell=False
     ModTrain()
 
+
 	PrepareDonateCC()
 	DonateCC()
 

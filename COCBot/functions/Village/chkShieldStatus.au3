@@ -24,7 +24,11 @@ Func chkShieldStatus($bChkShield = True, $bForceChkPBT = False)
 	If $bChkShield Or $g_asShieldStatus[0] = "" Or $g_asShieldStatus[1] = "" Or $g_asShieldStatus[2] = "" Or $g_sPBStartTime = "" Or $g_bGForcePBTUpdate = True Then ; almost always get shield information
 
 		$Result = getShieldInfo() ; get expire time of shield
-
+		; samm0d
+		If $g_bRestart = True Then
+			RestartBot()
+			Return
+		EndIf
 		If @error Then SetLog("chkShieldStatus Shield OCR error= " & @error & "Extended= " & @extended, $COLOR_ERROR)
 		If _Sleep($DELAYRESPOND) Then Return
 
@@ -91,7 +95,11 @@ Func chkShieldStatus($bChkShield = True, $bForceChkPBT = False)
 		$g_bGForcePBTUpdate = False ; Reset global flag to force PB update
 
 		$Result = getPBTime() ; Get time in future that PBT starts
-
+		; samm0d
+		If $g_bRestart = True Then
+			RestartBot()
+			Return
+		EndIf
 		If @error Then SetLog("chkShieldStatus getPBTime OCR error= " & @error & ", Extended= " & @extended, $COLOR_ERROR)
 		;If $g_bDebugSetlog Then SetDebugLog("getPBTime() returned: " & $Result, $COLOR_DEBUG)
 		If _Sleep($DELAYRESPOND) Then Return

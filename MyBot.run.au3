@@ -73,7 +73,7 @@ MainLoop(CheckPrerequisites())
 
 Func UpdateBotTitle()
 	Local $sConsoleTitle ; Console title has also Android Emulator Name
-	Local $sTitle = "My Bot " & $g_sBotVersion & " @Samkie M0d v1.3.7 "
+	Local $sTitle = "My Bot " & $g_sBotVersion & " @Samkie M0d v1.3.8 "
 	If $g_sBotTitle = "" Then
 		$g_sBotTitle = $sTitle
 		$sConsoleTitle = $sTitle
@@ -804,7 +804,7 @@ Func runBot() ;Bot that runs everything in order
 			If $g_bRestart = True Then ContinueLoop
 		EndIf
 
-		PrepareDonateCC()
+;~ 		PrepareDonateCC()
 
 		chkShieldStatus()
 		If $g_bRestart = True Then ContinueLoop
@@ -974,19 +974,34 @@ Func _Idle() ;Sequence that runs until Full Army
 	If $g_bDebugSetlog Then SetLog("Func Idle ", $COLOR_DEBUG)
 
 	; samm0d - check make donate type account enter idle loop
+	Local $bSkipEnterIdleLoop = False
+	Local $bDonateTypeAcc = False
 	If $ichkEnableMySwitch Then
 		If $iCurActiveAcc <> -1 Then
 			For $i = 0 To UBound($aSwitchList) - 1
 				If $aSwitchList[$i][4] = $iCurActiveAcc Then
 					If $aSwitchList[$i][2] = 1 Then
-						$g_bIsFullArmywithHeroesAndSpells = False
+						$bDonateTypeAcc = True
+						ExitLoop
 					EndIf
 				EndIf
 			Next
 		EndIf
+		If $bDonateTypeAcc = False Then
+			If $bAvoidSwitch = False Then
+				If $g_bIsFullArmywithHeroesAndSpells = False Then
+					$g_bRestart = True
+				EndIf
+				$bSkipEnterIdleLoop = True
+			Else
+				SetLog("Enter Idle Loop, troops getting ready or soon.", $COLOR_INFO)
+			EndIf
+		EndIf
+	Else
+		$bSkipEnterIdleLoop = $g_bIsFullArmywithHeroesAndSpells
 	EndIf
 
-	While $g_bIsFullArmywithHeroesAndSpells = False
+	While $bSkipEnterIdleLoop = False
 
 		CheckAndroidReboot()
 
@@ -996,9 +1011,6 @@ Func _Idle() ;Sequence that runs until Full Army
 		If $g_iCommandStop = -1 Then SetLog("====== Waiting for full army ======", $COLOR_SUCCESS)
 		Local $hTimer = __TimerInit()
 
-		;PrepareDonateCC()
-
-		;If $g_bDonateSkipNearFullEnable = True Then getArmyCapacity(true,true)
 		If $g_iActiveDonate And $g_bChkDonate Then
 			Local $iReHere = 0
 			; samm0d
@@ -1037,15 +1049,6 @@ Func _Idle() ;Sequence that runs until Full Army
 				EndIf
 			EndIf
 		EndIf
-
-;~ 		If ($g_iCommandStop = 3 Or $g_iCommandStop = 0) And $g_bTrainEnabled = True Then
-;~ 			CheckArmyCamp(True, True)
-;~ 			If _Sleep($DELAYIDLE1) Then Return
-;~ 			If ($g_bFullArmy = False Or $g_bFullArmySpells = False) Then
-;~ 				SetLog("Army Camp and Barracks are not full, Training Continues...", $COLOR_ACTION)
-;~ 				$g_iCommandStop = 0
-;~ 			EndIf
-;~ 		EndIf
 
 		ReplayShare($g_bShareAttackEnableNow)
 		If _Sleep($DELAYIDLE1) Then Return
@@ -1153,31 +1156,23 @@ Func _Idle() ;Sequence that runs until Full Army
 		If $ichkEnableMySwitch Then
 			; perform switch acc since army still need waiting
 			If $g_bIsFullArmywithHeroesAndSpells = False Then
-				If $ichkEnableContinueStay = 1 Then
+;~ 				If $ichkEnableContinueStay = 1 Then
 					If $bAvoidSwitch = False Then
 						$g_bRestart = True
 						ExitLoop
 					Else
 						SetLog("Avoid switch, troops getting ready or soon.", $COLOR_INFO)
 					EndIf
-				Else
-					$g_bRestart = True
-					ExitLoop
-				EndIf
+;~ 				Else
+;~ 					$g_bRestart = True
+;~ 					ExitLoop
+;~ 				EndIf
 			Else
 				; if donate type acc, perform switch account too
-				If $iCurActiveAcc <> -1 Then
-					For $i = 0 To UBound($aSwitchList) - 1
-						If $aSwitchList[$i][4] = $iCurActiveAcc Then
-							If $aSwitchList[$i][2] = 1 Then
-								If $ichkEnableContinueStay = 1 Then
-									$bAvoidSwitch = False
-								EndIf
-								$g_bRestart = True
-							EndIf
-							ExitLoop
-						EndIf
-					Next
+				If $bDonateTypeAcc Then
+					$bAvoidSwitch = False
+					$g_bRestart = True
+					ExitLoop
 				EndIf
 			EndIf
 		EndIf

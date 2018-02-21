@@ -253,10 +253,11 @@ Func PoliteCloseCoC($sSource = "Unknown_", $bPoliteCloseCoC = $g_bPoliteCloseCoC
 		$j += 1
 		If $g_iSamM0dDebug Then SetLog("Waiting game client close..." & $j, $COLOR_INFO)
 		If $j > 20 Then
+			If $g_iSamM0dDebug Then SetLog("force stop game client...", $COLOR_INFO)
 			AndroidAdbSendShellCommand("am force-stop " & $g_sAndroidGamePackage, Default, Default, False)
 		EndIf
 		If $j > 30 Then ExitLoop
-		_Sleep(200)
+		_Sleep(250)
 	WEnd
 	If $j > 30 Then SetLog("Failed to close game client.", $COLOR_ERROR)
 	ResetAndroidProcess()
