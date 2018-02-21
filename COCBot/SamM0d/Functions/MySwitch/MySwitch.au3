@@ -461,14 +461,15 @@ Func DoSwitchAcc()
 						If $g_iSamM0dDebug = 1 Then SetLog("$g_bIsFullArmywithHeroesAndSpells: " & $g_bIsFullArmywithHeroesAndSpells)
 						If $g_iSamM0dDebug = 1 Then SetLog("$ichkForcePreTrainB4Switch: " & $ichkForcePreTrainB4Switch)
 						If $g_bIsFullArmywithHeroesAndSpells = True Or $ichkForcePreTrainB4Switch = 1 Then ;If $g_bIsFullArmywithHeroesAndSpells = True mean just back from attack, then we check train before switch acc.
-							If $g_bIsFullArmywithHeroesAndSpells = True Then
-								ReplayShare($g_bShareAttackEnableNow, True)
-							EndIf
+							Local $bShare_replay = $g_bIsFullArmywithHeroesAndSpells
 							SetLog("Check train before switch account...",$COLOR_ACTION)
 							If $ichkModTrain = 1 Then
 								ModTrain($ichkForcePreTrainB4Switch = 1)
 							Else
 								TrainRevamp()
+							EndIf
+							If $bShare_replay = True Then
+								ReplayShare($g_bShareAttackEnableNow, True)
 							EndIf
 						EndIf
 						If $bAvoidSwitch Then
