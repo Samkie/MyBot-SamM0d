@@ -168,28 +168,28 @@ Global $MySpellsButton[10][3] = _
 ["Haste"	 ,  0,  4], _
 ["Skeleton"	 ,  1,  4]]
 
-; updated 28 Jun 2017
+; updated Jun 2018
 Global $MyTroopsCost[20][10] = _
-[[300,25,40,60,100,150,200,250,300,300], _
-[600,50,80,120,200,300,400,500,600,600], _
-[4500,250,750,1250,1750,2250,3000,3500,4000,4500], _
-[200,25,40,60,80,100,150,200,200,200], _
-[4500,1000,1500,2000,2500,3000,3500,4000,4500,4500], _
-[5500,2000,2500,3000,3500,4000,4500,5000,5500,5500], _
-[5500,1500,2000,2500,3000,3500,4000,4500,5000,5500], _
-[15000,5000,6000,8000,10000,15000,15000,15000,15000,15000], _
-[30000,18000,20000,22000,24000,26000,28000,30000,30000,30000], _
-[39000,21000,24000,27000,30000,33000,35000,37000,39000,39000], _
-[20000,15000,16000,17000,18000,19000,20000,20000,20000,20000], _
-[64000,4200,4800,5200,5600,6000,64000,64000,64000,64000], _
-[44000,36000,40000,44000,44000,44000,44000,44000,44000,44000], _
-[13,6,7,8,9,10,11,12,13,13], _
-[140,40,45,52,58,65,90,115,140,140], _
-[250,70,100,130,160,190,220,250,250,250], _
-[975,450,550,600,675,750,825,900,975,975], _
-[550,250,350,450,450,550,550,550,550,550], _
-[630,390,450,510,570,630,630,630,630,630], _
-[190,130,150,170,190,190,190,190,190,190]]
+[[300,25,40,60,100,150,200,250,300,300], _							; Barbarian
+[600,50,80,120,200,300,400,500,600,600], _							; Archer
+[4500,250,750,1250,1750,2250,3000,3500,4000,4500], _				; Giant
+[200,25,40,60,80,100,150,200,200,200], _							; Goblin
+[4500,1000,1500,2000,2500,3000,3500,4000,4500,4500], _				; WallBreaker
+[5500,2000,2500,3000,3500,4000,4500,5000,5500,5500], _				; Balloon
+[5500,1500,2000,2500,3000,3500,4000,4500,5000,5500], _				; Wizard
+[15000,5000,6000,8000,10000,15000,15000,15000,15000,15000], _		; Healer
+[30000,18000,20000,22000,24000,26000,28000,30000,30000,30000], _	; Dragon
+[39000,21000,24000,27000,30000,33000,35000,37000,39000,39000], _	; Pekka
+[20000,15000,16000,17000,18000,19000,20000,20000,20000,20000], _	; BabyDragon
+[64000,4200,4800,5200,5600,6000,64000,64000,64000,64000], _			; Miner
+[44000,36000,40000,44000,44000,44000,44000,44000,44000,44000], _	; ElectroDragon
+[13,6,7,8,9,10,11,12,13,13], _										; Minion
+[140,40,45,52,58,65,90,115,140,140], _								; HogRider
+[250,70,100,130,160,190,220,250,250,250], _							; Valkyrie
+[975,450,550,600,675,750,825,900,975,975], _						; Golem
+[550,250,350,450,450,550,550,550,550,550], _						; Witch
+[630,390,450,510,570,630,630,630,630,630], _						; Lavahound
+[190,130,150,170,190,190,190,190,190,190]]							; Bowler
 
 Global Enum $enumLightning, $enumHeal, $enumRage, $enumJump, $enumFreeze, $enumClone, $enumPoison, $enumEarth, $enumHaste, $enumSkeleton
 
@@ -211,8 +211,8 @@ Global $MySpells[10][5] = _
 ["Heal"	     ,  2,  2, 0, 0], _
 ["Rage"      ,  3,  2, 0, 0], _
 ["Jump"	     ,  4,  2, 0, 0], _
-["Freeze"	 ,  5,  2, 0, 0], _
-["Clone"	 ,  6,  4, 0, 0], _
+["Freeze"	 ,  5,  1, 0, 0], _
+["Clone"	 ,  6,  3, 0, 0], _
 ["Poison"	 ,  7,  1, 0, 0], _
 ["Earth"	 ,  8,  1, 0, 0], _
 ["Haste"	 ,  9,  1, 0, 0], _
@@ -277,10 +277,10 @@ Global $g_hHBitmap_Av_Spell_Slot1, $g_hHBitmap_Av_Spell_Slot2, $g_hHBitmap_Av_Sp
 Global $g_hHBitmap_Av_Spell_SlotQty1, $g_hHBitmap_Av_Spell_SlotQty2, $g_hHBitmap_Av_Spell_SlotQty3, $g_hHBitmap_Av_Spell_SlotQty4, $g_hHBitmap_Av_Spell_SlotQty5, $g_hHBitmap_Av_Spell_SlotQty6, $g_hHBitmap_Av_Spell_SlotQty7
 Global $g_hHBitmap_Capture_Av_Spell_Slot1, $g_hHBitmap_Capture_Av_Spell_Slot2, $g_hHBitmap_Capture_Av_Spell_Slot3, $g_hHBitmap_Capture_Av_Spell_Slot4, $g_hHBitmap_Capture_Av_Spell_Slot5, $g_hHBitmap_Capture_Av_Spell_Slot6, $g_hHBitmap_Capture_Av_Spell_Slot7
 
-Global $g_aiArmyAvailableCCSlot[4] = [22,533,460,549]
-Global $g_aiArmyAvailableCCSlotQty[4] = [24,498,460,514]
-Global $g_aiArmyAvailableCCSpellSlot[4] = [514,529,670,545]
-Global $g_aiArmyAvailableCCSpellSlotQty[4] = [514,499,670,515]
+Global $g_aiArmyAvailableCCSlot[4] = [25,532,389,548]
+Global $g_aiArmyAvailableCCSlotQty[4] = [27,497,389,513]
+Global $g_aiArmyAvailableCCSpellSlot[4] = [456,529,601,544]
+Global $g_aiArmyAvailableCCSpellSlotQty[4] = [458,497,601,513]
 
 Global $g_hHBitmap_Av_CC_Slot1, $g_hHBitmap_Av_CC_Slot2, $g_hHBitmap_Av_CC_Slot3, $g_hHBitmap_Av_CC_Slot4, $g_hHBitmap_Av_CC_Slot5, $g_hHBitmap_Av_CC_Slot6
 Global $g_hHBitmap_Av_CC_SlotQty1, $g_hHBitmap_Av_CC_SlotQty2, $g_hHBitmap_Av_CC_SlotQty3, $g_hHBitmap_Av_CC_SlotQty4, $g_hHBitmap_Av_CC_SlotQty5, $g_hHBitmap_Av_CC_SlotQty6

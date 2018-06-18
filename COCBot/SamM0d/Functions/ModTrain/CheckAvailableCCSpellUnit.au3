@@ -76,7 +76,7 @@ Func CheckAvailableCCSpellUnit()
 		Next
 
 		Local $iSlotCount = 0
-		If _ColorCheck(_GetPixelColor(540,510,False), Hex(0XCFCFC8, 6), 10) And _ColorCheck(_GetPixelColor(615,510,False), Hex(0XCFCFC8, 6), 10) = False Then
+		If _ColorCheck(_GetPixelColor(481,510,False), Hex(0XCECDC5, 6), 10) And _ColorCheck(_GetPixelColor(551,510,False), Hex(0XCDCDC5, 6), 10) = False Then
 			$iOffsetSlot = $g_aiArmyAvailableCCSpellSlot[0] + 39
 			$iSlotCount = 0
 		Else
