@@ -30,68 +30,11 @@
 ![Ll]anguages/*.ini
 
 # Exclusion Images/Icon
-![Ii]mages/logo.jpg
-![Ii]mages/2arrow.jpg
-![Ii]mages/MyBot.ico
-![Ii]mages/Button/*.*
-![Ii]mages/imglocbuttons/*.png
-![Ii]mages/Resources/Collect/*.png
-![Ii]mages/Resources/Collect/*.bmp
-![Ii]mages/Resources/LootCart/loot_cart.png
-![Ii]mages/Resources/Obstacles/*.png
-![Ii]mages/Resources/Tombs/*.png
-![Ii]mages/Resources/GemBox/*.png
-![Ii]mages/Stats/*.jpg
-![Ii]mages/WeakBase/Eagle/*.png
-![Ii]mages/WeakBase/Infernos/*.png
-![Ii]mages/WeakBase/Mortars/*.png
-![Ii]mages/WeakBase/WTower/*.png
-![Ii]mages/WeakBase/Xbow/*.png
-![Ii]mages/Walls/*.jpg
-![Ii]mages/*.png
+![Ii]mages/*
 ![Ss]trategies/*.ini
 
 #imgloc transition
-![Ii]mgxml/boostbarracks/*.png
-![Ii]mgxml/donateccwbl/*.png
-![Ii]mgxml/imglocbuttons/*.png
-![Ii]mgxml/imglocdonate/*.png
-![Ii]mgxml/ImgLocTH/*.png
-![Ii]mgxml/imgloctroopbar/*.png
-![Ii]mgxml/other/*.png
-![Ii]mgxml/rearm/*.png
-![Ii]mgxml/Resources/*.png
-![Ii]mgxml/Storages/*.png
-![Ii]mgxml/Walls/*.png
-![Ii]mgxml/WeakBase/*.png
-![Ii]mgxml/imglocbuttons/attackwindow/*.png
-![Ii]mgxml/imglocbuttons/chatopen/*.png
-![Ii]mgxml/imglocbuttons/exit/*.png
-![Ii]mgxml/imglocbuttons/findmatch/*.png
-![Ii]mgxml/imglocbuttons/mainwindow/*.png
-![Ii]mgxml/imglocbuttons/trainwindow/*.png
-![Ii]mgxml/imglocbuttons/upgradewindow/*.png
-![Ii]mgxml/imglocdonate/spells/*.png
-![Ii]mgxml/imglocdonate/troops/*.png
-![Ii]mgxml/imglocdonate/window/*.png
-![Ii]mgxml/imgloctroopbar/spells/*.png
-![Ii]mgxml/imgloctroopbar/troops/*.png
-![Ii]mgxml/Resources/Collect/*.png
-![Ii]mgxml/Resources/GemBox/*.png
-![Ii]mgxml/Resources/LootCart/*.png
-![Ii]mgxml/Resources/Obstacles/*.png
-![Ii]mgxml/Resources/Tombs/*.png
-![Ii]mgxml/Storages/Elixir/*.png
-![Ii]mgxml/Storages/Gold/*.png
-![Ii]mgxml/WeakBase/Eagle/*.png
-![Ii]mgxml/WeakBase/Infernos/*.png
-![Ii]mgxml/WeakBase/Mortars/*.png
-![Ii]mgxml/WeakBase/WTower/*.png
-![Ii]mgxml/WeakBase/Xbow/*.png
-![Ii]mgxml/deadbase/elix/*.png
-![Ii]mgxml/deadbase/elix/50/*.png
-![Ii]mgxml/deadbase/elix/100/*.png
-![Ii]mgxml/Resources/BuildersBase/AutoUpgrade/NewBuildings/Shop/*.png
+![Ii]mgxml/*
 
 # ignore test strategies
 [Ss]trategies/[Tt]est*.ini
@@ -101,39 +44,11 @@ CSV/Attack/[Tt]est*.csv
 CSV/THsnipe/[Tt]est*.csv
 
 #Sam Mod image
-![Ii]mages/triangle_left.bmp
-![Ii]mages/triangle_right.bmp
-!COCBot/SamM0d/[Ii]mages/Chat/*.*
-!COCBot/SamM0d/[Ii]mages/TrainButtons/*.*
-!COCBot/SamM0d/[Ii]mages/Troops/*.*
-!COCBot/SamM0d/[Ii]mages/Troops/Queue/*.*
-!COCBot/SamM0d/[Ii]mages/Troops/Train/*.*
-!COCBot/SamM0d/[Ii]mages/Troops/CC/*.*
-!COCBot/SamM0d/[Ii]mages/Troops/Ready/*.*
-!COCBot/SamM0d/[Ii]mages/Spells/*.*
-!COCBot/SamM0d/[Ii]mages/Spells/Brew/*.*
-!COCBot/SamM0d/[Ii]mages/Spells/Queue/*.*
-!COCBot/SamM0d/[Ii]mages/Spells/CC/*.*
-!COCBot/SamM0d/[Ii]mages/HeroStatus/*.*
-!COCBot/SamM0d/[Ii]mages/OCR/armybuildinfo/*.*
-!COCBot/SamM0d/[Ii]mages/OCR/armycap/*.*
-!COCBot/SamM0d/[Ii]mages/OCR/armyqty/*.*
-!COCBot/SamM0d/[Ii]mages/OCR/ccrequest/*.*
-!COCBot/SamM0d/[Ii]mages/OCR/maintenancebreak/*.*
-!COCBot/SamM0d/[Ii]mages/OCR/spellqty/*.*
-!COCBot/SamM0d/[Ii]mages/OCR/spellqtybrew/*.*
-!COCBot/SamM0d/[Ii]mages/OCR/spellqtypre/*.*
-!COCBot/SamM0d/[Ii]mages/OCR/troopcost/*.*
-!COCBot/SamM0d/[Ii]mages/OCR/troopslevel/*.*
+!COCBot/SamM0d/[Ii]mages/*
 !MyBot.run.exe
 !MyBot.run.Watchdog.exe
 !MyBot.run.Wmi.exe
-![Ll]ib/*.dll
-
-![Ii]mages/Storages/Gold/*.png
-![Ii]mages/Storages/Elixir/*.png
-![Ii]mgxml/AttackBar/*.png
-![Ii]mgxml/Resources/BuildersBase/AutoUpgrade/NewBuildings/Slot/*.png
+![Ll]ib/*
 
 # Debug
 [Ll]ib/[Dd]ebug/
