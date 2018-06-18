@@ -32,6 +32,11 @@ Global Const $aButtonClose7[9]    = [720, 104 + $g_iMidOffsetY, 738, 125 + $g_iM
 Global Const $aButtonClose8[9]	= [780, 185              , 835, 250              , 0  , 0                , 	0x0     ,  0, "=-= Random Away Coordinate"]
 
 ;~ ; ScreenCoordinates - first 4 values store the region [x1,y1,x2,y2] that can click; values 5,6,7,8 is the color check pixel x,y,color,tolerance level for confirm the button exist if needed.
+Global Const $aButtonArmyTab[9]                 = [30,  110, 164, 146, 115, 110, 0xF9F9F7, 20 , "=-= Army Tab"]
+Global Const $aButtonTrainTroopsTab[9]          = [187, 110, 321, 146, 265, 110, 0xF9F9F7, 20 , "=-= Train Troops Tab"]
+Global Const $aButtonBrewSpellsTab[9]           = [334, 110, 479, 146, 450, 110, 0xF9F9F7, 20 , "=-= Brew Spells Tab"]
+Global Const $aButtonQuickTrainTab[9]           = [500, 110, 635, 146, 600, 110, 0xFAFAF7, 20 , "=-= Quick Train Tab"]
+ 
 Global Const $aButtonOpenTrainArmy[9]  	  	  = [25 , 540 + $g_iMidOffsetY, 50 , 570 + $g_iMidOffsetY, 50 , 537 + $g_iMidOffsetY, 	0xEEAF45, 20, "=-= Open Train Army Page"] ; Main Screen, Army Train Button
 Global Const $aButtonOpenProfile[9]    	  	  = [28 , 23               , 46 , 46               , 38 , 18               ,    0x10D0F0, 20, "=-= Open Profile Page"] ; Main page, Open Profile Button
 ;Global Const $aButtonOpenShieldInfo[9] 	  	  = [430, 7                , 442, 20               , 435, 14               ,    0xE8E8E0, 20, "=-= Open Shield Info Page"] ; main page, open shield info page
@@ -58,7 +63,7 @@ Global Const $aButtonRequestCCSend[9] 		  = [470, 185 + $g_iMidOffsetY, 570, 225
 Global Const $aButtonSMSetting[9]				  = [810, 545 + $g_iMidOffsetY, 830, 565 + $g_iMidOffsetY, 814, 539 + $g_iMidOffsetY, 	0xFFFFFF, 10, "=-= Setting"]
 Global Const $aButtonSettingTabSetting[9]		  = [388, 80  + $g_iMidOffsetY, 484, 100 + $g_iMidOffsetY, 434, 80  + $g_iMidOffsetY, 	0xF0F4F0, 10, "=-= Tab Settings"]
 Global Const $aButtonGoogleConnectRed[9]		  = [410, 380 + $g_iMidOffsetY, 460, 400 + $g_iMidOffsetY, 431, 401 + $g_iMidOffsetY, 	0xD00408, 20, "=-= Connect Red"]
-Global Const $aButtonGoogleConnectGreen[9]	  = [410, 380 + $g_iMidOffsetY, 460, 400 + $g_iMidOffsetY, 431, 378 + $g_iMidOffsetY, 	0xD0E878, 20, "=-= Connect Green"]
+Global Const $aButtonGoogleConnectGreen[9]	  	  = [410, 380 + $g_iMidOffsetY, 460, 400 + $g_iMidOffsetY, 431, 378 + $g_iMidOffsetY, 	0xD0E878, 20, "=-= Connect Green"]
 
 Global Const $aButtonSMVillageLoad[9] 		      = [480, 385 + $g_iMidOffsetY, 550, 415 + $g_iMidOffsetY, 455, 407 + $g_iMidOffsetY, 	0x72C11D, 20, "=-= Village Load"]
 Global Const $aButtonVillageCancel[9] 		  = [310, 385 + $g_iMidOffsetY, 380, 415 + $g_iMidOffsetY, 288, 403 + $g_iMidOffsetY, 	0xED7531, 20, "=-= Village Cancel"]
@@ -67,11 +72,6 @@ Global Const $aButtonVillageConfirmClose[9]     = [575,                   20, 59
 Global Const $aButtonVillageConfirmText[9]      = [320, 160 + $g_iMidOffsetY, 375, 170 + $g_iMidOffsetY, 350, 165 + $g_iMidOffsetY, 	0xFFFFFF, 5 , "=-= Village Confirm Text"]
 Global Const $aButtonVillageConfirmOK[9]        = [500, 155 + $g_iMidOffsetY, 555, 175 + $g_iMidOffsetY, 480, 168 + $g_iMidOffsetY, 	0x76C01E, 20, "=-= Village Confirm Okay"]
 Global Const $aButtonVillageWasAttackOK[9]	  = [380, 475 + $g_iMidOffsetY, 470, 510 + $g_iMidOffsetY, 405, 507 + $g_iMidOffsetY, 	0x5EAC10, 20, "=-= Village Was Attacked Confirm Okay"]
-
-Global Const $aButtonArmyTab[9]                 = [50,  85 + $g_iMidOffsetY , 160, 110 + $g_iMidOffsetY, 110, 84 + $g_iMidOffsetY ,    0XF8F8F8, 5 , "=-= Army Tab"]
-Global Const $aButtonTrainTroopsTab[9]          = [250, 85 + $g_iMidOffsetY , 360, 110 + $g_iMidOffsetY, 310, 84 + $g_iMidOffsetY ,    0XF8F8F8, 5 , "=-= Train Troops Tab"]
-Global Const $aButtonBrewSpellsTab[9]           = [450, 85 + $g_iMidOffsetY , 560, 110 + $g_iMidOffsetY, 510, 84 + $g_iMidOffsetY ,    0XF8F8F8, 5 , "=-= Brew Spells Tab"]
-Global Const $aButtonQuickTrainTab[9]           = [650, 85 + $g_iMidOffsetY , 760, 110 + $g_iMidOffsetY, 710, 84 + $g_iMidOffsetY ,    0XF8F8F8, 5 , "=-= Quick Train Tab"]
 
 Global Const $aButtonEditArmy[9]                = [740, 480+ $g_iMidOffsetY , 800, 506 + $g_iMidOffsetY, 800, 490 + $g_iMidOffsetY,    0XC0E968, 20, "=-= Edit Army"]
 Global Const $aButtonEditCancel[9]              = [740, 470+ $g_iMidOffsetY , 800, 490 + $g_iMidOffsetY, 800, 485 + $g_iMidOffsetY,    0XE91217, 20, "=-= Edit Army Cancel"]
@@ -82,7 +82,6 @@ Global Const $aButtonFCChangeLayout[9]          = [200,                  290, 28
 Global Const $aButtonFCStart[9]                 = [500,                  290, 550,                  305, 530,                  284,    0XDBF685, 20, "=-= Start Share Challenge"]
 Global Const $aButtonFCBack[9]                  = [160,                  106, 195,                  120, 180,                  116,    0XF5FDFF, 10, "=-= Back To Challenge"]
 Global Const $aButtonFCClose[9]                 = [690,                  103, 710,                  125, 700,                  111,    0xFFFFFF, 10, "=-= Close Challenge"]
-
 
 Global Const $aButtonGuardRemove[9]             = [500,260,560,275,530,275,0XE51115,15,"=-= Guard Remove"]
 Global Const $aButtonGuardConfirmRemove[9]      = [485,417,543,444,510,445,0X6AB91D,15,"=-= Confirm Guard Remove"]
@@ -440,7 +439,7 @@ Func HMLClickAway(ByRef $x, ByRef $y, ByRef $MsgCode)
 	Else
 		ForceCaptureRegion()
 		_CaptureRegion()
-		If _CheckPixel($aIsMain) Or _CheckPixel($aIsMainGrayed) Or _CheckPixel($aIsOnBuilderIsland) Or _CheckPixel($aIsOnBuilderIslandGrayed) Then
+		If _CheckPixel($aIsMain) Or _CheckPixel($aIsMainGrayed) Or _CheckPixel($aIsOnBuilderBase) Or _CheckPixel($aIsOnBuilderBaseGrayed) Then
 			For $i = 1 To 7
 				Local $tempButton = Eval("aButtonClose" & $i)
 				Local $sMsg = Default

@@ -17,7 +17,7 @@
 Func DoRevampTroops($bDoPreTrain = False)
 	If _Sleep(500) Then Return
 	Local $bReVampFlag = False
-	Local $tempTroops[19][5]
+	Local $tempTroops[20][5]
 	$tempTroops	= $MyTroops
 
 	If $ichkMyTroopsOrder Then
@@ -190,12 +190,12 @@ Func DoRevampTroops($bDoPreTrain = False)
 								$iRemainTroopsCapacity -= $fixRemain
 							EndIf
 						Else
-							SetLog("Cannot find button: " & $tempTroops[$i][0] & " for click", $COLOR_ERROR)
+							SetLog("Cannot find button (1): " & $tempTroops[$i][0] & " for click", $COLOR_ERROR)
 						EndIf
 					EndIf
 
 					Else
-						SetLog("Cannot find button: " & $tempTroops[$i][0] & " for click", $COLOR_ERROR)
+						SetLog("Cannot find button (2): " & $tempTroops[$i][0] & " for click", $COLOR_ERROR)
 					EndIf
 
 					; reduce some speed

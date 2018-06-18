@@ -129,8 +129,8 @@ Global Const $DELAYCHECKOBSTACLES10 = 1800000 ; 30 minutes
 ;isGemOpen
 Global Const $DELAYISGEMOPEN1 = 350
 
-;isOnBuilderIsland
-Global Const $DELAYISBUILDERISLAND = 300
+;isOnBuilderBase
+Global Const $DELAYISBUILDERBASE = 300
 
 ;waitMainScreen
 Global Const $DELAYWAITMAINSCREEN1 = 2000
@@ -387,3 +387,9 @@ Global $DELAYSWITCHBASES1 = 1000
 ;ClockTower
 Global $DELAYCLOCKTOWER1 = 1000
 Global $DELAYCLOCKTOWER2 = 200
+
+;SuperXP / GoblinXP
+Global Const $DELAYDROPSuperXP1= 500
+Global Const $DELAYDROPSuperXP2 = 1000
+Global Const $DELAYDROPSuperXP3 = 250
+Global Const $DELAYPREPARESearchSuperXP = 500

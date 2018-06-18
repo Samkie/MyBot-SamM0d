@@ -35,8 +35,7 @@ Func CreateAttackSearchDeadBaseScripted()
 			GUICtrlSetOnEvent(-1, 'UpdateComboScriptNameDB') ; Run this function when the secondary GUI [X] is clicked
 
 	$y += 25
-		;samm0d increase height of $lblNotesScriptDB
-		$g_hLblNotesScriptDB =  GUICtrlCreateLabel("", $x, $y + 5, 200, 230)
+		$g_hLblNotesScriptDB =  GUICtrlCreateLabel("", $x, $y + 5, 200, 180)
 		$g_hCmbScriptRedlineImplDB = GUICtrlCreateCombo("", $x, $y + 195, 230, -1, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
 			GUICtrlSetData(-1, GetTranslatedFileIni("MBR GUI Design Child Attack - Attack Scripted", "CmbScriptRedlineImpl", "ImgLoc Raw Redline (default)|ImgLoc Redline Drop Points|Original Redline|External Edges"))
 			_GUICtrlComboBox_SetCurSel(-1, $g_aiAttackScrRedlineRoutine[$DB])

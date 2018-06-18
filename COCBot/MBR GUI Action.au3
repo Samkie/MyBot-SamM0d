@@ -16,6 +16,7 @@
 Func BotStart($bAutostartDelay = 0)
 	FuncEnter(BotStart)
 	ResumeAndroid()
+	CleanSecureFiles()
 	CalCostCamp()
 	CalCostSpell()
 
@@ -188,6 +189,9 @@ Func BotStop()
 	GUICtrlSetState($g_hBtnAttackNowTS, $GUI_HIDE)
 	GUICtrlSetState($g_hPicTwoArrowShield, $GUI_SHOW)
 	GUICtrlSetState($g_hLblVersion, $GUI_SHOW)
+	For $i = $g_hlblKing to $g_hPicLabRed
+		GUICtrlSetState($i, $GUI_SHOW)
+	NExt
 
 	; update try items
 	TrayItemSetText($g_hTiStartStop, GetTranslatedFileIni("MBR GUI Design - Loading", "StatusBar_Item_Start", "Start bot"))

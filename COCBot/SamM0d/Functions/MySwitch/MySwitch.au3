@@ -614,7 +614,6 @@ Func DoVillageLoadSucess($iAcc)
 	$g_asShieldStatus[1] = ""
 	$g_asShieldStatus[2] = ""
 	$g_sPBStartTime = ""
-	$g_bShareAttackEnableNow = False
 
 	; Mod Train
 	;-----------------------------------------------------
@@ -1431,7 +1430,7 @@ Func Wait4Main($bBuilderBase = False)
 		If _CheckColorPixel($aIsMain[0], $aIsMain[1], $aIsMain[2], $aIsMain[3], $g_bNoCapturePixel, "aIsMain") Then
 			If $g_iSamM0dDebug = 1 Then Setlog("Main Village - Screen cleared, Wait4Main exit", $COLOR_DEBUG)
 			Return True
-		ElseIf _CheckColorPixel($aIsOnBuilderIsland[0], $aIsOnBuilderIsland[1], $aIsOnBuilderIsland[2], $aIsOnBuilderIsland[3], $g_bNoCapturePixel, "aIsOnBuilderIsland") Then
+		ElseIf _CheckColorPixel($aIsOnBuilderBase[0], $aIsOnBuilderBase[1], $aIsOnBuilderBase[2], $aIsOnBuilderBase[3], $g_bNoCapturePixel, "aIsOnBuilderBase") Then
 			If Not $bBuilderBase Then
 				ZoomOut()
 				SwitchBetweenBases()

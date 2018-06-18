@@ -16,7 +16,7 @@
 
 Global $g_hGUI_ACTIVEBASE_ATTACK_SCRIPTED = 0
 Global $g_hCmbScriptNameAB = 0, $g_hCmbScriptRedlineImplAB = 0, $g_hCmbScriptDroplineAB = 0
-Global $g_hLblNotesScriptAB = 0
+Global $g_hLblNotesScriptAB = 0 , $g_hbtnAttNow
 
 Func CreateAttackSearchActiveBaseScripted()
 	$g_hGUI_ACTIVEBASE_ATTACK_SCRIPTED = _GUICreate("", $_GUI_MAIN_WIDTH - 195, $g_iSizeHGrpTab4, 150, 25, BitOR($WS_CHILD, $WS_TABSTOP), -1, $g_hGUI_ACTIVEBASE)

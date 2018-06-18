@@ -24,8 +24,14 @@ Func DropTrophy()
 			setZombie()
 		EndIf
 
-		$g_aiCurrentLoot[$eLootTrophy] = getTrophyMainScreen($aTrophies[0], $aTrophies[1]) ; get OCR to read current Village Trophies
-		SetDebugLog("Current Trophy Count: " & $g_aiCurrentLoot[$eLootTrophy], $COLOR_DEBUG)
+		For $i = 0 to 5
+			$g_aiCurrentLoot[$eLootTrophy] = getTrophyMainScreen($aTrophies[0], $aTrophies[1]) ; get OCR to read current Village Trophies
+			SetDebugLog("Current Trophy Count: " & $g_aiCurrentLoot[$eLootTrophy], $COLOR_DEBUG)
+			If $g_aiCurrentLoot[$eLootTrophy] <> "" then ExitLoop
+			If _Sleep(1000) then return
+			ClickP($aAway, 1, 0, "#0000") ;Click Away to prevent any pages on top
+		Next
+
 		If Number($g_aiCurrentLoot[$eLootTrophy]) <= Number($g_iDropTrophyMax) Then Return ; exit on trophy count to avoid other checks
 
 		; Check if proper troop types avail during last checkarmycamp(), no need to call separately since droptrophy checked often
@@ -266,6 +272,10 @@ Func DropTrophy()
 							Click($aRandomEdge[$iRandomXY][0], $aRandomEdge[$iRandomXY][1], 1, 0, "#0186") ;Drop one troop
 							$g_aiCurrentTroops[$eTroopMinion] += 1
 							SetLog("Deploying 1 Minion", $COLOR_INFO)
+						Case $g_avAttackTroops[0][0] = $eBall
+							Click($aRandomEdge[$iRandomXY][0], $aRandomEdge[$iRandomXY][1], 1, 0, "#0186") ;Drop one troop
+							$g_aiCurrentTroops[$eTroopBalloon] += 1
+							SetLog("Deploying 1 Balloon", $COLOR_INFO)
 						Case Else
 							SetLog("You don't have Tier 1/2 Troops, Stop dropping trophies.", $COLOR_INFO) ; preventing of deploying Tier 2/3 expensive troops
 							$g_bDisableDropTrophy = True

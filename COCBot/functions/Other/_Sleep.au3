@@ -16,7 +16,25 @@
 ; ===============================================================================================================================
 #include-once
 
-Func _Sleep($iDelay, $iSleep = True, $CheckRunState = True, $SleepWhenPaused = True)
+Func _Sleep($iDelay_t, $iSleep = True, $CheckRunState = True, $SleepWhenPaused = True)
+If $g_ichkUseRandomSleep = 1 Then
+	Switch $iDelay_t
+		Case 100
+			Local $iDelay = 100
+		Case 1000
+			Local $iDelay = 1000
+    Case Else
+		Local $iDelay = Random($iDelay_t, $iDelay_t * $g_fMultiplicando, 1)
+	EndSwitch
+	Else
+			Local $iDelay
+			$iDelay = $iDelay_t
+EndIf
+
+If $g_bDebugSleep Or TestCapture() Then
+	SetLog("StatusRandom, "  & $g_ichkUseRandomSleep & ", X " & $g_fMultiplicando & ", Delay " & $iDelay & "," & $iSleep & "," & $CheckRunState & "," & $SleepWhenPaused, $COLOR_ACTION, "Verdana", "7.5", 0)
+EndIf
+
 	Static $hTimer_SetTime = 0
 	Static $hTimer_PBRemoteControlInterval = 0
 	Static $hTimer_PBDeleteOldPushesInterval = 0
@@ -59,10 +77,6 @@ Func _Sleep($iDelay, $iSleep = True, $CheckRunState = True, $SleepWhenPaused = T
 		EndIf
 
 		If $iDelay > 0 And __TimerDiff($g_hTxtLogTimer) >= $g_iTxtLogTimerTimeout Then
-			; samm0d
-			If $ichkIncreaseGlobalDelay Then
-				$iDelay = $iDelay + Int(($iDelay * $itxtIncreaseGlobalDelay) / 100)
-			EndIf
 
 			; Notify stuff
 			If $g_bNotifyDeleteAllPushesNow = True Then PushMsg("DeleteAllPBMessages") ; only when button is pushed, and only when on a sleep cyle

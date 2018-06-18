@@ -57,6 +57,8 @@ Func SetComboTroopComp()
 	Local $TotalTroopsToTrain = 0
 
 	lblTotalCountTroop1()
+    lblTotalWarTroopCount()
+    lblTotalWarSpellCount()
 
 	; samm0d
 	UpdateTroopSize()
@@ -66,6 +68,8 @@ EndFunc   ;==>SetComboTroopComp
 
 Func chkTotalCampForced()
 	GUICtrlSetState($g_hTxtTotalCampForced, GUICtrlRead($g_hChkTotalCampForced) = $GUI_CHECKED ? $GUI_ENABLE : $GUI_DISABLE)
+    lblTotalWarTroopCount()
+    lblTotalWarSpellCount()
 EndFunc   ;==>chkTotalCampForced
 
 Func lblTotalCountTroop1()
@@ -125,7 +129,7 @@ Func lblTotalCountTroop2()
 	Local $TotalTotalTimeTroop = 0
 	Local $NbrOfBarrack = 4 ;For the moment fix to 4 until fine detect level of each Barrack
 	Local $NbrOfDarkBarrack = 2 ;For the moment fix to 2 until fine detect level of each Barrack
-	For $i = $eTroopBarbarian To $eTroopMiner
+	For $i = $eTroopBarbarian To $eTroopElectroDragon
 		Local $NbrOfTroop = GUICtrlRead($g_ahTxtTrainArmyTroopCount[$i])
 		Local $LevOfTroop = $g_aiTrainArmyTroopLevel[$i]
 
@@ -242,6 +246,8 @@ Func TotalSpellCountClick()
 	EndIf
 
 	lblTotalCountSpell2()
+    ApplyConfig_600_52_2("Save") ; update total spell value in Village/Misc/War preparation Tab - StopForWar (Demen)
+    lblTotalWarSpellCount()
 	SetRedrawBotWindow($bWasRedraw, Default, Default, Default, "TotalSpellCountClick")
 EndFunc   ;==>TotalSpellCountClick
 
@@ -579,7 +585,7 @@ Func BtnTroopOrderSet()
 	Local $bMissingTroop = False ; flag for when troops are not assigned by user
 	Local $aiUsedTroop[$eTroopCount] = [ _
 		$eTroopBarbarian, $eTroopArcher, $eTroopGiant, $eTroopGoblin, $eTroopWallBreaker, $eTroopBalloon, $eTroopWizard, _
-		$eTroopHealer, $eTroopDragon, $eTroopPekka, $eTroopBabyDragon, $eTroopMiner, $eTroopMinion, $eTroopHogRider, _
+		$eTroopHealer, $eTroopDragon, $eTroopPekka, $eTroopBabyDragon, $eTroopMiner, $eTroopElectroDragon, $eTroopMinion, $eTroopHogRider, _
 		$eTroopValkyrie, $eTroopGolem, $eTroopWitch, $eTroopLavaHound, $eTroopBowler]
 
 	; check for duplicate combobox index and take action
@@ -889,7 +895,7 @@ EndFunc   ;==>TrainSpellLevelClick
 Func CalCostCamp()
 	Local $iElixirCostCamp = 0, $iDarkCostCamp = 0
 
-	For $i = $eTroopBarbarian To $eTroopMiner
+	For $i = $eTroopBarbarian To $eTroopElectroDragon
 		$iElixirCostCamp += $g_aiArmyCompTroops[$i] * $g_aiTroopCostPerLevel[$i][$g_aiTrainArmyTroopLevel[$i]]
 	Next
 

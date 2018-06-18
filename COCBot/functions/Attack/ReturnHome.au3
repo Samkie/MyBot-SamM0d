@@ -85,36 +85,34 @@ Func ReturnHome($TakeSS = 1, $GoldChangeCheck = True) ;Return main screen
 	If $g_bRunState = False Then Return
 
 	; ---- CLICK SURRENDER BUTTON ----
-	; samm0d - waiting for return home button appear
-	$i = 0 ; Reset Loop counter
-	While IsReturnHomeBattlePage(True, False) = False ; dynamic wait loop for surrender button to appear
-		If $g_bDebugSetlog Then SetDebugLog("Wait for surrender button to appear #" & $i)
-		If _CheckPixel($aSurrenderButton, $g_bCapturePixel) Then ;is surrender button is visible?
-			If IsAttackPage() Then ; verify still on attack page, and battle has not ended magically before clicking
-				ClickP($aSurrenderButton, 1, 0, "#0099") ;Click Surrender
-				$j = 0
-				While 1 ; dynamic wait for Okay button
-					If $g_bDebugSetlog Then SetDebugLog("Wait for OK button to appear #" & $j)
-					If IsEndBattlePage(False) Then
-						ClickOkay("SurrenderOkay") ; Click Okay to Confirm surrender
-						ExitLoop 2
-					Else
-						$j += 1
-					EndIf
-					If ReturnHomeMainPage() Then Return
-					If $j > 10 Then ExitLoop ; if Okay button not found in 10*(200)ms or 2 seconds, then give up.
-					If _Sleep($DELAYRETURNHOME5) Then Return
-				WEnd
-			Else
-				$i += 1
+	If Not (IsReturnHomeBattlePage(True, False)) Then ; check if battle is already over
+		For $i = 0 To 5 ; dynamic wait loop for surrender button to appear (if end battle or surrender button are not found in 5*(200)ms + 10*(200)ms or 3 seconds, then give up.)
+			If $g_bDebugSetlog Then SetDebugLog("Wait for surrender button to appear #" & $i)
+			If _CheckPixel($aSurrenderButton, $g_bCapturePixel) Then ;is surrender button is visible?
+				If IsAttackPage() Then ; verify still on attack page, and battle has not ended magically before clicking
+					ClickP($aSurrenderButton, 1, 0, "#0099") ;Click Surrender
+					$j = 0
+					While 1 ; dynamic wait for Okay button
+						If $g_bDebugSetlog Then SetDebugLog("Wait for OK button to appear #" & $j)
+						If IsEndBattlePage(False) Then
+							ClickOkay("SurrenderOkay") ; Click Okay to Confirm surrender
+							ExitLoop 2
+						Else
+							$j += 1
+						EndIf
+						If ReturnHomeMainPage() Then Return
+						If $j > 10 Then ExitLoop ; if Okay button not found in 10*(200)ms or 2 seconds, then give up.
+						If _Sleep($DELAYRETURNHOME5) Then Return
+					WEnd
+				EndIf
 			EndIf
-		Else
-			$i += 1
-		EndIf
-		If ReturnHomeMainPage() Then Return
-		If $i > 5 Then ExitLoop ; if end battle or surrender button are not found in 5*(200)ms + 10*(200)ms or 3 seconds, then give up.
-		If _Sleep($DELAYRETURNHOME5) Then Return
-	WEnd
+			If ReturnHomeMainPage() Then Return
+			If _Sleep($DELAYRETURNHOME5) Then Return
+		Next
+	Else
+		If $g_bDebugSetlog Then SetDebugLog("Battle already over.", $COLOR_DEBUG)
+	EndIf
+	If _Sleep($DELAYRETURNHOME2) Then Return ; short wait for return to main
 
 	TrayTip($g_sBotTitle, "", BitOR($TIP_ICONASTERISK, $TIP_NOSOUND)) ; clear village search match found message
 

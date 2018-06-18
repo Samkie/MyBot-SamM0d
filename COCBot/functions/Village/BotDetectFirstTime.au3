@@ -92,7 +92,7 @@ Func BotDetectFirstTime()
 		EndIf
 	EndIf
 
-	If Number($g_iTownHallLevel) > 10 And ((GUICtrlRead($g_hCmbBoostWarden) > 0) Or $g_bUpgradeWardenEnable = True) Then
+	If Number($g_iTownHallLevel) > 10 And ((GUICtrlRead($g_hCmbBoostWarden) > 0) Or $g_bUpgradeWardenEnable = True Or $g_bCheckWardenMode = True) Then
 		If _Sleep($DELAYBOTDETECT3) Then Return
 		If $g_aiWardenAltarPos[0] = -1 Then
 			LocateWardenAltar()

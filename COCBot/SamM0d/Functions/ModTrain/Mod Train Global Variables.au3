@@ -27,30 +27,30 @@ Global $bRestartCustomTrain = False
 
 Global $icmbTroopSetting = 0
 Global $icmbMyQuickTrain = 0
-Global $txtMyBarb, $txtMyArch, $txtMyGiant, $txtMyGobl, $txtMyWall, $txtMyBall, $txtMyWiza, $txtMyHeal, $txtMyDrag, $txtMyPekk, $txtMyBabyD, $txtMyMine, _
+Global $txtMyBarb, $txtMyArch, $txtMyGiant, $txtMyGobl, $txtMyWall, $txtMyBall, $txtMyWiza, $txtMyHeal, $txtMyDrag, $txtMyPekk, $txtMyBabyD, $txtMyMine, $txtMyEDrag, _
 $txtMyMini, $txtMyHogs, $txtMyValk, $txtMyGole, $txtMyWitc, $txtMy, $txtMyLava, $txtMyBowl
-Global $cmbMyBarbOrder, $cmbMyArchOrder, $cmbMyGiantOrder, $cmbMyGoblOrder, $cmbMyWallOrder, $cmbMyBallOrder, $cmbMyWizaOrder, $cmbMyHealOrder, $cmbMyDragOrder, $cmbMyPekkOrder, $cmbMyBabyDOrder, $cmbMyMineOrder, _
+Global $cmbMyBarbOrder, $cmbMyArchOrder, $cmbMyGiantOrder, $cmbMyGoblOrder, $cmbMyWallOrder, $cmbMyBallOrder, $cmbMyWizaOrder, $cmbMyHealOrder, $cmbMyDragOrder, $cmbMyPekkOrder, $cmbMyBabyDOrder, $cmbMyMineOrder, $cmbMyEDragOrder, _
 $cmbMyMiniOrder, $cmbMyHogsOrder, $cmbMyValkOrder, $cmbMyGoleOrder, $cmbMyWitcOrder, $cmbMyOrder, $cmbMyLavaOrder, $cmbMyBowlOrder
 
-Global $CurBarb = 0, $CurArch = 0, $CurGiant = 0, $CurGobl = 0, $CurWall = 0, $CurBall = 0, $CurWiza = 0, $CurHeal = 0
+Global $CurBarb = 0, $CurArch = 0, $CurGiant = 0, $CurGobl = 0, $CurWall = 0, $CurBall = 0, $CurWiza = 0, $CurHeal = 0, $CurEDrag = 0
 Global $CurMini = 0, $CurHogs = 0, $CurValk = 0, $CurGole = 0, $CurWitc = 0, $CurLava = 0, $CurBowl = 0, $CurDrag = 0, $CurPekk = 0, $CurBabyD = 0, $CurMine = 0
 
-Global $OnQBarb = 0, $OnQArch = 0, $OnQGiant = 0, $OnQGobl = 0, $OnQWall = 0, $OnQBall = 0, $OnQWiza = 0, $OnQHeal = 0
+Global $OnQBarb = 0, $OnQArch = 0, $OnQGiant = 0, $OnQGobl = 0, $OnQWall = 0, $OnQBall = 0, $OnQWiza = 0, $OnQHeal = 0, $OnQEDrag = 0
 Global $OnQMini = 0, $OnQHogs = 0, $OnQValk = 0, $OnQGole = 0, $OnQWitc = 0, $OnQLava = 0, $OnQBowl = 0, $OnQDrag = 0, $OnQPekk = 0, $OnQBabyD = 0, $OnQMine = 0
 
-Global $OnTBarb = 0, $OnTArch = 0, $OnTGiant = 0, $OnTGobl = 0, $OnTWall = 0, $OnTBall = 0, $OnTWiza = 0, $OnTHeal = 0
+Global $OnTBarb = 0, $OnTArch = 0, $OnTGiant = 0, $OnTGobl = 0, $OnTWall = 0, $OnTBall = 0, $OnTWiza = 0, $OnTHeal = 0, $OnTEDrag = 0
 Global $OnTMini = 0, $OnTHogs = 0, $OnTValk = 0, $OnTGole = 0, $OnTWitc = 0, $OnTLava = 0, $OnTBowl = 0, $OnTDrag = 0, $OnTPekk = 0, $OnTBabyD = 0, $OnTMine = 0
 
-Global $ReadyBarb = 0, $ReadyArch = 0, $ReadyGiant = 0, $ReadyGobl = 0, $ReadyWall = 0, $ReadyBall = 0, $ReadyWiza = 0, $ReadyHeal = 0
+Global $ReadyBarb = 0, $ReadyArch = 0, $ReadyGiant = 0, $ReadyGobl = 0, $ReadyWall = 0, $ReadyBall = 0, $ReadyWiza = 0, $ReadyHeal = 0, $ReadyEDrag = 0
 Global $ReadyMini = 0, $ReadyHogs = 0, $ReadyValk = 0, $ReadyGole = 0, $ReadyWitc = 0, $ReadyLava = 0, $ReadyBowl = 0, $ReadyDrag = 0, $ReadyPekk = 0, $ReadyBabyD = 0, $ReadyMine = 0
 
 
-Global $MyTroopsSetting[3][19][2]=[[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]]]
+Global $MyTroopsSetting[3][20][2]=[[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]]]
 Global $MySpellSetting[3][10][3] = [[[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]],[[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]],[[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]]]
 
 Global $g_iMyTroopsSize = 0
-Global $MyTroopsIcon[19] = [$eIcnBarbarian, $eIcnArcher, $eIcnGiant, $eIcnGoblin, $eIcnWallBreaker, $eIcnBalloon, $eIcnWizard, $eIcnHealer, $eIcnDragon, $eIcnPekka, $eIcnBabyDragon, $eIcnMiner,$eIcnMinion, $eIcnHogRider, $eIcnValkyrie, $eIcnGolem, $eIcnWitch, $eIcnLavaHound, $eIcnBowler]
-Global $MyTroops[19][5] = _
+Global $MyTroopsIcon[20] = [$eIcnBarbarian, $eIcnArcher, $eIcnGiant, $eIcnGoblin, $eIcnWallBreaker, $eIcnBalloon, $eIcnWizard, $eIcnHealer, $eIcnDragon, $eIcnPekka, $eIcnBabyDragon, $eIcnMiner, $eIcnElectroDragon, $eIcnMinion, $eIcnHogRider, $eIcnValkyrie, $eIcnGolem, $eIcnWitch, $eIcnLavaHound, $eIcnBowler]
+Global $MyTroops[20][5] = _
 [["Barb",  1,  1, 0,0], _
 ["Arch"	,  2,  1, 0,0], _
 ["Giant",  3,  5, 0,0], _
@@ -63,13 +63,14 @@ Global $MyTroops[19][5] = _
 ["Pekk"	, 10, 25, 0,0], _
 ["BabyD", 11, 10, 0,0], _
 ["Mine"	, 12,  6, 0,0], _
-["Mini"	, 13,  2, 0,0], _
-["Hogs"	, 14,  5, 0,0], _
-["Valk"	, 15,  8, 0,0], _
-["Gole"	, 16, 30, 0,0], _
-["Witc"	, 17, 12, 0,0], _
-["Lava"	, 18, 30, 0,0], _
-["Bowl"	, 19,  6, 0,0]]
+["EDrag", 13, 30, 0,0], _
+["Mini"	, 14,  2, 0,0], _
+["Hogs"	, 15,  5, 0,0], _
+["Valk"	, 16,  8, 0,0], _
+["Gole"	, 17, 30, 0,0], _
+["Witc"	, 18, 12, 0,0], _
+["Lava"	, 19, 30, 0,0], _
+["Bowl"	, 20,  6, 0,0]]
 ;name,order,size,unit quantity,train cost
 
 Global $eEventTroop1 = 51
@@ -98,54 +99,29 @@ Global $OnTEventTroop2 = 0
 Global $OnTEventSpell1 = 0
 Global $OnTEventSpell2 = 0
 
-;~ Global Enum $eTrainBarb, $eTrainPumpkin, $eTrainArch, $eTrainGiant, $eTrainGiantSkeleton, $eTrainGobl, $eTrainWall, $eTrainBall, $eTrainWiza, $eTrainHeal, $eTrainDrag, $eTrainPekk, $eTrainBabyD, $eTrainMine, _
-;~ 		$eTrainMini, $eTrainHogs, $eTrainValk, $eTrainGole, $eTrainWitc, $eTrainLava, $eTrainBowl
+Global $MyTroopsButton[20][3] = _
+[["Barb",0, 0], _
+["Arch",1, 0], _
+["Giant",0, 1], _
+["Gobl",1, 1], _
+["Wall",0, 2], _
+["Ball",1, 2], _
+["Wiza",0, 3], _
+["Heal",1, 3], _
+["Drag",0, 4], _
+["Pekk",1, 4], _
+["BabyD",0, 5], _
+["Mine",1, 5], _
+["EDrag",0, 5], _
+["Mini",0, 7], _
+["Hogs",1, 7], _
+["Valk",2, 0], _
+["Gole",3, 0], _
+["Witc",2, 1], _
+["Lava",3, 1], _
+["Bowl",2, 2]]
 
-;~ Global $MyTroopsButton[21][3] = _
-;~ [["Barb", 0, 0], _
-;~ ["Pumpkin", 1, 0], _
-;~ ["Arch"	, 0, 1], _
-;~ ["Giant", 1, 1], _
-;~ ["GiantSkeleton", 0, 2], _
-;~ ["Gobl"	, 1, 2], _
-;~ ["Wall"	, 0, 3], _
-;~ ["Ball"	, 1, 3], _
-;~ ["Wiza"	, 0, 4], _
-;~ ["Heal"	, 1, 4], _
-;~ ["Drag"	, 0, 5], _
-;~ ["Pekk"	, 1, 5], _
-;~ ["BabyD", 0, 6], _
-;~ ["Mine"	, 1, 6], _
-;~ ["Mini"	, 0, 7], _
-;~ ["Hogs"	, 1, 7], _
-;~ ["Valk"	, 2, 0], _
-;~ ["Gole"	, 3, 0], _
-;~ ["Witc"	, 2, 1], _
-;~ ["Lava"	, 3, 1], _
-;~ ["Bowl"	, 2, 2]]
-
-Global $MyTroopsButton[19][3] = _
-[["Barb", 0, 0], _
-["Arch"	, 1, 0], _
-["Giant", 0, 1], _
-["Gobl"	, 1, 1], _
-["Wall"	, 0, 2], _
-["Ball"	, 1, 2], _
-["Wiza"	, 0, 3], _
-["Heal"	, 1, 3], _
-["Drag"	, 0, 4], _
-["Pekk"	, 1, 4], _
-["BabyD", 0, 5], _
-["Mine"	, 1, 5], _
-["Mini"	, 0, 6], _
-["Hogs"	, 1, 6], _
-["Valk"	, 0, 7], _
-["Gole"	, 1, 7], _
-["Witc"	, 2, 0], _
-["Lava"	, 3, 0], _
-["Bowl"	, 2, 1]]
-
-Global Enum $eTrainBarb, $eTrainArch, $eTrainGiant, $eTrainGobl, $eTrainWall, $eTrainBall, $eTrainWiza, $eTrainHeal, $eTrainDrag, $eTrainPekk, $eTrainBabyD, $eTrainMine, _
+Global Enum $eTrainBarb, $eTrainArch, $eTrainGiant, $eTrainGobl, $eTrainWall, $eTrainBall, $eTrainWiza, $eTrainHeal, $eTrainDrag, $eTrainPekk, $eTrainBabyD, $eTrainMine, $eTrainEDrag, _
 		$eTrainMini, $eTrainHogs, $eTrainValk, $eTrainGole, $eTrainWitc, $eTrainLava, $eTrainBowl
 
 
@@ -162,40 +138,28 @@ Global $MySpellsButton[10][3] = _
 ["Haste"	 ,  0,  4], _
 ["Skeleton"	 ,  1,  4]]
 
-;~ Global $MySpellsButton[11][3] = _
-;~ [["Lightning",  0,  0], _
-;~ ["Santa"	 ,  1,  0], _
-;~ ["Heal"	     ,  0,  1], _
-;~ ["Rage"      ,  1,  1], _
-;~ ["Jump"	     ,  0,  2], _
-;~ ["Freeze"	 ,  1,  2], _
-;~ ["Clone"	 ,  0,  3], _
-;~ ["Poison"	 ,  0,  4], _
-;~ ["Earth"	 ,  1,  4], _
-;~ ["Haste"	 ,  0,  5], _
-;~ ["Skeleton"	 ,  1,  5]]
-
-; updated 28 Jun 2017
-Global $MyTroopsCost[19][9] = _
-[[250,25,40,60,100,150,200,250,250], _
-[500,50,80,120,200,300,400,500,500], _
-[4000,250,750,1250,1750,2250,3000,3500,4000], _
-[200,25,40,60,80,100,150,200,200], _
-[4000,1000,1500,2000,2500,3000,3500,4000,4000], _
-[5000,2000,2500,3000,3500,4000,4500,5000,5000], _
-[5000,1500,2000,2500,3000,3500,4000,4500,5000], _
-[15000,5000,6000,8000,10000,15000,15000,15000,15000], _
-[47000,25000,29000,33000,37000,42000,47000,47000,47000], _
-[50000,28000,32000,36000,40000,45000,50000,50000,50000], _
-[19000,15000,16000,17000,18000,19000,19000,19000,19000], _
-[6000,4200,4800,5200,5600,6000,6000,6000,6000], _
-[12,6,7,8,9,10,11,12,12], _
-[115,40,45,52,58,65,90,115,115], _
-[190,70,100,130,160,190,190,190,190], _
-[825,450,550,600,675,750,825,825,825], _
-[450,250,350,450,450,450,450,450,450], _
-[570,390,450,510,570,570,570,570,570], _
-[170,130,150,170,170,170,170,170,170]]
+; updated Jun 2018
+Global $MyTroopsCost[20][10] = _
+[[300,25,40,60,100,150,200,250,300,300], _							; Barbarian
+[600,50,80,120,200,300,400,500,600,600], _							; Archer
+[4500,250,750,1250,1750,2250,3000,3500,4000,4500], _				; Giant
+[200,25,40,60,80,100,150,200,200,200], _							; Goblin
+[4500,1000,1500,2000,2500,3000,3500,4000,4500,4500], _				; WallBreaker
+[5500,2000,2500,3000,3500,4000,4500,5000,5500,5500], _				; Balloon
+[5500,1500,2000,2500,3000,3500,4000,4500,5000,5500], _				; Wizard
+[15000,5000,6000,8000,10000,15000,15000,15000,15000,15000], _		; Healer
+[30000,18000,20000,22000,24000,26000,28000,30000,30000,30000], _	; Dragon
+[39000,21000,24000,27000,30000,33000,35000,37000,39000,39000], _	; Pekka
+[20000,15000,16000,17000,18000,19000,20000,20000,20000,20000], _	; BabyDragon
+[64000,4200,4800,5200,5600,6000,64000,64000,64000,64000], _			; Miner
+[44000,36000,40000,44000,44000,44000,44000,44000,44000,44000], _	; ElectroDragon
+[13,6,7,8,9,10,11,12,13,13], _										; Minion
+[140,40,45,52,58,65,90,115,140,140], _								; HogRider
+[250,70,100,130,160,190,220,250,250,250], _							; Valkyrie
+[975,450,550,600,675,750,825,900,975,975], _						; Golem
+[550,250,350,450,450,550,550,550,550,550], _						; Witch
+[630,390,450,510,570,630,630,630,630,630], _						; Lavahound
+[190,130,150,170,190,190,190,190,190,190]]							; Bowler
 
 Global Enum $enumLightning, $enumHeal, $enumRage, $enumJump, $enumFreeze, $enumClone, $enumPoison, $enumEarth, $enumHaste, $enumSkeleton
 
@@ -217,8 +181,8 @@ Global $MySpells[10][5] = _
 ["Heal"	     ,  2,  2, 0, 0], _
 ["Rage"      ,  3,  2, 0, 0], _
 ["Jump"	     ,  4,  2, 0, 0], _
-["Freeze"	 ,  5,  2, 0, 0], _
-["Clone"	 ,  6,  4, 0, 0], _
+["Freeze"	 ,  5,  1, 0, 0], _
+["Clone"	 ,  6,  3, 0, 0], _
 ["Poison"	 ,  7,  1, 0, 0], _
 ["Earth"	 ,  8,  1, 0, 0], _
 ["Haste"	 ,  9,  1, 0, 0], _
@@ -283,10 +247,10 @@ Global $g_hHBitmap_Av_Spell_Slot1, $g_hHBitmap_Av_Spell_Slot2, $g_hHBitmap_Av_Sp
 Global $g_hHBitmap_Av_Spell_SlotQty1, $g_hHBitmap_Av_Spell_SlotQty2, $g_hHBitmap_Av_Spell_SlotQty3, $g_hHBitmap_Av_Spell_SlotQty4, $g_hHBitmap_Av_Spell_SlotQty5, $g_hHBitmap_Av_Spell_SlotQty6, $g_hHBitmap_Av_Spell_SlotQty7
 Global $g_hHBitmap_Capture_Av_Spell_Slot1, $g_hHBitmap_Capture_Av_Spell_Slot2, $g_hHBitmap_Capture_Av_Spell_Slot3, $g_hHBitmap_Capture_Av_Spell_Slot4, $g_hHBitmap_Capture_Av_Spell_Slot5, $g_hHBitmap_Capture_Av_Spell_Slot6, $g_hHBitmap_Capture_Av_Spell_Slot7
 
-Global $g_aiArmyAvailableCCSlot[4] = [22,533,460,549]
-Global $g_aiArmyAvailableCCSlotQty[4] = [24,498,460,514]
-Global $g_aiArmyAvailableCCSpellSlot[4] = [514,529,670,545]
-Global $g_aiArmyAvailableCCSpellSlotQty[4] = [514,499,670,515]
+Global $g_aiArmyAvailableCCSlot[4] = [25,532,389,548]
+Global $g_aiArmyAvailableCCSlotQty[4] = [27,497,389,513]
+Global $g_aiArmyAvailableCCSpellSlot[4] = [456,529,601,544]
+Global $g_aiArmyAvailableCCSpellSlotQty[4] = [458,497,601,513]
 
 Global $g_hHBitmap_Av_CC_Slot1, $g_hHBitmap_Av_CC_Slot2, $g_hHBitmap_Av_CC_Slot3, $g_hHBitmap_Av_CC_Slot4, $g_hHBitmap_Av_CC_Slot5, $g_hHBitmap_Av_CC_Slot6
 Global $g_hHBitmap_Av_CC_SlotQty1, $g_hHBitmap_Av_CC_SlotQty2, $g_hHBitmap_Av_CC_SlotQty3, $g_hHBitmap_Av_CC_SlotQty4, $g_hHBitmap_Av_CC_SlotQty5, $g_hHBitmap_Av_CC_SlotQty6
