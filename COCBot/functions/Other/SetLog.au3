@@ -383,6 +383,8 @@ EndFunc   ;==>__FileWriteLog
 Func ClearLog($hRichEditCtrl = $g_hTxtLog)
 	Switch $hRichEditCtrl
 		Case $g_hTxtLog
+			; samm0d
+			If $ichkBotLogLineLimit Then Return
 			$g_oTxtLogInitText($g_oTxtLogInitText.Count + 1) = 0
 		Case $g_hTxtAtkLog
 			$g_oTxtAtkLogInitText($g_oTxtAtkLogInitText.Count + 1) = 0

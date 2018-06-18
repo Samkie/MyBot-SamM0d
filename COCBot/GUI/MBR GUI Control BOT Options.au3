@@ -461,7 +461,7 @@ Func btnTestTrain()
 
 	_GUICtrlTab_ClickTab($g_hTabMain, 0)
 
-	SetLog("===START===")
+
 	Local $hTimer = __TimerInit()
 
 	checkMainScreen()
@@ -469,16 +469,16 @@ Func btnTestTrain()
 	$g_bRestart = False
 	$tempDisableTrain=False
 	$tempDisableBrewSpell=False
+	SetLog("===START TRAIN===")
     ModTrain()
-
-
+	SetLog("===START DONATE===")
 	PrepareDonateCC()
 	DonateCC()
-
+	SetLog("===START FRIENDLY CHALLENGE===")
 	FriendlyChallenge()
 
 	SetLog("Elapsed: " & Round(__TimerDiff($hTimer) / 1000, 2) & "s")
-	SetLog("===END===")
+	SetLog("===All TEST END===")
 
 	$g_bRunState = $currentRunState
 EndFunc   ;==>btnTestTrain
