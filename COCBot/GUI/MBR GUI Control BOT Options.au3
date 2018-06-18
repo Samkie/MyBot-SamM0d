@@ -209,6 +209,7 @@ Func chkSwitchAcc()
 		For $i = $g_hCmbTotalAccount To $g_ahChkDonate[7]
 			GUICtrlSetState($i, $GUI_ENABLE)
 		Next
+		chkSmartSwitch()
 	Else
 		releaseSwitchAccountMutex()
 		For $i = $g_hCmbTotalAccount To $g_ahChkDonate[7]
@@ -280,6 +281,7 @@ Func _cmbSwitchAcc($bReadSaveConfig = True)
 		GUICtrlSetState($i, (($bEnable) ? $GUI_ENABLE : $GUI_DISABLE))
 	Next
 	cmbTotalAcc()
+	chkSmartSwitch()
 	$s_bActive = False
 EndFunc   ;==>_cmbSwitchAcc
 
@@ -360,25 +362,9 @@ Func cmbSwitchAccProfileX()
 	Next
 EndFunc   ;==>cmbSwitchAccProfileX
 
-Func chkAccSwitchMode()
-	If GUICtrlRead($g_hRadSwitchGooglePlay) = $GUI_CHECKED Then
-		$g_bChkGooglePlay = True
-		$g_bChkSuperCellID = False
-		$g_bChkSharedPrefs = False
-	ElseIf GUICtrlRead($g_hRadSwitchSuperCellID) = $GUI_CHECKED Then
-		$g_bChkGooglePlay = False
-		$g_bChkSuperCellID = True
-		$g_bChkSharedPrefs = False
-	ElseIf GUICtrlRead($g_hRadSwitchSharedPrefs) = $GUI_CHECKED Then
-		$g_bChkGooglePlay = False
-		$g_bChkSuperCellID = False
-		$g_bChkSharedPrefs = True
-	Else
-		$g_bChkGooglePlay = False
-		$g_bChkSuperCellID = False
-		$g_bChkSharedPrefs = False
-	EndIf
-EndFunc   ;==>chkAccSwitchMode
+Func chkSharedPrefs()
+	$g_bChkSharedPrefs = GUICtrlRead($g_hChkSharedPrefs) = $GUI_CHECKED
+EndFunc   ;==>chkSharedPrefs
 
 ; #DEBUG FUNCTION# ==============================================================================================================
 
@@ -470,6 +456,7 @@ Func btnTestTrain()
 	$tempDisableTrain=False
 	$tempDisableBrewSpell=False
     ModTrain()
+
 
 	PrepareDonateCC()
 	DonateCC()

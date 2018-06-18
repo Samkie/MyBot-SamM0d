@@ -7,13 +7,13 @@ Func chkMyTroopOrder()
 EndFunc
 
 Func cmbMyTroopOrder()
-	Local $tempOrder[20]
-	For $i = 0 To 19
+	Local $tempOrder[19]
+	For $i = 0 To 18
 		$tempOrder[$i] = Int(GUICtrlRead(Eval("cmbMy" & $MyTroops[$i][0] & "Order")))
 	Next
-	For $i = 0 To 19
+	For $i = 0 To 18
 		If $tempOrder[$i] <> $MyTroops[$i][1] Then
-			For $j = 0 To 19
+			For $j = 0 To 18
 				If $MyTroops[$j][1] = $tempOrder[$i] Then
 					$tempOrder[$j] = Int($MyTroops[$i][1])
 					ExitLoop
@@ -22,7 +22,7 @@ Func cmbMyTroopOrder()
 			ExitLoop
 		EndIf
 	Next
-	For $i = 0 To 19
+	For $i = 0 To 18
 		$MyTroopsSetting[$icmbTroopSetting][$i][1] = Int($tempOrder[$i])
 		$MyTroops[$i][1] = $MyTroopsSetting[$icmbTroopSetting][$i][1]
 		_GUICtrlComboBox_SetCurSel(Eval("cmbMy" & $MyTroops[$i][0] & "Order"), $MyTroops[$i][1]-1)
@@ -208,7 +208,7 @@ Func cmbMyQuickTrain()
 EndFunc
 
 Func btnResetTroops()
-	For $i = 0 To 19
+	For $i = 0 To 18
 		GUICtrlSetData(Eval("txtMy" & $MyTroops[$i][0]),"0")
 		$MyTroops[$i][3] = 0
 	Next
@@ -216,7 +216,7 @@ Func btnResetTroops()
 EndFunc
 
 Func btnResetOrder()
-	For $i = 0 To 19
+	For $i = 0 To 18
 		_GUICtrlComboBox_SetCurSel(Eval("cmbMy" & $MyTroops[$i][0] & "Order"), $i)
 		$MyTroops[$i][1] = $i + 1
 	Next
@@ -289,15 +289,9 @@ EndFunc
 Func chkForcePreBrewSpell()
 	If GUICtrlRead($chkForcePreBrewSpell) = $GUI_CHECKED Then
 		$ichkForcePreBrewSpell = 1
-	For $i = 0 To UBound($MySpells)-1
-			GUICtrlSetState(Eval("chkPre" & $MySpells[$i][0]), $GUI_CHECKED)
-	Next
 	Else
 		$ichkForcePreBrewSpell = 0
-	For $i = 0 To UBound($MySpells)-1
-			GUICtrlSetState(Eval("chkPre" & $MySpells[$i][0]), $GUI_UNCHECKED)
-	Next
-EndIf
+	EndIf
 EndFunc
 
 Func chkAutoDock()
@@ -335,16 +329,8 @@ EndFunc
 Func lblMyTotalCountSpell()
 	_GUI_Value_STATE("HIDE", $groupListMySpells)
 	; calculate $iTotalTrainSpaceSpell value
-	$g_iMySpellsSize = Int((GUICtrlRead($txtNumLightningSpell) * $g_aiSpellSpace[$eSpellLightning]) + _
-	(GUICtrlRead($txtNumHealSpell) * $g_aiSpellSpace[$eSpellHeal]) + _ 
-	(GUICtrlRead($txtNumRageSpell) * $g_aiSpellSpace[$eSpellRage]) + _ 
-	(GUICtrlRead($txtNumJumpSpell) * $g_aiSpellSpace[$eSpellJump]) + _
-	GUICtrlRead($txtNumFreezeSpell) + _ 
-	(GUICtrlRead($txtNumCloneSpell) * $g_aiSpellSpace[$eSpellClone]) + _
-	GUICtrlRead($txtNumPoisonSpell) + _ 
-	GUICtrlRead($txtNumHasteSpell) + _ 
-	GUICtrlRead($txtNumEarthSpell) + _ 
-	GUICtrlRead($txtNumSkeletonSpell))
+	$g_iMySpellsSize = Int((GUICtrlRead($txtNumLightningSpell) * 2) + (GUICtrlRead($txtNumHealSpell) * 2) + (GUICtrlRead($txtNumRageSpell) * 2) + (GUICtrlRead($txtNumJumpSpell) * 2) + _
+			(GUICtrlRead($txtNumFreezeSpell) * 2) + (GUICtrlRead($txtNumCloneSpell) * 4) + GUICtrlRead($txtNumPoisonSpell) + GUICtrlRead($txtNumHasteSpell) + GUICtrlRead($txtNumEarthSpell) + GUICtrlRead($txtNumSkeletonSpell))
 
 	_GUICtrlComboBox_SetCurSel($g_hTxtTotalCountSpell, _GUICtrlComboBox_GetCurSel($txtTotalCountSpell2))
 
@@ -558,22 +544,22 @@ Func chkEnableHLFClick()
 	EndIf
 EndFunc
 
-;-Func chkSmartUpdateWall()
-;-	If GUICtrlRead($chkSmartUpdateWall) = $GUI_CHECKED Then
-;-		GUICtrlSetState($txtClickWallDelay, $GUI_ENABLE)
-;-		If $g_bDebugSetlog Then SetLog("BaseNode: " & $aBaseNode[0] & "," & $aBaseNode[1])
-;-		If $g_bDebugSetlog Then SetLog("LastWall: " & $aLastWall[0] & "," & $aLastWall[1])
-;-		If $g_bDebugSetlog Then SetLog("FaceDirection: " & $iFaceDirection)
-;-	Else
-;-		GUICtrlSetState($txtClickWallDelay, $GUI_DISABLE)
-;-		; reset all data
-;-		$aLastWall[0] = -1
-;-		$aLastWall[1] = -1
-;-		$aBaseNode[0] = -1
-;-		$aBaseNode[1] = -1
-;-		$iFaceDirection = 1
-;-	EndIf
-;-EndFunc
+Func chkSmartUpdateWall()
+	If GUICtrlRead($chkSmartUpdateWall) = $GUI_CHECKED Then
+		GUICtrlSetState($txtClickWallDelay, $GUI_ENABLE)
+		If $g_bDebugSetlog Then SetLog("BaseNode: " & $aBaseNode[0] & "," & $aBaseNode[1])
+		If $g_bDebugSetlog Then SetLog("LastWall: " & $aLastWall[0] & "," & $aLastWall[1])
+		If $g_bDebugSetlog Then SetLog("FaceDirection: " & $iFaceDirection)
+	Else
+		GUICtrlSetState($txtClickWallDelay, $GUI_DISABLE)
+		; reset all data
+		$aLastWall[0] = -1
+		$aLastWall[1] = -1
+		$aBaseNode[0] = -1
+		$aBaseNode[1] = -1
+		$iFaceDirection = 1
+	EndIf
+EndFunc
 
 Func chkDropCCFirst()
 	$ichkDropCCFirst = (GUICtrlRead($chkDropCCFirst) = $GUI_CHECKED ? 1 : 0)
@@ -792,228 +778,3 @@ Func _BatteryStatus()
 		EndIf
 	EndIf
 EndFunc   ;==>_BatteryStatus
-
-; War preparation (Demen)
-
-;========= GUI Control ==========
-Func ChkStopForWar()
-    If GUICtrlRead($g_hChkStopForWar) = $GUI_CHECKED Then
-        For $i = $g_hCmbStopTime To $g_hChkTrainWarTroop
-            GUICtrlSetState($i, $GUI_ENABLE)
-        Next
-        ChkTrainWarTroop()
-        GUICtrlSetState($g_hChkRequestCCForWar, $GUI_ENABLE)
-        ChkRequestCCForWar()
-    Else
-        For $i = $g_hCmbStopTime To $g_hTxtRequestCCForWar
-            GUICtrlSetState($i, $GUI_DISABLE)
-        Next
-        GUICtrlSetBkColor($g_hLblCountWarTroopsTotal, $COLOR_MONEYGREEN)
-        GUICtrlSetBkColor($g_hLblCountWarSpellsTotal, $COLOR_MONEYGREEN)
-    EndIf
-EndFunc
-
-Func CmbStopTime()
-    If _GUICtrlComboBox_GetCurSel($g_CmbStopBeforeBattle) < 1 Then Return
-    If _GUICtrlComboBox_GetCurSel($g_hCmbStopTime) >= 24 - _GUICtrlComboBox_GetCurSel($g_hCmbReturnTime) Then
-        _GUICtrlComboBox_SetCurSel($g_hCmbReturnTime, 0)
-        ToolTip("Set Return Time: " & @CRLF & "Pause time should be before Return time.")
-        Sleep(3500)
-        ToolTip('')
-    EndIf
-EndFunc
-
-Func CmbReturnTime()
-    If _GUICtrlComboBox_GetCurSel($g_CmbStopBeforeBattle) < 1 Then Return
-    If _GUICtrlComboBox_GetCurSel($g_hCmbReturnTime) >= 24 - _GUICtrlComboBox_GetCurSel($g_hCmbStopTime) Then
-        _GUICtrlComboBox_SetCurSel($g_hCmbReturnTime, 0)
-        ToolTip("Set Return Time: " & @CRLF & "Return time should be after Pause time.")
-        Sleep(3500)
-        ToolTip('')
-    EndIf
-EndFunc
-
-Func ChkTrainWarTroop()
-    If GUICtrlRead($g_hChkTrainWarTroop) = $GUI_CHECKED Then
-        GUICtrlSetState($g_hChkUseQuickTrainWar, $GUI_ENABLE)
-        GUICtrlSetState($g_hChkX2ForWar, $GUI_ENABLE) ; War
-        chkUseQTrainWar()
-    Else
-        For $i = $g_hChkUseQuickTrainWar To $g_hLblCountWarSpellsTotal
-            GUICtrlSetState($i, $GUI_DISABLE)
-        Next
-        GUICtrlSetBkColor($g_hLblCountWarTroopsTotal, $COLOR_MONEYGREEN)
-        GUICtrlSetBkColor($g_hLblCountWarSpellsTotal, $COLOR_MONEYGREEN)
-        GUICtrlSetState($g_hChkX2ForWar, $GUI_DISABLE) ; War
-    EndIf
-EndFunc
-
-Func chkUseQTrainWar()
-    If GUICtrlRead($g_hChkUseQuickTrainWar) = $GUI_CHECKED Then
-        _GUI_Value_STATE("ENABLE", $g_ahChkArmyWar[0] & "#" & $g_ahChkArmyWar[1] & "#" & $g_ahChkArmyWar[2])
-        chkQuickTrainComboWar()
-        For $i = $g_hLblRemoveArmy To $g_hLblCountWarSpellsTotal
-            GUICtrlSetState($i, $GUI_DISABLE)
-        Next
-        GUICtrlSetBkColor($g_hLblCountWarTroopsTotal, $COLOR_MONEYGREEN)
-        GUICtrlSetBkColor($g_hLblCountWarSpellsTotal, $COLOR_MONEYGREEN)
-    Else
-        _GUI_Value_STATE("DISABLE", $g_ahChkArmyWar[0] & "#" & $g_ahChkArmyWar[1] & "#" & $g_ahChkArmyWar[2])
-        For $i = $g_hLblRemoveArmy To $g_hLblCountWarSpellsTotal
-            GUICtrlSetState($i, $GUI_ENABLE)
-        Next
-        lblTotalWarTroopCount()
-        lblTotalWarSpellCount()
-    EndIf
-EndFunc
-
-Func chkQuickTrainComboWar()
-    If GUICtrlRead($g_ahChkArmyWar[0]) = $GUI_UNCHECKED And GUICtrlRead($g_ahChkArmyWar[1]) = $GUI_UNCHECKED And GUICtrlRead($g_ahChkArmyWar[2]) = $GUI_UNCHECKED Then
-        GUICtrlSetState($g_ahChkArmyWar[0], $GUI_CHECKED)
-        ToolTip("QuickTrainCombo: " & @CRLF & "At least 1 Army Check is required! Default Army 1.")
-        Sleep(2000)
-        ToolTip('')
-    EndIf
-EndFunc
-
-Func RemovecampWar()
-    For $T = 0 To $eTroopCount - 1
-        $g_aiWarCompTroops[$T] = 0
-        GUICtrlSetData($g_ahTxtTrainWarTroopCount[$T], 0)
-    Next
-    For $S = 0 To $eSpellCount - 1
-        $g_aiWarCompSpells[$S] = 0
-        GUICtrlSetData($g_ahTxtTrainWarSpellCount[$S], 0)
-    Next
-    lblTotalWarTroopCount()
-    lblTotalWarSpellCount()
-EndFunc
-
-Func lblTotalWarTroopCount($TotalArmyCamp = 0)
-    Local $TotalTroopsToTrain
-    If $TotalArmyCamp = 0 Then $TotalArmyCamp = $g_bTotalCampForced ? $g_iTotalCampForcedValue : 280
-
-    For $i = 0 To $eTroopCount - 1
-        Local $iCount = GUICtrlRead($g_ahTxtTrainWarTroopCount[$i])
-        If $iCount > 0 Then
-            $TotalTroopsToTrain += $iCount * $g_aiTroopSpace[$i]
-        Else
-            GUICtrlSetData($g_ahTxtTrainWarTroopCount[$i], 0)
-        EndIf
-    Next
-
-    GUICtrlSetData($g_hLblCountWarTroopsTotal, String($TotalTroopsToTrain))
-
-    If $TotalTroopsToTrain = $TotalArmyCamp Then
-        GUICtrlSetBkColor($g_hLblCountWarTroopsTotal, $COLOR_MONEYGREEN)
-    ElseIf $TotalTroopsToTrain > $TotalArmyCamp / 2 And $TotalTroopsToTrain < $TotalArmyCamp Then
-        GUICtrlSetBkColor($g_hLblCountWarTroopsTotal, $COLOR_ORANGE)
-    Else
-        GUICtrlSetBkColor($g_hLblCountWarTroopsTotal, $COLOR_RED)
-    EndIf
-
-    Local $fPctOfCalculated = Floor(($TotalTroopsToTrain / $TotalArmyCamp) * 100)
-
-    GUICtrlSetData($g_hCalTotalWarTroops, $fPctOfCalculated < 1 ? ($TotalTroopsToTrain > 0 ? 1 : 0) : $fPctOfCalculated)
-
-    If $TotalTroopsToTrain > $TotalArmyCamp Then
-        GUICtrlSetState($g_hLblTotalWarTroopsProgress, $GUI_SHOW)
-    Else
-        GUICtrlSetState($g_hLblTotalWarTroopsProgress, $GUI_HIDE)
-    EndIf
-
-EndFunc
-
-Func lblTotalWarSpellCount($TotalArmyCamp = 0 )
-
-    Local $TotalSpellsToBrew
-    If $TotalArmyCamp = 0 Then $TotalArmyCamp = $g_iTotalSpellValue > 0 ? $g_iTotalSpellValue : 11
-
-    For $i = 0 To $eSpellCount - 1
-        Local $iCount = GUICtrlRead($g_ahTxtTrainWarSpellCount[$i])
-        If $iCount > 0 Then
-            $TotalSpellsToBrew += $iCount * $g_aiSpellSpace[$i]
-        Else
-            GUICtrlSetData($g_ahTxtTrainWarSpellCount[$i], 0)
-        EndIf
-    Next
-
-    GUICtrlSetData($g_hLblCountWarSpellsTotal, String($TotalSpellsToBrew))
-
-    If $TotalSpellsToBrew = $TotalArmyCamp Then
-        GUICtrlSetBkColor($g_hLblCountWarSpellsTotal, $COLOR_MONEYGREEN)
-    ElseIf $TotalSpellsToBrew > $TotalArmyCamp / 2 And $TotalSpellsToBrew < $TotalArmyCamp Then
-        GUICtrlSetBkColor($g_hLblCountWarSpellsTotal, $COLOR_ORANGE)
-    Else
-        GUICtrlSetBkColor($g_hLblCountWarSpellsTotal, $COLOR_RED)
-    EndIf
-
-    Local $fPctOfCalculated = Floor(($TotalSpellsToBrew / $TotalArmyCamp) * 100)
-
-    GUICtrlSetData($g_hCalTotalWarSpells, $fPctOfCalculated < 1 ? ($TotalSpellsToBrew > 0 ? 1 : 0) : $fPctOfCalculated)
-
-    If $TotalSpellsToBrew > $TotalArmyCamp Then
-        GUICtrlSetState($g_hLblTotalWarSpellsProgress, $GUI_SHOW)
-    Else
-        GUICtrlSetState($g_hLblTotalWarSpellsProgress, $GUI_HIDE)
-    EndIf
-
-EndFunc
-
-Func TrainWarTroopCountEdit()
-    For $i = 0 To $eTroopCount - 1
-        If @GUI_CtrlId = $g_ahTxtTrainWarTroopCount[$i] Then
-            $g_aiWarCompTroops[$i] = GUICtrlRead($g_ahTxtTrainWarTroopCount[$i])
-            lblTotalWarTroopCount()
-            Return
-        EndIf
-    Next
-EndFunc
-
-Func TrainWarSpellCountEdit()
-    For $i = 0 To $eSpellCount - 1
-        If @GUI_CtrlId = $g_ahTxtTrainWarSpellCount[$i] Then
-            $g_aiWarCompSpells[$i] = GUICtrlRead($g_ahTxtTrainWarSpellCount[$i])
-            lblTotalWarSpellCount()
-            Return
-        EndIf
-    Next
-EndFunc
-
-Func ChkRequestCCForWar()
-    If GUICtrlRead($g_hChkRequestCCForWar) = $GUI_CHECKED Then
-        GUICtrlSetState($g_hTxtRequestCCForWar, $GUI_ENABLE)
-    Else
-        GUICtrlSetState($g_hTxtRequestCCForWar, $GUI_DISABLE)
-    EndIf
-EndFunc
-
-; Restart Search Legend league - Team AiO MOD++
-Func chkSearchTimeout()
-	If GUICtrlRead($g_hChkSearchTimeout) = $GUI_CHECKED Then
-		_GUI_Value_STATE("ENABLE", $g_hLblSearchTimeout & "#" & $g_hTxtSearchTimeout & "#" & $g_hLblSearchTimeoutminutes)
-	Else
-		_GUI_Value_STATE("DISABLE", $g_hLblSearchTimeout & "#" & $g_hTxtSearchTimeout & "#" & $g_hLblSearchTimeoutminutes)
-	EndIf
-EndFunc   ;==>chkSearchTimeout
-
-;_Sleep 
-Func chkUseRandomSleep()
-	If GUICtrlRead($g_chkUseRandomSleep) = $GUI_CHECKED Then
-			$g_ichkUseRandomSleep = 1
-		Else
-			$g_ichkUseRandomSleep = 0
-			GUICtrlSetState($g_chkUseRandomSleep, $GUI_UNCHECKED)
-		EndIf
-EndFunc   ;==>chkUseRandomSleep
-
-Func chkUseRandomSleepDbg()
-    If GUICtrlRead($g_chkUseRandomSleepDbg) = $GUI_CHECKED Then
-        $g_ichkUseRandomSleepDbg = 1
-        $g_bDebugSleep = 1
-        Else
-        $g_ichkUseRandomSleepDbg = 0
-        $g_bDebugSleep = 0
-            GUICtrlSetState($g_chkUseRandomSleepDbg, $GUI_UNCHECKED)
-        EndIf
-EndFunc   ;==>chkUseRandomSleepDbg

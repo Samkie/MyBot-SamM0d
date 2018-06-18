@@ -27,35 +27,28 @@ Func checkObstacles($bBuilderBase = False) ;Checks if something is in the way fo
 		PureClick(383, 375 + $g_iMidOffsetY, 1, 0, "Click Cancel")
 	EndIf
 	; prevent recursion
-	;If $checkObstaclesActive = True Then
-	; delay recursion
-	;	_Sleep(1000)
-	;	Return FuncReturn(True)
-	;EndIf
+	If $checkObstaclesActive = True Then Return FuncReturn(True)
 	Local $wasForce = OcrForceCaptureRegion(False)
-	Local $checkObstaclesWasActive = $checkObstaclesActive
 	$checkObstaclesActive = True
 
 	; samm0d
 	_CaptureRegions()
 
-	Local $Result = _checkObstacles($bBuilderBase, $checkObstaclesWasActive)
+	Local $Result = _checkObstacles($bBuilderBase)
 	OcrForceCaptureRegion($wasForce)
-	$checkObstaclesActive = $checkObstaclesWasActive
+	$checkObstaclesActive = False
 	Return FuncReturn($Result)
 EndFunc   ;==>checkObstacles
 
-Func _checkObstacles($bBuilderBase = False, $bRecursive = False) ;Checks if something is in the way for mainscreen
+Func _checkObstacles($bBuilderBase = False) ;Checks if something is in the way for mainscreen
 	Local $msg, $x, $y, $Result
 	$g_bMinorObstacle = False
 
 	;_CaptureRegions()
 
-	If Not $bRecursive Then
-		If checkObstacles_Network() Then Return True
-		If checkObstacles_GfxError() Then Return True
-	EndIf
-	Local $bIsOnBuilderIsland = _CheckPixel($aIsOnBuilderBase, $g_bNoCapturePixel)
+	If checkObstacles_Network() Then Return True
+	If checkObstacles_GfxError() Then Return True
+	Local $bIsOnBuilderIsland = _CheckPixel($aIsOnBuilderIsland, $g_bNoCapturePixel)
 	If $bBuilderBase = False And $bIsOnBuilderIsland = True Then
 		SetLog("Detected Builder Base, trying to switch back to Main Village")
 		If SwitchBetweenBases(False) Then
@@ -102,7 +95,7 @@ Func _checkObstacles($bBuilderBase = False, $bRecursive = False) ;Checks if some
 				PushMsg("AnotherDevice")
 			EndIf
 			If _SleepStatus($g_iAnotherDeviceWaitTime * 1000) Then Return ; Wait as long as user setting in GUI, default 120 seconds
-			checkObstacles_ReloadCoC($aReloadButton, "#0127", $bRecursive)
+			checkObstacles_ReloadCoC($aReloadButton, "#0127")
 			If $g_bForceSinglePBLogoff Then $g_bGForcePBTUpdate = True
 			checkObstacles_ResetSearch()
 			Return True
@@ -114,7 +107,7 @@ Func _checkObstacles($bBuilderBase = False, $bRecursive = False) ;Checks if some
 			If TestCapture() Then Return "Village must take a break"
 			PushMsg("TakeBreak")
 			If _SleepStatus($DELAYCHECKOBSTACLES4) Then Return ; 2 Minutes
-			checkObstacles_ReloadCoC($aReloadButton, "#0128", $bRecursive) ;Click on reload button
+			checkObstacles_ReloadCoC($aReloadButton, "#0128") ;Click on reload button
 			If $g_bForceSinglePBLogoff Then $g_bGForcePBTUpdate = True
 			checkObstacles_ResetSearch()
 			Return True
@@ -139,11 +132,6 @@ Func _checkObstacles($bBuilderBase = False, $bRecursive = False) ;Checks if some
 					Return checkObstacles_StopBot($msg) ; stop bot
 				EndIf
 				SetLog("Connection lost, Reloading CoC...", $COLOR_ERROR)
-				If $g_bChkSharedPrefs And HaveSharedPrefs() Then
-					SetLog("Please wait for loading CoC...!")
-					PushSharedPrefs()
-					OpenCoC()
-				EndIf
 			Case _CheckPixel($aIsCheckOOS, $g_bNoCapturePixel) Or (UBound(decodeSingleCoord(FindImageInPlace("OOS", $g_sImgOutOfSync, "355,335,435,395", False, $g_iAndroidLollipop))) > 1) ; Check OoS
 				SetLog("Out of Sync Error, Reloading CoC...", $COLOR_ERROR)
 			Case _CheckPixel($aIsMaintenance, $g_bNoCapturePixel) ; Check Maintenance
@@ -200,7 +188,7 @@ Func _checkObstacles($bBuilderBase = False, $bRecursive = False) ;Checks if some
 						Switch UpdateGame()
 							Case True, Default
 								; Update completed or not required
-								If Not $bRecursive Then Return checkObstacles_ReloadCoC()
+								Return checkObstacles_ReloadCoC()
 							Case False
 								; Update failed
 								$msg = "Game Update failed, Bot must stop!!"
@@ -229,12 +217,12 @@ Func _checkObstacles($bBuilderBase = False, $bRecursive = False) ;Checks if some
 				SetLog("Warning: Can not find type of Reload error message", $COLOR_ERROR)
 		EndSelect
 		If TestCapture() Then Return "Village is out of sync or inactivity or connection lost or maintenance"
-		Return checkObstacles_ReloadCoC($aReloadButton, "#0131", $bRecursive) ; Click for out of sync or inactivity or connection lost or maintenance
+		Return checkObstacles_ReloadCoC($aReloadButton, "#0131") ; Click for out of sync or inactivity or connection lost or maintenance
 	EndIf
 	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	If TestCapture() = 0 And GetAndroidProcessPID() = 0 Then
 		; CoC not running
-		Return checkObstacles_ReloadCoC(Default, "", $bRecursive) ; just start CoC (but first close it!)
+		Return checkObstacles_ReloadCoC() ; just start CoC (but first close it!)
 	EndIf
 
 	;samm0d for my switch problem prevention
@@ -374,7 +362,7 @@ Func _checkObstacles($bBuilderBase = False, $bRecursive = False) ;Checks if some
 		;PureClick(250 + $x, 328 + $g_iMidOffsetY + $y, 1, 0, "#0129");Check for "CoC has stopped error, looking for OK message" on screen
 		PureClick($CSFoundCoords[0], $CSFoundCoords[1], 1, 0, "#0129") ;Check for "CoC has stopped error, looking for OK message" on screen
 		If _Sleep($DELAYCHECKOBSTACLES2) Then Return
-		Return checkObstacles_ReloadCoC(Default, "", $bRecursive)
+		Return checkObstacles_ReloadCoC()
 	EndIf
 
 	If $bHasTopBlackBar Then
@@ -383,26 +371,23 @@ Func _checkObstacles($bBuilderBase = False, $bRecursive = False) ;Checks if some
 	EndIf
 
 	; check if google account list shown and select first
-	If Not CheckGoogleSelectAccount() Then
-		; check Log in with Supercell ID login screen
-		CheckLoginWithSupercellID()
-	EndIf
+	CheckGoogleSelectAccount()
 
 	Return False
 EndFunc   ;==>_checkObstacles
 
 ; It's more stable to restart CoC app than click the message restarting the game
-Func checkObstacles_ReloadCoC($point = Default, $debugtxt = "", $bRecursive = False)
+Func checkObstacles_ReloadCoC($point = Default, $debugtxt = "")
 	If TestCapture() Then Return "Reload CoC"
 	ForceCaptureRegion(True)
 	OcrForceCaptureRegion(True)
 	If $point = Default Then
-		If Not $bRecursive Then CloseCoC(True)
+		CloseCoC(True)
 	Else
 		If UBound($point) > 1 Then
 			PureClickP($point, 1, 0, $debugtxt)
 		EndIf
-		If Not $bRecursive Then OpenCoC()
+		OpenCoC()
 	EndIf
 	If _Sleep($DELAYCHECKOBSTACLES3) Then Return
 	Return True

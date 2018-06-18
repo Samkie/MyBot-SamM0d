@@ -216,7 +216,6 @@ Func CheckIfArmyIsReady()
 	If _Sleep(250) Then Return
 
 	CheckArmyCamp(False, False, False, True)
-	CheckWardenMode()
 
 	If $g_bDebugSetlogTrain Then
 		SetLog(" - $g_CurrentCampUtilization : " & $g_CurrentCampUtilization)
@@ -570,9 +569,7 @@ Func CompareCCSpellWithGUI($CCSpell1, $CCSpell2, $CastleCapacity)
 
 				Case 2 ; Two Spells on Slot 1
 
-					If $g_aiSearchCastleSpellsWaitRegular[$Mode] <= 5 And $g_aiSearchCastleSpellsWaitRegular[$Mode] > 0 Then ; Should be a Regular Spell not a Dark Spell
-						$aShouldRemove[0] = $CCSpell1[0][3]
-					ElseIf ($sCCSpell <> $CCSpell1[0][0] And $sCCSpell <> "Any") And ($sCCSpell2 <> $CCSpell1[0][0] And $sCCSpell2 <> "Any") Then
+					If ($sCCSpell <> $CCSpell1[0][0] And $sCCSpell <> "Any") And ($sCCSpell2 <> $CCSpell1[0][0] And $sCCSpell2 <> "Any") Then
 						$aShouldRemove[0] = $CCSpell1[0][3]
 					ElseIf ($sCCSpell <> $CCSpell1[0][0] And $sCCSpell <> "Any") Or ($sCCSpell2 <> $CCSpell1[0][0] And $sCCSpell2 <> "Any") Then
 						$aShouldRemove[0] = 1
@@ -592,13 +589,13 @@ EndFunc   ;==>CompareCCSpellWithGUI
 
 Func GetCurCCSpell($iSpellSlot = 1)
 	If Not $g_bRunState Then Return
-	Local $x1 = 451, $x2 = 575, $y1 = 500, $y2 = 585
+	Local $x1 = 508, $x2 = 615, $y1 = 500, $y2 = 585
 
 	If $iSpellSlot = 1 Then
 		;Nothing
 	ElseIf $iSpellSlot = 2 Then
-		$x1 = 530
-		$x2 = 605
+		$x1 = 600
+		$x2 = 660
 	Else
 		If $g_bDebugSetlog Then SetDebugLog("GetCurCCSpell() called with the wrong argument!", $COLOR_ERROR)
 		Return
@@ -636,7 +633,7 @@ Func TrainUsingWhatToTrain($rWTT, $bSpellsOnly = False)
 				If Not $g_bRunState Then Return
 				If $rWTT[$i][1] > 0 Then ; If Count to Train Was Higher Than ZERO
 					If IsSpellToBrew($rWTT[$i][0]) Then
-						If $bSpellsOnly Then BrewUsingWhatToTrain($rWTT[$i][0], $rWTT[$i][1])
+						BrewUsingWhatToTrain($rWTT[$i][0], $rWTT[$i][1])
 						ContinueLoop
 					Else
 						If $bSpellsOnly Then ContinueLoop
@@ -695,7 +692,7 @@ Func TrainUsingWhatToTrain($rWTT, $bSpellsOnly = False)
 				If Not $g_bRunState Then Return
 				If $rWTT[$i][1] > 0 Then ; If Count to Train Was Higher Than ZERO
 					If IsSpellToBrew($rWTT[$i][0]) Then
-						If $bSpellsOnly Then BrewUsingWhatToTrain($rWTT[$i][0], $rWTT[$i][1])
+						BrewUsingWhatToTrain($rWTT[$i][0], $rWTT[$i][1])
 						ContinueLoop
 					Else
 						If $bSpellsOnly Then ContinueLoop
@@ -1301,7 +1298,7 @@ EndFunc   ;==>GetSlotRemoveBtnPosition
 Func GetSlotNumber($bSpells = False)
 	Select
 		Case $bSpells = False
-			Local Const $Orders[20] = [$eBarb, $eArch, $eGiant, $eGobl, $eWall, $eBall, $eWiza, $eHeal, $eDrag, $ePekk, $eBabyD, $eMine, $eEDrag, _
+			Local Const $Orders[19] = [$eBarb, $eArch, $eGiant, $eGobl, $eWall, $eBall, $eWiza, $eHeal, $eDrag, $ePekk, $eBabyD, $eMine, _
 					$eMini, $eHogs, $eValk, $eGole, $eWitc, $eLava, $eBowl] ; Set Order of troop display in Army Tab
 
 			Local $allCurTroops[UBound($Orders)]
@@ -1713,22 +1710,26 @@ EndFunc   ;==>ResetVariables
 
 Func TrainArmyNumber($Army)
 
-	Local $a_TrainArmy[3][4] = [[784, 368, 0x6fb830, 10], [784, 485, 0x72bb2f, 10], [784, 602, 0x71ba2f, 10]]
+	Local $a_TrainArmy[3][4] = [[784, 368, 0x71BB2B, 10], [784, 485, 0x74BD2D, 10], [784, 602, 0x73BD2D, 10]]
 	SetLog("Using Quick Train Tab", $COLOR_INFO)
 	If Not $g_bRunState Then Return
 
-	For $Num = 0 To 2
-		If $Army[$Num] Then
-			If _ColorCheck(_GetPixelColor($a_TrainArmy[$Num][0], $a_TrainArmy[$Num][1], True), Hex($a_TrainArmy[$Num][2], 6), $a_TrainArmy[$Num][3]) Then
-				Click($a_TrainArmy[$Num][0], $a_TrainArmy[$Num][1], 1)
-				SetLog(" - Making the Army " & $Num + 1, $COLOR_INFO)
-				If _Sleep(500) Then Return
-			Else
-				SetLog(" - Error Clicking On Army: " & $Num + 1 & "| Pixel was :" & _GetPixelColor($a_TrainArmy[$Num][0], $a_TrainArmy[$Num][1], True), $COLOR_ACTION)
-				SetLog(" - Please 'edit' the Army " & $Num + 1 & " before start the BOT!!!", $COLOR_ERROR)
+	If IsArmyWindow(False, $QuickTrainTAB) Then
+		For $Num = 0 To 2
+			If $Army[$Num] Then
+				If _ColorCheck(_GetPixelColor($a_TrainArmy[$Num][0], $a_TrainArmy[$Num][1], True), Hex($a_TrainArmy[$Num][2], 6), $a_TrainArmy[$Num][3]) Then
+					Click($a_TrainArmy[$Num][0], $a_TrainArmy[$Num][1], 1)
+					SetLog(" - Making the Army " & $Num + 1, $COLOR_INFO)
+					If _Sleep(500) Then Return
+				Else
+					SetLog(" - Error Clicking On Army: " & $Num + 1 & "| Pixel was :" & _GetPixelColor($a_TrainArmy[$Num][0], $a_TrainArmy[$Num][1], True), $COLOR_ACTION)
+					SetLog(" - Please 'edit' the Army " & $Num + 1 & " before start the BOT!!!", $COLOR_ERROR)
+				EndIf
 			EndIf
-		EndIf
-	Next
+		Next
+	Else
+		SetLog(" - Error Clicking On Army! You are not on the Quicktrain Tab", $COLOR_ERROR)
+	EndIf
 
 EndFunc   ;==>TrainArmyNumber
 
@@ -2030,7 +2031,7 @@ Func IIf($Condition, $IfTrue, $IfFalse)
 		Return $IfFalse
 	EndIf
 EndFunc   ;==>IIf
-#cs
+
 Func _ArryRemoveBlanks(ByRef $aArray)
 	Local $iCounter = 0
 	For $i = 0 To UBound($aArray) - 1
@@ -2041,7 +2042,7 @@ Func _ArryRemoveBlanks(ByRef $aArray)
 	Next
 	ReDim $aArray[$iCounter]
 EndFunc   ;==>_ArryRemoveBlanks
-#ce
+
 Func ValidateSearchArmyResult($aSearchResult, $iIndex = 0)
 	If IsArray($aSearchResult) Then
 		If UBound($aSearchResult) > 0 Then

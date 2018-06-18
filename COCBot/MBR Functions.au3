@@ -19,39 +19,13 @@
 ;#include "functions\Other\Synchronization.au3" ; now included in LaunchConsole.au3
 #include "functions\Other\OnAutoItErrorRegisterBot.au3"
 
-
-; moved to the end to avoid any global declare issues
-#include "functions\Config\profileFunctions.au3"
-#include "functions\Config\_Ini_Table.au3"
-#include "functions\Config\applyConfig.au3"
-#include "functions\Config\readConfig.au3"
-#include "functions\Config\saveConfig.au3"
-
-; SamM0d config
-#include "SamM0d\Functions\Config\applyConfig.au3"
-#include "SamM0d\Functions\Config\readConfig.au3"
-#include "SamM0d\Functions\Config\saveConfig.au3"
-
 ;===========Samm0d collection==============================
-; Random _Sleep
-#include "SamM0d\functions\_Sleep random.au3"
 #include "SamM0d\Functions\SamM0dZap.au3"
 #include "SamM0d\Functions\AreCollectorsNearRedline.au3"
 #include "SamM0d\Functions\HLFClick.au3"
 #include "SamM0d\Functions\getMyOcr.au3"
 #include "SamM0d\Functions\FriendlyChallenge.au3"
 #include "SamM0d\Functions\MySwitch\MySwitch.au3"
-
-; Misc Mod
-#include "SamM0d\GUI\MOD GUI Design - Misc.au3"
-
-; Bot Humanization
-#include "SamM0d\GUI\MOD GUI Design - BotHumanization.au3"
-
-; Goblin XP
-#include "SamM0d\GUI\MOD GUI Design - GoblinXP.au3"
-
-#include "SamM0d\Functions\CheckStopForWar.au3"
 ; Mod Train
 ;---------------------------------------------------------------
 #include "SamM0d\Functions\ModTrain\ModTrain.au3"
@@ -90,29 +64,6 @@
 #include "SamM0d\MBRMates\Multi Fingers\eightFinger.au3"
 #include "SamM0d\MBRMates\Multi Fingers\multiFinger.au3"
 #include "SamM0d\MBRMates\Multi Fingers\unitInfo.au3"
-;==========================================================
-; ClanHop - Team AiO MOD++
-#include "SamM0d\functions\Mod's\ClanHop.au3"
-
-; Check Grand Warden Mode - Team AiO MOD++
-#include "SamM0d\functions\Mod's\CheckWardenMode.au3"
-
-; Bot Humanization - Team AiO MOD++
-#include "SamM0d\functions\Bot Humanization\BotHumanization.au3"
-#include "SamM0d\functions\Bot Humanization\AttackNDefenseActions.au3"
-#include "SamM0d\functions\Bot Humanization\BestClansNPlayersActions.au3"
-#include "SamM0d\functions\Bot Humanization\ChatActions.au3"
-#include "SamM0d\functions\Bot Humanization\ClanActions.au3"
-#include "SamM0d\functions\Bot Humanization\ClanWarActions.au3"
-
-; Goblin XP - Team AiO MOD++
-#include "SamM0d\functions\GoblinXP\GoblinXP.au3"
-#include "SamM0d\functions\GoblinXP\multiSearch.au3"
-#include "SamM0d\functions\GoblinXP\ArrayFunctions.au3"
-
-; GTFO - Team AiO MOD++
-#include "SamM0d\functions\Bot GTFO\GTFO.au3"
-#include "SamM0d\functions\Bot GTFO\KickOut.au3"
 ;==========================================================
 
 #include "functions\Attack\AttackReport.au3"
@@ -223,7 +174,7 @@
 
 #include "functions\CreateArmy\getArmyCCSpells\getArmyCCSpellCapacity.au3"
 #include "functions\CreateArmy\getArmyCCSpells\getArmyCCSpell.au3"
-#EndRegion CreateArmy / Train
+#EndRegion
 
 #include "functions\Image Search\ImageSearch.au3"
 #include "functions\Image Search\checkDeadBase.au3"
@@ -243,7 +194,7 @@
 #include "functions\Main Screen\checkAttackDisable.au3"
 #include "functions\Main Screen\RemoveGhostTrayIcons.au3"
 #include "functions\Main Screen\waitMainScreen.au3"
-#include "functions\Main Screen\isOnBuilderBase.au3"
+#include "functions\Main Screen\isOnBuilderIsland.au3"
 
 ; Android support for MEmu, LeapDroid, Droid4X, Nox, BlueStacks...
 #include "functions\Android\AndroidMenuShortcuts.au3"
@@ -376,8 +327,6 @@
 #include "functions\Village\CheckNeedOpenTrain.au3"
 #include "functions\Village\SwitchBetweenBases.au3"
 #include "functions\Village\SwitchAccount.au3"
-#include "functions\Village\Clan Games\ClanGames.au3"
-#include "functions\Village\FreeMagicItems.au3"
 
 #include "functions\Village\BuilderBase\Collect.au3"
 #include "functions\Village\BuilderBase\StartClockTowerBoost.au3"
@@ -386,3 +335,10 @@
 
 #include "functions\Other\Api.au3"
 #include "functions\Other\ApiClient.au3"
+
+; moved to the end to avoid any global declare issues
+#include "functions\Config\profileFunctions.au3"
+#include "functions\Config\_Ini_Table.au3"
+#include "functions\Config\applyConfig.au3"
+#include "functions\Config\readConfig.au3"
+#include "functions\Config\saveConfig.au3"

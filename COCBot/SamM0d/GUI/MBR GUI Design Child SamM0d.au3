@@ -31,7 +31,6 @@ Global $sTxtLavaHounds = GetTranslatedFileIni("MBR Global GUI Design Names Troop
 Global $sTxtBowlers = GetTranslatedFileIni("MBR Global GUI Design Names Troops", "TxtBowlers", "Bowlers")
 Global $sTxtBabyDragons = GetTranslatedFileIni("MBR Global GUI Design Names Troops", "TxtBabyDragons", "Baby Dragons")
 Global $sTxtMiners = GetTranslatedFileIni("MBR Global GUI Design Names Troops", "TxtMiners", "Miners")
-Global $sTxtElectroDragons = GetTranslatedFileIni("MBR Global GUI Design Names Troops", "TxtElectroDragons", "Electro Dragons")
 Global $sTxtLightningSpells = GetTranslatedFileIni("MBR Global GUI Design Names Spells", "TxtShortLightningSpells", "Lightning")
 Global $sTxtHealSpells = GetTranslatedFileIni("MBR Global GUI Design Names Spells", "TxtShortHealSpells", "Heal")
 Global $sTxtRageSpells = GetTranslatedFileIni("MBR Global GUI Design Names Spells", "TxtShortRageSpells", "Rage")
@@ -42,8 +41,7 @@ Global $sTxtPoisonSpells = GetTranslatedFileIni("MBR Global GUI Design Names Spe
 Global $sTxtEarthquakeSpells = GetTranslatedFileIni("MBR Global GUI Design Names Spells", "TxtShortEarthquakeSpells", "EarthQuake")
 Global $sTxtHasteSpells = GetTranslatedFileIni("MBR Global GUI Design Names Spells", "TxtShortHasteSpells", "Haste")
 Global $sTxtSkeletonSpells = GetTranslatedFileIni("MBR Global GUI Design Names Spells", "TxtShortSkeletonSpells", "Skeleton")
-; Check Grand Warden Mode - Team AiO MOD++
-Global $g_hChkCheckWardenMode = 0, $g_hCmbCheckWardenMode = 0
+
 Global $hGUI_MOD = 0
 Local $sTxtTip
 
@@ -199,7 +197,7 @@ GUICtrlCreateGroup("", -99, -99, 1, 1)
 
 Local $x = 10, $y = 30
 
-GUICtrlCreateGroup(GetTranslatedFileIni("sam m0d", 107, "Deploy speed for all standard attack mode."), $x, $y, 430, 82)
+GUICtrlCreateGroup(GetTranslatedFileIni("sam m0d", 107, "Deploy speed for all standard attack mode."), $x, $y, 430, 100)
 
 $chkUnitFactor = GUICtrlCreateCheckbox(GetTranslatedFileIni("sam m0d", 108, "Modify Unit Factor"), $x+10, $y + 20, 130, 25)
 	$sTxtTip = GetTranslatedFileIni("sam m0d", 109, "Unit deploy delay = Unit setting x Unit Factor (millisecond)")
@@ -213,7 +211,7 @@ $txtUnitFactor = GUICtrlCreateInput("10", $x + 180, $y + 20, 31, 20, BitOR($GUI_
 	GUICtrlSetState(-1, $GUI_DISABLE)
 	GUICtrlSetData(-1, 10)
 	GUICtrlSetOnEvent(-1, "chkUnitFactor")
-$y += 25
+$y += 30
 $chkWaveFactor = GUICtrlCreateCheckbox(GetTranslatedFileIni("sam m0d", 110, "Modify Wave Factor"), $x+10, $y + 20, 130, 25)
 	$sTxtTip = GetTranslatedFileIni("sam m0d", 111, "Switch troop delay = Wave setting x Wave Factor (millisecond)")
 	_GUICtrlSetTip(-1, $sTxtTip)
@@ -227,30 +225,10 @@ $txtWaveFactor = GUICtrlCreateInput("100", $x + 180, $y + 20, 31, 20, BitOR($GUI
 	GUICtrlSetData(-1, 100)
 	GUICtrlSetOnEvent(-1, "chkWaveFactor")
 
+
 GUICtrlCreateGroup("", -99, -99, 1, 1)
-	; Restart Search Legend league - Team AiO MOD++
-	$x = 55 + 151 + 15
-	$y += 80
-        GUICtrlCreateGroup(GetTranslatedFileIni("sam m0d", "Group_04", "Restart search IF Cloud Time"), $x, $y - 15, 173, 50)
-		$g_hChkSearchTimeout = GUICtrlCreateCheckbox(GetTranslatedFileIni("sam m0d", "ChkSearchTimeout", "Restart search") ,$x + 10 , $y)
-			_GUICtrlSetTip(-1,GetTranslatedFileIni("MBR GUI Design Child Attack - Options-Search", "ChkSearchTimeout_Info_01", "Will Return to home and restart search if clouding time is > xx minutes"))
-			GUICtrlSetOnEvent(-1, "chkSearchTimeout")
-		$g_hLblSearchTimeout = GUICtrlCreateLabel(ChrW(62), $x + 5, $y + 17, -1, -1)
-		$g_hTxtSearchTimeout = GUICtrlCreateInput("10", $x + 15, $y + 15, 25, 18, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
-		$g_hLblSearchTimeoutminutes = GUICtrlCreateLabel("minutes", $x + 50, $y + 17, -1, -1)
 
-    ; Check Grand Warden Mode - Team AiO MOD++
-$x = 10 ;	horizontal
-        GUICtrlCreateGroup(GetTranslatedFileIni("sam m0d", "Group_04", "Check Grand Warden Mode"), $x, $y - 15, 173, 50)
-        $g_hChkCheckWardenMode = GUICtrlCreateCheckbox(GetTranslatedFileIni("MBR GUI Design Child Attack - Troops_Options", "CheckWardenMode", "Check Mode") & ": ",$x + 10 , $y)
-            GUICtrlSetOnEvent(-1, "chkCheckWardenMode")
-            _GUICtrlSetTip(-1, GetTranslatedFileIni("MBR GUI Design Child Attack - Troops_Options", "CheckWardenMode_Info_01", "Enable this Option if you want to check in which Mode the Grand Warden is and change if needed"))
-        $g_hCmbCheckWardenMode = GUICtrlCreateCombo("", $x + 90, $y, 60, 18, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
-            GUICtrlSetState(-1, $GUI_DISABLE)
-            GUICtrlSetData(-1, "Ground|Air", "Ground")
-            _GUICtrlSetTip(-1, GetTranslatedFileIni("MBR GUI Design Child Attack - Troops_Options", "CheckWardenMode_Info_02", "Select the Mode your Warden needs to have for attacks"))
-
-$y += 40
+$y = 140
 $chkDropCCFirst = GUICtrlCreateCheckbox(GetTranslatedFileIni("sam m0d", 105, "Enable deploy cc troops first"), $x+10, $y, -1, -1)
 	$sTxtTip = GetTranslatedFileIni("sam m0d", 106, "Deploy cc troops first, only support for standard attack mode")
 	GUICtrlSetOnEvent(-1, "chkDropCCFirst")
@@ -328,9 +306,10 @@ $y += 25
 	$txtIFTHLevel = GUICtrlCreateCombo("", $x+30, $y+25, 100, 20, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
 			GUICtrlSetData(-1, "7|8|9|10","7")
 
+
 Local $x = 10, $y = 30
-SplashStep("Loading M0d - Advanced Random tab...")
-GUICtrlCreateTabItem(GetTranslatedFileIni("sam m0d", 10, "Random Humanization"))
+SplashStep("Loading M0d - Advanced Random Click tab...")
+GUICtrlCreateTabItem(GetTranslatedFileIni("sam m0d", 10, "Random Click"))
 $grpHLFClick = GUICtrlCreateGroup(GetTranslatedFileIni("sam m0d", 11, "Advanced Random Click On Button"), $x, $y, 430, 180)
 	; More Human Like When Train Click By Sam
 	$chkEnableHLFClick = GUICtrlCreateCheckbox(GetTranslatedFileIni("sam m0d", 12, "Enable Random Click On Button Area =-= Train/Remove Troops And Etc."),$x+10, $y+20)
@@ -365,40 +344,8 @@ $grpHLFClick = GUICtrlCreateGroup(GetTranslatedFileIni("sam m0d", 11, "Advanced 
 		GUICtrlSetState(-1, $GUI_UNCHECKED)
 		GUICtrlSetOnEvent(-1, "chkEnableHLFClickSetlog")
 
-	$y += 80
-
-		GUICtrlCreateGroup(GetTranslatedFileIni("sam m0d", "_Sleep", "Advanced Random _Sleep"), $x, $y, 430, 180)
-	; More Human _Sleep
-	$g_chkUseRandomSleep = GUICtrlCreateCheckbox(GetTranslatedFileIni("sam m0d", "_Sleep", "Advanced Random _Sleep."),$x+10, $y+20)
-		$sTxtTip = "More human _Sleep time. Does not affect the waiting time."
-		GUICtrlSetState(-1, $GUI_CHECKED)
-		_GUICtrlSetTip(-1, $sTxtTip)
-		GUICtrlSetOnEvent(-1, "chkUseRandomSleep")
-
-	GUICtrlCreateLabel(GetTranslatedFileIni("sam m0d", "_SleepMultipler", "Sleep Multipler"), $x+28, $y+42, 40, 30)
-		$sTxtTip = "Extra time you want to add randomly."
-		_GUICtrlSetTip(-1, $sTxtTip)
-			$y += 10
-		$cmb_SleepMult = GUICtrlCreateCombo("", $x+28, $y+58, 40, 30, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
-		_GUICtrlSetTip(-1, $sTxtTip)
-		GUICtrlSetData(-1, "1.25x|1.5x|2x|3x", "1.25x")
-
-	$y += 80
-	$g_chkUseRandomSleepDbg = GUICtrlCreateCheckbox(GetTranslatedFileIni("sam m0d", "_SleepMultiplerDBG", "Enable Setlog for Random Sleep."),$x+10, $y+20)
-		$sTxtTip = "Logs data for random _Sleep."
-		_GUICtrlSetTip(-1, $sTxtTip)
-		GUICtrlSetState(-1, $GUI_UNCHECKED)
-		GUICtrlSetOnEvent(-1, "chkUseRandomSleepDbg")
-SplashStep("Loading M0d - Humanization tab...")
-GUICtrlCreateTabItem(GetTranslatedFileIni("sam m0d","Humanization", "Humanization"))
-HumanizationGUI()
-GUICtrlCreateGroup("", -99, -99, 1, 1)
-
 SplashStep("Loading M0d - My Switch tab...")
 GUICtrlCreateTabItem(GetTranslatedFileIni("sam m0d", "My Switch", "My Switch"))
-GUICtrlCreateGroup("", -99, -99, 1, 1)
-Local $x = 10, $y = 30
-
 ; samm0d
 Local $x = 10, $y = 25
 GUICtrlCreateGroup(GetTranslatedFileIni("MBR GUI Design Child Bot - Profiles", "Group_01", "Switch Profiles"), $x, $y, 430, 60)
@@ -449,8 +396,8 @@ $cmbMyQuickTrain = GUICtrlCreateCombo("", $x+300, $y+20, 130, 20, BitOR($CBS_DRO
 
 
 Local $sComboData= ""
-Local $aTroopOrderList[21] = ["","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"]
-For $j = 0 To 20
+Local $aTroopOrderList[20] = ["","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19"]
+For $j = 0 To 19
 	$sComboData &= $aTroopOrderList[$j] & "|"
 Next
 
@@ -499,7 +446,7 @@ GUICtrlSetFont(-1,10,$FW_BOLD)
 $idProgressbar = GUICtrlCreateProgress($x+210, $y+20,15, 165,$PBS_VERTICAL)
 
 
-$y = $yStart + 240
+$y = $yStart + 220
 
 $chkDisablePretrainTroops = GUICtrlCreateCheckbox(GetTranslatedFileIni("sam m0d", 69, "Disable pre-train troops"), $x, $y, -1, -1)
 _GUICtrlSetTip(-1, GetTranslatedFileIni("sam m0d", 70, "Disable pre-train troops, normally use by donate and train setting together."))
@@ -806,154 +753,29 @@ Local $x = 10, $y = 30
 
 SetupFriendlyChallengeGUI($x, $y)
 
-	GUICtrlCreateGroup("", -99, -99, 1, 1)
-SplashStep("Loading M0d - Goblin XP tab...")
-GUICtrlCreateTabItem(GetTranslatedFileIni("sam m0d","GoblinXP", "Goblin XP"))
-
-Local $x = 10, $y = 30
-
-GoblinXPGUI()
-
-	GUICtrlCreateGroup("", -99, -99, 1, 1)
-SplashStep("Loading M0d - GTFO/FastDon tab...")
-GUICtrlCreateTabItem(GetTranslatedFileIni("sam m0d","MiscMOD", "GTFO/FastDon"))
-
-Local $x = 10, $y = 30
-
-MiscMODGUI()
-
-GUICtrlCreateGroup("", -99, -99, 1, 1)
-
-;================================= War preparation ===============================================
-; War preparation (Demen)
-
-SplashStep("Loading M0d - Clan War...")
-GUICtrlCreateTab(0, 0, $_GUI_MAIN_WIDTH - 20, $_GUI_MAIN_HEIGHT - 255, $TCS_FLATBUTTONS)
-GUICtrlCreateTabItem(GetTranslatedFileIni("sam m0d","Clan War Troops", "War troops"))
-
-
-    Local $aTroopsIcons[20] = [$eIcnBarbarian, $eIcnArcher, $eIcnGiant, $eIcnGoblin, $eIcnWallBreaker, $eIcnBalloon, _
-            $eIcnWizard, $eIcnHealer, $eIcnDragon, $eIcnPekka, $eIcnBabyDragon, $eIcnMiner, $eIcnElectroDragon, $eIcnMinion, _
-            $eIcnHogRider, $eIcnValkyrie, $eIcnGolem, $eIcnWitch, $eIcnLavaHound, $eIcnBowler]
-    Local $aSpellsIcons[10] =[$eIcnLightSpell, $eIcnHealSpell, $eIcnRageSpell, $eIcnJumpSpell, $eIcnFreezeSpell, _
-            $eIcnCloneSpell, $eIcnPoisonSpell, $eIcnEarthQuakeSpell, $eIcnHasteSpell, $eIcnSkeletonSpell]
-
-    Local $x = 15, $y = 40
-
-        $g_hChkStopForWar = GUICtrlCreateCheckbox("Pause farming for war", $x, $y, -1, -1)
-            _GUICtrlSetTip(-1, "Pause or set current account 'idle' to prepare for war")
-            GUICtrlSetOnEvent(-1, "ChkStopForWar")
-
-        $g_hCmbStopTime = GUICtrlCreateCombo("", $x + 140, $y, 60, -1)
-            GUICtrlSetData(-1,     "0 hr|1 hr|2 hrs|3 hrs|4 hrs|5 hrs|6 hrs|7 hrs|8 hrs|9 hrs|10 hrs|11 hrs|12 hrs |13 hrs|14 hrs|15 hrs|16 hrs|17 hrs|18 hrs|19 hrs|20 hrs|21 hrs|22 hrs|23 hrs", "0 hr")
-            GUICtrlSetOnEvent(-1,"CmbStopTime")
-        $g_CmbStopBeforeBattle = GUICtrlCreateCombo("", $x + 220, $y, 120, -1)
-            GUICtrlSetData(-1,     "before battle start|after battle start", "before battle start")
-            GUICtrlSetOnEvent(-1,"CmbStopTime")
-
-    $y += 25
-        GUICtrlCreateLabel("Return to farm", $x + 15, $y + 1, -1, -1)
-        $g_hCmbReturnTime = GUICtrlCreateCombo("", $x + 140, $y, 60, -1)
-            GUICtrlSetData(-1,     "0 hr|1 hr|2 hrs|3 hrs|4 hrs|5 hrs|6 hrs|7 hrs|8 hrs|9 hrs|10 hrs|11 hrs|12 hrs |13 hrs|14 hrs|15 hrs|16 hrs|17 hrs|18 hrs|19 hrs|20 hrs|21 hrs|22 hrs|23 hrs", "0 hr")
-            GUICtrlSetOnEvent(-1,"CmbReturnTime")
-        GUICtrlCreateLabel("before battle finish", $x + 220, $y + 1, -1, -1)
-
-    $y += 25
-        $g_hChkTrainWarTroop = GUICtrlCreateCheckbox("Delete all farming troops and train war troops before pausing", $x, $y, -1, -1)
-            GUICtrlSetOnEvent(-1, "ChkTrainWarTroop")
-
-    $y += 25
-        $g_hChkUseQuickTrainWar = GUICtrlCreateCheckbox("Use Quick Train", $x + 15, $y, -1, 15)
-            GUICtrlSetState(-1, $GUI_UNCHECKED)
-            GUICtrlSetOnEvent(-1, "chkUseQTrainWar")
-        For $i = 0 To 2
-            $g_ahChkArmyWar[$i] = GUICtrlCreateCheckbox("Army " & $i + 1, $x + 120 + $i * 60, $y, 50, 15)
-                GUICtrlSetState(-1, $GUI_DISABLE)
-                If $i = 0 Then GUICtrlSetState(-1, $GUI_CHECKED)
-                GUICtrlSetOnEvent(-1, "chkQuickTrainComboWar")
-        Next
-        $g_hLblRemoveArmy = GUICtrlCreateLabel("Remove Army", $x + 305, $y + 1, -1, 15, $SS_LEFT)
-        _GUICtrlCreateIcon($g_sLibIconPath, $eIcnResetButton, $x + 375, $y - 4, 24, 24)
-            GUICtrlSetOnEvent(-1, "RemovecampWar")
-
-    $x = 30
-    $y += 25
-        For $i = 0 To 19 ; Troops
-            If $i >= 12 Then $x = 37
-            _GUICtrlCreateIcon($g_sLibIconPath, $aTroopsIcons[$i], $x + Int($i / 2) * 38, $y + Mod($i, 2) * 60, 32, 32)
-
-            $g_ahTxtTrainWarTroopCount[$i] = GUICtrlCreateInput("0", $x + Int($i / 2) * 38 + 1, $y + Mod($i, 2) * 60 + 34, 30, 20, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
-                GUICtrlSetLimit(-1, 3)
-                GUICtrlSetOnEvent(-1, "TrainWarTroopCountEdit")
-        Next
-
-    $x = 30
-    $y += 120
-        $g_hCalTotalWarTroops = GUICtrlCreateProgress($x, $y + 3, 285, 10)
-        $g_hLblTotalWarTroopsProgress = GUICtrlCreateLabel("", $x, $y + 3, 285, 10)
-            GUICtrlSetBkColor(-1, $COLOR_RED)
-            GUICtrlSetState(-1, BitOR($GUI_DISABLE, $GUI_HIDE))
-
-        GUICtrlCreateLabel("Total troops", $x + 290, $y, -1, -1)
-        $g_hLblCountWarTroopsTotal = GUICtrlCreateLabel("" & 0, $x + 350, $y, 30, 15, $SS_CENTER)
-            GUICtrlSetBkColor(-1, $COLOR_MONEYGREEN) ;lime, moneygreen
-
-    $y += 25
-        For $i = 0 To 9 ; Spells
-            If $i >= 6 Then $x = 37
-            _GUICtrlCreateIcon($g_sLibIconPath, $aSpellsIcons[$i], $x + $i * 38, $y, 32, 32)
-            $g_ahTxtTrainWarSpellCount[$i] = GUICtrlCreateInput("0", $x +  $i * 38, $y + 34, 30, 20, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
-                GUICtrlSetLimit(-1, 3)
-                GUICtrlSetOnEvent(-1, "TrainWarSpellCountEdit")
-        Next
-
-    $x = 30
-    $y += 60
-        $g_hCalTotalWarSpells = GUICtrlCreateProgress($x, $y + 3, 285, 10)
-        $g_hLblTotalWarSpellsProgress = GUICtrlCreateLabel("", $x, $y + 3, 285, 10)
-            GUICtrlSetBkColor(-1, $COLOR_RED)
-            GUICtrlSetState(-1, BitOR($GUI_DISABLE, $GUI_HIDE))
-
-        GUICtrlCreateLabel("Total spells", $x + 290, $y, -1, -1)
-        $g_hLblCountWarSpellsTotal = GUICtrlCreateLabel("" & 0, $x + 350, $y, 30, 15, $SS_CENTER)
-            GUICtrlSetBkColor(-1, $COLOR_MONEYGREEN) ;lime, moneygreen
-        
-    $x = 15
-    $y += 13
-    $g_hChkX2ForWar = GUICtrlCreateCheckbox("Train X2", $x, $y, -1, -1)  ; War
-
-    $x = 15
-    $y += 17
-        $g_hChkRequestCCForWar = GUICtrlCreateCheckbox("Request CC before pausing", $x, $y, -1, -1)
-            GUICtrlSetOnEvent(-1, "ChkRequestCCForWar")
-        $g_hTxtRequestCCForWar = GUICtrlCreateInput("War troop please", $x + 180, $y, 120, -1, $SS_CENTER)
-
-
-    GUICtrlCreateGroup("", -99, -99, 1, 1)
-
 GUICtrlCreateTabItem(GetTranslatedFileIni("sam m0d", 14, "Other"))
 
 Local $x = 10, $y = 30
 SplashStep("Loading M0d - Other tab...")
 $grpStatsMisc = GUICtrlCreateGroup(GetTranslatedFileIni("sam m0d", 14, "Other"), $x, $y, 430, 360)
 
-;-$y += 20
-;-
-;-$chkSmartUpdateWall = GUICtrlCreateCheckbox(GetTranslatedFileIni("sam m0d", 18, "Enable advanced update for wall"), $x+10, $y, -1, -1)
-;-	$sTxtTip = "Save the last position, then next update will start at last position and checking around if got wall match for update."
-;-	GUICtrlSetOnEvent(-1, "chkSmartUpdateWall")
-;-	_GUICtrlSetTip(-1, $sTxtTip)
-;-	GUICtrlSetState(-1, $GUI_CHECKED)
-;-
-;-
-;-$y += 20
-;-GUICtrlCreateLabel(GetTranslatedFileIni("sam m0d", 19, "Delay: "), $x + 30, $y, -1, -1)
-;-$sTxtTip = "Set the delay between each click of wall. Increase the delay if your PC is slow."
-;-_GUICtrlSetTip(-1, $sTxtTip)
-;-$txtClickWallDelay = GUICtrlCreateInput("500", $x + 60, $y, 31, 18, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
-;-	_GUICtrlSetTip(-1, $sTxtTip)
-;-	GUICtrlSetLimit(-1, 3)
-;-	GUICtrlSetData(-1, 500)
+$y += 20
+
+$chkSmartUpdateWall = GUICtrlCreateCheckbox(GetTranslatedFileIni("sam m0d", 18, "Enable advanced update for wall"), $x+10, $y, -1, -1)
+	$sTxtTip = "Save the last position, then next update will start at last position and checking around if got wall match for update."
+	GUICtrlSetOnEvent(-1, "chkSmartUpdateWall")
+	_GUICtrlSetTip(-1, $sTxtTip)
+	GUICtrlSetState(-1, $GUI_CHECKED)
+
+
+$y += 20
+GUICtrlCreateLabel(GetTranslatedFileIni("sam m0d", 19, "Delay: "), $x + 30, $y, -1, -1)
+$sTxtTip = "Set the delay between each click of wall. Increase the delay if your PC is slow."
+_GUICtrlSetTip(-1, $sTxtTip)
+$txtClickWallDelay = GUICtrlCreateInput("500", $x + 60, $y, 31, 18, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
+	_GUICtrlSetTip(-1, $sTxtTip)
+	GUICtrlSetLimit(-1, 3)
+	GUICtrlSetData(-1, 500)
 
 $x = 10
 $y += 20
@@ -1080,6 +902,9 @@ $txtLogLineLimit = GUICtrlCreateInput("240", $x + 300, $y+2, 35, 18, BitOR($GUI_
 ;~ $chkRemoveSpecialObstacleBB = GUICtrlCreateCheckbox(GetTranslatedFileIni("sam m0d", "Remove Special Obstacle BB", "Remove Special Obstacle at Builder Base"), $x+10, $y, -1, -1)
 ;~ 	GUICtrlSetOnEvent(-1, "chkRemoveSpecialObstacleBB")
 ;~ 	GUICtrlSetState(-1, $GUI_UNCHECKED)
+
+GUICtrlCreateGroup("", -99, -99, 1, 1)
+
 
 GUICtrlCreateTabItem("") ; end tabitem definition
 

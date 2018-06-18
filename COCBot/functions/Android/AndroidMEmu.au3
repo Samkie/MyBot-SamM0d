@@ -23,7 +23,7 @@ Func OpenMEmu($bRestart = False)
 	If $launchAndroid Then
 		; Launch MEmu
 		$cmdPar = GetAndroidProgramParameter()
-		$PID = LaunchAndroid($g_sAndroidProgramPath, $cmdPar, $g_sAndroidPath)
+		$PID = LaunchAndroid($g_sAndroidProgramPath, $cmdPar, $g_sAndroidPath, 30)
 		If $PID = 0 Then
 			SetError(1, 1, -1)
 			Return False

@@ -850,7 +850,6 @@ Func ResetStats()
 			$g_aiSkippedVillageCountAcc[$i] = 0
 		Next
 	EndIf
-	ResetGoblinsXP() ; Goblin XP - Team AiO MOD++
 	UpdateStats()
 EndFunc   ;==>ResetStats
 
@@ -858,7 +857,7 @@ Func WallsStatsMAJ()
 	$g_aiWallsCurrentCount[$g_iCmbUpgradeWallsLevel + 4] -= Number($g_iNbrOfWallsUpped)
 	$g_aiWallsCurrentCount[$g_iCmbUpgradeWallsLevel + 5] += Number($g_iNbrOfWallsUpped)
 	$g_iNbrOfWallsUpped = 0
-	For $i = 4 To 13
+	For $i = 4 To 12
 		GUICtrlSetData($g_ahWallsCurrentCount[$i], $g_aiWallsCurrentCount[$i])
 	Next
 	SaveConfig()

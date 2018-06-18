@@ -36,25 +36,23 @@ Func MatchTroopDropName($Num)
 			Return $eBabyD
 		Case 11
 			Return $eMine
-		case 12
-			Return $eEDrag
-		Case 13
+		Case 12
 			Return $eMini
-		Case 14
+		Case 13
 			Return $eHogs
-		Case 15
+		Case 14
 			Return $eValk
-		Case 16
+		Case 15
 			Return $eGole
-		Case 17
+		Case 16
 			Return $eWitc
-		Case 18
+		Case 17
 			Return $eLava
-		Case 19
+		Case 18
 			Return $eBowl
-		Case 20
+		Case 19
 			Return "CC"
-		Case 21
+		Case 20
 			Return "HEROES"
 	EndSwitch
 EndFunc   ;==>MatchTroopDropName
@@ -109,48 +107,42 @@ Func MatchSlotsPerEdge($Num)
 			Else
 				Return 1
 			EndIf
-		Case 12 ; $eEDrag
-			If $g_iMatchMode = $LB And $g_aiAttackStdDropSides[$LB] = 5 Then
-				Return 0
-			Else
-				Return 2
-			EndIf
-		Case 13 ;$eMini
+		Case 12 ;$eMini
 			Return 0
-		Case 14 ;$eHogs
+		Case 13 ;$eHogs
 			If $g_iMatchMode = $LB And $g_aiAttackStdDropSides[$LB] = 5 Then
 				Return 1
 			Else
 				Return 2
 			EndIf
-		Case 15 ;$eValk
+		Case 14 ;$eValk
 			If $g_iMatchMode = $LB And $g_aiAttackStdDropSides[$LB] = 5 Then
 				Return 0
 			Else
 				Return 2
 			EndIf
-		Case 16 ;$eGole
+		Case 15 ;$eGole
 			Return 2
-		Case 17 ;$eWitc
+		Case 16 ;$eWitc
 			If $g_iMatchMode = $LB And $g_aiAttackStdDropSides[$LB] = 5 Then
 				Return 1
 			Else
 				Return 2
 			EndIf
-		Case 18 ;$eLava
+		Case 17 ;$eLava
 			Return 2
-		Case 19 ;$eBowl
+		Case 18 ;$eBowl
 			Return 0
-		Case 20 ;CC
+		Case 19 ;CC
 			Return 1
-		Case 21 ;HEROES
+		Case 20 ;HEROES
 			Return 1
 	EndSwitch
 EndFunc   ;==>MatchSlotsPerEdge
 
 Func MatchSidesDrop($Num)
 	Switch _GUICtrlComboBox_GetCurSel($g_ahCmbDropOrder[$Num])
-		Case 0 To 19 ;$eBarb to $eBowl
+		Case 0 To 18 ;$eBarb to $eBowl
 			If $g_aiAttackStdDropSides[$g_iMatchMode] = 0 Then Return 1
 			If $g_aiAttackStdDropSides[$g_iMatchMode] = 1 Then Return 2
 			If $g_aiAttackStdDropSides[$g_iMatchMode] = 2 Then Return 3
@@ -158,9 +150,9 @@ Func MatchSidesDrop($Num)
 			If $g_aiAttackStdDropSides[$g_iMatchMode] = 4 Then Return 4
 			If $g_aiAttackStdDropSides[$g_iMatchMode] = 5 Then Return 1
 			If $g_aiAttackStdDropSides[$g_iMatchMode] = 6 Then Return 1
-		Case 20
+		Case 19
 			Return 1 ;CC
-		Case 21
+		Case 20
 			Return 1 ;HEROES
 	EndSwitch
 EndFunc   ;==>MatchSidesDrop

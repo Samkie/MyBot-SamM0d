@@ -14,7 +14,6 @@
 ; ===============================================================================================================================
 #include-once
 
-; samm0d
 Func ReplayShare($bShareLastReplay, $bForce = False)
 	If Not $g_bShareAttackEnable Or Not $bShareLastReplay Then Return
 

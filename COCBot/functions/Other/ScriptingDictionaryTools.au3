@@ -175,10 +175,10 @@ Func _LogObjList(ByRef $oDICT)
 				Select
 					Case UBound($array, 1) > 1 And IsArray($array[1]) ; if we have array of arrays, separate and list
 						$Text &= PixelArrayToString($array, ",")
-					Case UBound($array[0]) = 2 ; single row with one array internal
+					Case IsArray($array[0]) ; single row with one array internal
 						Local $aPixel = $array[0]
 						$Text &= PixelToString($aPixel, ";")
-					Case UBound($array) = 2 And IsArray($array[0]) = 0 ; original array has x, y
+					Case IsArray($array[0]) = 0 ; original array has x, y
 						$Text &= PixelToString($array, ":")
 					Case Else
 						$Text = "Monkey found bad banana!"
