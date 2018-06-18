@@ -328,6 +328,14 @@ Func SetAtkLog($String1, $String2 = "", $Color = $COLOR_BLACK, $Font = "Lucida C
 	;string1 see in video, string1&string2 put in file
 	_FileWriteLog($g_hAttackLogFile, $String1 & $String2)
 
+	; samm0d
+	If $g_iLCID = 1028 Then
+		If $Font = "Lucida Console" And $FontSize = 7.5 Then
+			$Font = "MingLiU"
+			$FontSize = 7.5
+		EndIf
+	EndIf
+
 	;Local $txtLogMutex = AcquireMutex("txtAtkLog")
 	Dim $a[6]
 	$a[0] = $String1
@@ -363,9 +371,9 @@ Func SetSwitchAccLog($String, $Color = $COLOR_BLACK, $Font = "Verdana", $FontSiz
 EndFunc   ;==>SetSwitchAccLog
 
 Func AtkLogHead()
-	SetAtkLog(_PadStringCenter(" " & GetTranslatedFileIni("MBR Func_AtkLogHead", "AtkLogHead_Text_01", "ATTACK LOG") & " ", 71, "="), "", $COLOR_BLACK, "MS Shell Dlg", 8.5)
-	SetAtkLog(GetTranslatedFileIni("MBR Func_AtkLogHead", "AtkLogHead_Text_02", '|                      --------  LOOT --------       ----- BONUS ------'), "")
-	SetAtkLog(GetTranslatedFileIni("MBR Func_AtkLogHead", "AtkLogHead_Text_03", '|AC|TIME.|TROP.|SEARCH|   GOLD| ELIXIR|DARK EL|TR.|S|  GOLD|ELIXIR|  DE|L.'), "")
+	SetAtkLog(_PadStringCenter(" " & GetTranslatedFileIni("MBR Func_AtkLogHead", "AtkLogHead_Text_01", "ATTACK LOG") & " ", 61, "="), "", $COLOR_BLACK, "MS Shell Dlg", 8.5)
+	SetAtkLog(GetTranslatedFileIni("MBR Func_AtkLogHead", "AtkLogHead_Text_02", '# |                   -------- LOOT ---------        ----- BONUS ------'), "", $COLOR_BLACK)
+	SetAtkLog(GetTranslatedFileIni("MBR Func_AtkLogHead", "AtkLogHead_Text_03", '# |TIME |TROP.|SEARCH|   GOLD| ELIXIR|DARK EL|TR.|S |  GOLD|ELIXIR|  DE|L.  |'), "", $COLOR_BLACK)
 EndFunc   ;==>AtkLogHead
 
 Func __FileWriteLog($handle, $text)
