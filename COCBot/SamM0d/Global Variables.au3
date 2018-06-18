@@ -208,8 +208,8 @@ Global $aBaseNode[2] = [-1,-1] ;first found with core
 Global $aLastWall[2] = [-1,-1]
 Global $iFaceDirection = -1
 
-Global $grpStatsMisc, $chkSmartUpdateWall,$txtClickWallDelay, $chkEnableCustomOCR4CCRequest, $chkCheck4CC, $txtCheck4CCWaitTime, $chkIncreaseGlobalDelay, $txtIncreaseGlobalDelay, _
-$chkAutoDock
+;~ Global $chkSmartUpdateWall,$txtClickWallDelay
+Global $grpStatsMisc, $chkEnableCustomOCR4CCRequest, $chkCheck4CC, $txtCheck4CCWaitTime, $chkIncreaseGlobalDelay, $txtIncreaseGlobalDelay, $chkAutoDock
 
 ; CSV Deployment Speed Mod
 Global $isldSelectedCSVSpeed[$g_iModeCount], $iCSVSpeeds[19]

@@ -90,14 +90,14 @@ _Ini_Add("AutoDock", "Enable", (GUICtrlRead($chkAutoDock) = $GUI_CHECKED ? 1 : 0
 _Ini_Add("AutoHideEmulator", "Enable", (GUICtrlRead($chkAutoHideEmulator) = $GUI_CHECKED ? 1 : 0))
 _Ini_Add("AutoMinimizeBot", "Enable", (GUICtrlRead($chkAutoMinimizeBot) = $GUI_CHECKED ? 1 : 0))
 
-; advanced update for wall by Samkie
-_Ini_Add("AU4Wall", "EnableSmartUpdateWall", (GUICtrlRead($chkSmartUpdateWall) = $GUI_CHECKED ? 1 :0))
-_Ini_Add("AU4Wall", "ClickWallDelay", GUICtrlRead($txtClickWallDelay))
-_Ini_Add("AU4Wall", "BaseNodeX", $aBaseNode[0])
-_Ini_Add("AU4Wall", "BaseNodeY", $aBaseNode[1])
-_Ini_Add("AU4Wall", "LastWallX", $aLastWall[0])
-_Ini_Add("AU4Wall", "LastWallY", $aLastWall[1])
-_Ini_Add("AU4Wall", "FaceDirection", $iFaceDirection)
+;~ ; advanced update for wall by Samkie
+;~ _Ini_Add("AU4Wall", "EnableSmartUpdateWall", (GUICtrlRead($chkSmartUpdateWall) = $GUI_CHECKED ? 1 :0))
+;~ _Ini_Add("AU4Wall", "ClickWallDelay", GUICtrlRead($txtClickWallDelay))
+;~ _Ini_Add("AU4Wall", "BaseNodeX", $aBaseNode[0])
+;~ _Ini_Add("AU4Wall", "BaseNodeY", $aBaseNode[1])
+;~ _Ini_Add("AU4Wall", "LastWallX", $aLastWall[0])
+;~ _Ini_Add("AU4Wall", "LastWallY", $aLastWall[1])
+;~ _Ini_Add("AU4Wall", "FaceDirection", $iFaceDirection)
 
 ; CSV Deployment Speed Mod
 _Ini_Add("attack", "CSVSpeedDB", $isldSelectedCSVSpeed[$DB])

@@ -760,23 +760,23 @@ Local $x = 10, $y = 30
 SplashStep("Loading M0d - Other tab...")
 $grpStatsMisc = GUICtrlCreateGroup(GetTranslatedFileIni("sam m0d", 14, "Other"), $x, $y, 430, 360)
 
-$y += 20
+;~ $y += 20
 
-$chkSmartUpdateWall = GUICtrlCreateCheckbox(GetTranslatedFileIni("sam m0d", 18, "Enable advanced update for wall"), $x+10, $y, -1, -1)
-	$sTxtTip = "Save the last position, then next update will start at last position and checking around if got wall match for update."
-	GUICtrlSetOnEvent(-1, "chkSmartUpdateWall")
-	_GUICtrlSetTip(-1, $sTxtTip)
-	GUICtrlSetState(-1, $GUI_CHECKED)
+;~ $chkSmartUpdateWall = GUICtrlCreateCheckbox(GetTranslatedFileIni("sam m0d", 18, "Enable advanced update for wall"), $x+10, $y, -1, -1)
+;~ 	$sTxtTip = "Save the last position, then next update will start at last position and checking around if got wall match for update."
+;~ 	GUICtrlSetOnEvent(-1, "chkSmartUpdateWall")
+;~ 	_GUICtrlSetTip(-1, $sTxtTip)
+;~ 	GUICtrlSetState(-1, $GUI_CHECKED)
 
 
-$y += 20
-GUICtrlCreateLabel(GetTranslatedFileIni("sam m0d", 19, "Delay: "), $x + 30, $y, -1, -1)
-$sTxtTip = "Set the delay between each click of wall. Increase the delay if your PC is slow."
-_GUICtrlSetTip(-1, $sTxtTip)
-$txtClickWallDelay = GUICtrlCreateInput("500", $x + 60, $y, 31, 18, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
-	_GUICtrlSetTip(-1, $sTxtTip)
-	GUICtrlSetLimit(-1, 3)
-	GUICtrlSetData(-1, 500)
+;~ $y += 20
+;~ GUICtrlCreateLabel(GetTranslatedFileIni("sam m0d", 19, "Delay: "), $x + 30, $y, -1, -1)
+;~ $sTxtTip = "Set the delay between each click of wall. Increase the delay if your PC is slow."
+;~ _GUICtrlSetTip(-1, $sTxtTip)
+;~ $txtClickWallDelay = GUICtrlCreateInput("500", $x + 60, $y, 31, 18, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
+;~ 	_GUICtrlSetTip(-1, $sTxtTip)
+;~ 	GUICtrlSetLimit(-1, 3)
+;~ 	GUICtrlSetData(-1, 500)
 
 $x = 10
 $y += 20

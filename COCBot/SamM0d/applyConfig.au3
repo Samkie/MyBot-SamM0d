@@ -93,10 +93,10 @@ chkEnableHLFClick()
 sldHLFClickDelayTime()
 GUICtrlSetState($chkEnableHLFClickSetlog, ($EnableHMLSetLog = 1 ? $GUI_CHECKED : $GUI_UNCHECKED))
 
-; advanced update for wall by Samkie
-GUICtrlSetState($chkSmartUpdateWall, ($ichkSmartUpdateWall = 1 ? $GUI_CHECKED : $GUI_UNCHECKED))
-GUICtrlSetData($txtClickWallDelay, $itxtClickWallDelay)
-chkSmartUpdateWall()
+;~ ; advanced update for wall by Samkie
+;~ GUICtrlSetState($chkSmartUpdateWall, ($ichkSmartUpdateWall = 1 ? $GUI_CHECKED : $GUI_UNCHECKED))
+;~ GUICtrlSetData($txtClickWallDelay, $itxtClickWallDelay)
+;~ chkSmartUpdateWall()
 
 ; samm0d ocr
 GUICtrlSetState($chkEnableCustomOCR4CCRequest, ($ichkEnableCustomOCR4CCRequest = 1 ? $GUI_CHECKED : $GUI_UNCHECKED))

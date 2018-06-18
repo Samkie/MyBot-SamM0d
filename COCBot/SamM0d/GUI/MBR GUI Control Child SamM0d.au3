@@ -544,22 +544,22 @@ Func chkEnableHLFClick()
 	EndIf
 EndFunc
 
-Func chkSmartUpdateWall()
-	If GUICtrlRead($chkSmartUpdateWall) = $GUI_CHECKED Then
-		GUICtrlSetState($txtClickWallDelay, $GUI_ENABLE)
-		If $g_bDebugSetlog Then SetLog("BaseNode: " & $aBaseNode[0] & "," & $aBaseNode[1])
-		If $g_bDebugSetlog Then SetLog("LastWall: " & $aLastWall[0] & "," & $aLastWall[1])
-		If $g_bDebugSetlog Then SetLog("FaceDirection: " & $iFaceDirection)
-	Else
-		GUICtrlSetState($txtClickWallDelay, $GUI_DISABLE)
-		; reset all data
-		$aLastWall[0] = -1
-		$aLastWall[1] = -1
-		$aBaseNode[0] = -1
-		$aBaseNode[1] = -1
-		$iFaceDirection = 1
-	EndIf
-EndFunc
+;~ Func chkSmartUpdateWall()
+;~ 	If GUICtrlRead($chkSmartUpdateWall) = $GUI_CHECKED Then
+;~ 		GUICtrlSetState($txtClickWallDelay, $GUI_ENABLE)
+;~ 		If $g_bDebugSetlog Then SetLog("BaseNode: " & $aBaseNode[0] & "," & $aBaseNode[1])
+;~ 		If $g_bDebugSetlog Then SetLog("LastWall: " & $aLastWall[0] & "," & $aLastWall[1])
+;~ 		If $g_bDebugSetlog Then SetLog("FaceDirection: " & $iFaceDirection)
+;~ 	Else
+;~ 		GUICtrlSetState($txtClickWallDelay, $GUI_DISABLE)
+;~ 		; reset all data
+;~ 		$aLastWall[0] = -1
+;~ 		$aLastWall[1] = -1
+;~ 		$aBaseNode[0] = -1
+;~ 		$aBaseNode[1] = -1
+;~ 		$iFaceDirection = 1
+;~ 	EndIf
+;~ EndFunc
 
 Func chkDropCCFirst()
 	$ichkDropCCFirst = (GUICtrlRead($chkDropCCFirst) = $GUI_CHECKED ? 1 : 0)
