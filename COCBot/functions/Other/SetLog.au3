@@ -41,6 +41,7 @@ Func LimitLines(ByRef $hRichText, $sDelimiter = @CR, $iMaxLength = 200) ;$iMaxLe
         ;_SendMessage($hTxtLog, $WM_SETREDRAW, True, 0) ; enabled RechEdit redraw again
     EndIf
 EndFunc
+
 Global $g_oTxtSALogInitText = ObjCreate("Scripting.Dictionary")
 Global $g_bSilentSetDebugLog = False
 Global $g_aLastStatusBar
@@ -54,6 +55,7 @@ Func _SetLog($sLogMessage, $Color = Default, $Font = Default, $FontSize = Defaul
 		$LogPrefix = Default, $bPostponed = Default, $bSilentSetLog = Default, $bWriteToLogFile = Default)
 
 	Local Static $bActive = False
+	Local Static $hLogCheckFreeSpaceTimer = 0
 
 	If $Color = Default Then $Color = $COLOR_BLACK
 	If $Font = Default Then $Font = "Verdana"
@@ -108,6 +110,21 @@ Func _SetLog($sLogMessage, $Color = Default, $Font = Default, $FontSize = Defaul
 	If (($g_hTxtLog <> 0 Or $g_iGuiMode <> 1) And $g_bRunState = False) Or ($bPostponed = False And __TimerDiff($g_hTxtLogTimer) >= $g_iTxtLogTimerTimeout) Then
 		; log now to GUI
 		CheckPostponedLog()
+
+		If $g_iLogCheckFreeSpaceMB And $g_bRunState Then
+			If $hLogCheckFreeSpaceTimer = 0 Or __TimerDiff($hLogCheckFreeSpaceTimer) > 600000 Then
+				; check free space of profile folder
+				Local $fFree = DriveSpaceFree($g_sProfilePath & "\" & $g_sProfileCurrentName)
+				If $hLogCheckFreeSpaceTimer = 0 Then SetDebugLog("Free disk space is " & $fFree & " MB")
+				$hLogCheckFreeSpaceTimer = __TimerInit()
+				If @error = 0 And $fFree < $g_iLogCheckFreeSpaceMB Then
+					$hLogCheckFreeSpaceTimer = 0 ; force check on next start
+					SetLog("Less than " & $g_iLogCheckFreeSpaceMB & " MB free disk space, bot is stopping!", $COLOR_ERROR)
+					If $g_bRunState Then btnStop()
+				EndIf
+			EndIf
+		EndIf
+
 	EndIf
 	$bActive = False
 EndFunc   ;==>_SetLog
@@ -311,13 +328,6 @@ Func SetAtkLog($String1, $String2 = "", $Color = $COLOR_BLACK, $Font = "Lucida C
 	;string1 see in video, string1&string2 put in file
 	_FileWriteLog($g_hAttackLogFile, $String1 & $String2)
 
-	If $g_iLCID = 1028 Then
-		If $Font = "Lucida Console" And $FontSize = 7.5 Then
-			$Font = "MingLiU"
-			$FontSize = 7.5
-		EndIf
-	EndIf
-
 	;Local $txtLogMutex = AcquireMutex("txtAtkLog")
 	Dim $a[6]
 	$a[0] = $String1
@@ -353,9 +363,9 @@ Func SetSwitchAccLog($String, $Color = $COLOR_BLACK, $Font = "Verdana", $FontSiz
 EndFunc   ;==>SetSwitchAccLog
 
 Func AtkLogHead()
-	SetAtkLog(_PadStringCenter(" " & GetTranslatedFileIni("MBR Func_AtkLogHead", "AtkLogHead_Text_01", "ATTACK LOG") & " ", 61, "="), "", $COLOR_BLACK, "MS Shell Dlg", 8.5)
-	SetAtkLog(GetTranslatedFileIni("MBR Func_AtkLogHead", "AtkLogHead_Text_02", '# |                   -------- LOOT ---------        ----- BONUS ------'), "", $COLOR_BLACK)
-	SetAtkLog(GetTranslatedFileIni("MBR Func_AtkLogHead", "AtkLogHead_Text_03", '# |TIME |TROP.|SEARCH|   GOLD| ELIXIR|DARK EL|TR.|S |  GOLD|ELIXIR|  DE|L.  |'), "", $COLOR_BLACK)
+	SetAtkLog(_PadStringCenter(" " & GetTranslatedFileIni("MBR Func_AtkLogHead", "AtkLogHead_Text_01", "ATTACK LOG") & " ", 71, "="), "", $COLOR_BLACK, "MS Shell Dlg", 8.5)
+	SetAtkLog(GetTranslatedFileIni("MBR Func_AtkLogHead", "AtkLogHead_Text_02", '|                      --------  LOOT --------       ----- BONUS ------'), "")
+	SetAtkLog(GetTranslatedFileIni("MBR Func_AtkLogHead", "AtkLogHead_Text_03", '|AC|TIME.|TROP.|SEARCH|   GOLD| ELIXIR|DARK EL|TR.|S|  GOLD|ELIXIR|  DE|L.'), "")
 EndFunc   ;==>AtkLogHead
 
 Func __FileWriteLog($handle, $text)
@@ -365,7 +375,6 @@ EndFunc   ;==>__FileWriteLog
 Func ClearLog($hRichEditCtrl = $g_hTxtLog)
 	Switch $hRichEditCtrl
 		Case $g_hTxtLog
-			If $ichkBotLogLineLimit Then Return
 			$g_oTxtLogInitText($g_oTxtLogInitText.Count + 1) = 0
 		Case $g_hTxtAtkLog
 			$g_oTxtAtkLogInitText($g_oTxtAtkLogInitText.Count + 1) = 0

@@ -41,14 +41,13 @@ Func UpgradeHeroes()
 
 	;Check if Auto Lab Upgrade is enabled and if a Dark Troop is selected for Upgrade. If yes, it has priority!
 	If $g_bAutoLabUpgradeEnable And $g_iCmbLaboratory >= 19 Then
-		Setlog("Laboratory needs DE to Upgrade :  " & $g_avLabTroops[$g_iCmbLaboratory][3])
+		SetLog("Laboratory needs DE to Upgrade :  " & $g_avLabTroops[$g_iCmbLaboratory][3])
 		SetLog("Skipping the Heroes Upgrade!")
 		Return
 	EndIf
 
-	SetLog("Check Heroes For Upgrading.", $COLOR_INFO)
-	;;;;;;;;;;;;;;;;;;;;;;;;##### Archer Queen #####;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-	;##### Verify Builders available #####;
+	SetLog("Upgrading Heroes", $COLOR_INFO)
+
 	; samm0d - if heroes already in upgrade, skip update...
 	If $g_bUpgradeQueenEnable Then
 		If BitAND($g_iHeroUpgradingBit, $eHeroQueen) <> $eHeroQueen Then
@@ -101,6 +100,7 @@ Func UpgradeHeroes()
 			SetLog("Grand Warden upgrade in Process.", $COLOR_INFO)
 		EndIf
 	EndIf
+
 EndFunc   ;==>UpgradeHeroes
 
 Func QueenUpgrade()

@@ -127,7 +127,7 @@ Func checkAttackDisable($iSource, $Result = "")
 				If _Sleep($DELAYATTACKDISABLE500) Then Return
 			EndIf
 			If $g_asShieldStatus[0] = "guard" Then
-				Setlog("Unable to Force PB, Guard shield present", $COLOR_INFO)
+				SetLog("Unable to Force PB, Guard shield present", $COLOR_INFO)
 				; samm0d
 				BreakPersonalShield()
 			Else
@@ -138,15 +138,14 @@ Func checkAttackDisable($iSource, $Result = "")
 			Return False
 	EndSwitch
 
-	Setlog("Prepare base before Personal Break..", $COLOR_INFO)
+	SetLog("Prepare base before Personal Break..", $COLOR_INFO)
+
 	; samm0d
 	If $bchkQuickBase Then CheckBaseQuick(True) ; check and restock base before exit.
 
 	$g_bIsClientSyncError = False ; reset OOS fast restart flag
 	$g_bIsSearchLimit = False ; reset search limit flag
 	$g_bRestart = True ; Set flag to restart the process at the bot main code when it returns
-
-	SetLog("Time for break, exit now..", $COLOR_INFO)
 
 	;samm0d
 	If $ichkEnableMySwitch Then
@@ -181,6 +180,7 @@ Func checkAttackDisable($iSource, $Result = "")
 					EndIf
 				EndIf
 			Next
+
 			If $iAllcounts <> $iAllAccountsPBactive Then
 				checkSwitchAcc()
 				Return
@@ -188,6 +188,7 @@ Func checkAttackDisable($iSource, $Result = "")
 				SetLog("All Accounts are in PB Time!!", $COLOR_INFO)
 			EndIf
 		EndIf
+		SetLog("Time for break, exit now..", $COLOR_INFO)
 
 		If TestCapture() Then
 			SetLog("checkAttackDisable: PoliteCloseCoC")

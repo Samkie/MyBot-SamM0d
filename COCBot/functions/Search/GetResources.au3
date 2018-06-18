@@ -22,10 +22,6 @@ Func GetResources($bLog = True, $pMatchMode = -1) ;Reads resources
 
 	SuspendAndroid()
 
-	; samm0d - set ocr farce capture to false
-	Local $wasForce = OcrForceCaptureRegion(False)
-	Local $bDarkElixirFlag = False
-
 	Local $iCount = 0
 	While (getGoldVillageSearch(48, 69) = "") Or (getElixirVillageSearch(48, 69 + 29) = "")
 		$iCount += 1
@@ -45,9 +41,6 @@ Func GetResources($bLog = True, $pMatchMode = -1) ;Reads resources
 		$g_iSearchDark = "N/A"
 		$g_iSearchTrophy = getTrophyVillageSearch(48, 69 + 69)
 	EndIf
-
-	; samm0d
-	OcrForceCaptureRegion($wasForce)
 
 	If $g_iSearchGold = $iSearchGold2 And $g_iSearchElixir = $iSearchElixir2 Then $iStuck += 1
 	If $g_iSearchGold <> $iSearchGold2 Or $g_iSearchElixir <> $iSearchElixir2 Then $iStuck = 0
@@ -83,12 +76,11 @@ Func resetAttackSearch($bStuck = False)
 	Else
 		If $bStuck Then
 			SetLog("Attack Is Disabled Or Slow connection issues, Restarting CoC and Bot...", $COLOR_ERROR)
-			CloseCoC(True)
 		Else
-			SetLog("Stuck At Search Clouds, restarting attack...", $COLOR_ERROR)
-			$g_bRestart = True
+			SetLog("Stuck At Search Clouds, Restarting CoC and Bot...", $COLOR_ERROR)
 		EndIf
-		; samm0d
+		$g_bIsClientSyncError = False ; disable fast OOS restart if not simple error and restarting CoC
+		CloseCoC(True)
 	EndIf
 	Return
 EndFunc   ;==>resetAttackSearch

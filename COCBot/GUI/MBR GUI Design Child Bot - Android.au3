@@ -28,7 +28,7 @@ Func CreateBotAndroid()
 	GUICtrlCreateGroup("", -99, -99, 1, 1)
 
 	; samm0d
-	CreatLocateAdBtn($x + 200, $y)
+	CreatLocateAdBtn($x + 250, $y)
 
 	$y += $h + 5
 	$y2 = $y

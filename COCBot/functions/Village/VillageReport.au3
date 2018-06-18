@@ -27,13 +27,6 @@ Func VillageReport($bBypass = False, $bSuppressLog = False)
 			If Not $bSuppressLog Then SetLog("Village Report Error, You have been a BAD programmer!", $COLOR_ERROR)
 	EndSwitch
 
-	; samm0d - set ocr farce capture to false
-	Local $wasForce = OcrForceCaptureRegion(False)
-	Local $bDarkElixirFlag = False
-	_CaptureRegions()
-	If _CheckPixel($aVillageHasDarkElixir, $g_bNoCapturePixel) Then $bDarkElixirFlag = True ; check if the village have a Dark Elixir Storage
-
-
 	getBuilderCount($bSuppressLog) ; update builder data
 	If _Sleep($DELAYRESPOND) Then Return
 
@@ -53,10 +46,6 @@ Func VillageReport($bBypass = False, $bSuppressLog = False)
 		If Not $bSuppressLog Then SetLog(" [G]: " & _NumberFormat($g_aiCurrentLoot[$eLootGold]) & " [E]: " & _NumberFormat($g_aiCurrentLoot[$eLootElixir]) & " [GEM]: " & _NumberFormat($g_iGemAmount), $COLOR_SUCCESS)
 		If ProfileSwitchAccountEnabled() Then $g_aiCurrentLoot[$eLootDarkElixir] = "" ; prevent applying Dark Elixir of previous account to current account
 	EndIf
-
-	; samm0d
-	OcrForceCaptureRegion($wasForce)
-
 	If ProfileSwitchAccountEnabled() Then
 		$g_aiFreeBuilderCountAcc[$g_iCurAccount] = $g_iFreeBuilderCount
 		$g_aiTotalBuilderCountAcc[$g_iCurAccount] = $g_iTotalBuilderCount

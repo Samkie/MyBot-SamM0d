@@ -440,7 +440,7 @@ Func HMLClickAway(ByRef $x, ByRef $y, ByRef $MsgCode)
 	Else
 		ForceCaptureRegion()
 		_CaptureRegion()
-		If _CheckPixel($aIsMain) Or _CheckPixel($aIsMainGrayed) Or _CheckPixel($aIsOnBuilderIsland) Or _CheckPixel($aIsOnBuilderIslandGrayed) Then
+		If _CheckPixel($aIsMain) Or _CheckPixel($aIsMainGrayed) Or _CheckPixel($aIsOnBuilderBase) Or _CheckPixel($aIsOnBuilderBaseGrayed) Then
 			For $i = 1 To 7
 				Local $tempButton = Eval("aButtonClose" & $i)
 				Local $sMsg = Default

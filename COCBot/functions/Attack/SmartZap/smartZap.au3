@@ -283,7 +283,7 @@ Func smartZap($minDE = -1)
 		If $aCluster <> -1 Then
 			Local $tLastZap = 0
 			For $i = 0 To UBound($aCluster[3]) - 1
-				If $aDarkDrills[($aCluster[3])[$i]][4] <> 0 Then 
+				If $aDarkDrills[($aCluster[3])[$i]][4] <> 0 Then
 					If $tLastZap = 0 Then
 						$tLastZap = __TimerDiff($aDarkDrills[($aCluster[3])[$i]][4])
 					Else
@@ -296,7 +296,7 @@ Func smartZap($minDE = -1)
 				Local $sToDelete = ""
 				Local $iToDelete = 0
 				For $i = 0 To UBound($aCluster[3]) - 1
-					If $aDarkDrills[($aCluster[3])[$i]][4] <> 0 Then 
+					If $aDarkDrills[($aCluster[3])[$i]][4] <> 0 Then
 						If ReCheckDrillExist($aDarkDrills[($aCluster[3])[$i]][0], $aDarkDrills[($aCluster[3])[$i]][1]) Then
 							$aDarkDrills[($aCluster[3])[$i]][4] = 0
 						Else
@@ -309,7 +309,7 @@ Func smartZap($minDE = -1)
 						EndIf
 					EndIf
 				Next
-				If $iToDelete > 1 Then 
+				If $iToDelete > 1 Then
 					SetLog("Removing " & $iToDelete & " destroyed drills from list.", $COLOR_ACTION)
 					_ArrayDelete($aDarkDrills, $sToDelete)
 					ContinueLoop

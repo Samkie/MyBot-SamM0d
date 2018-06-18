@@ -113,7 +113,7 @@ Func MainSuggestedUpgradeCode()
 	Local $bScreencap = True
 
 	; Check if you are on Builder island
-	If isOnBuilderIsland(True) Then
+	If isOnBuilderBase(True) Then
 		; Will Open the Suggested Window and check if is OK
 		If ClickOnBuilder() Then
 			SetLog(" - Upg Window Opened successfully", $COLOR_INFO)
@@ -289,9 +289,12 @@ Func GetUpgradeButton($sUpgButtom = "", $Debug = False)
 EndFunc   ;==>GetUpgradeButton
 
 Func NewBuildings($aResult)
+
 	Local $Screencap = True, $Debug = False
+
 	If UBound($aResult) = 3 And $aResult[2] = "New" Then
 
+		; The $g_iQuickMISX and $g_iQuickMISY haves the coordinates compansation from 'New' | GetIconPosition()
 		Click($aResult[0], $aResult[1], 1)
 		If _Sleep(3000) Then Return
 
@@ -314,7 +317,7 @@ Func NewBuildings($aResult)
 
 				Click($Coordinates[0] - 100, $Coordinates[1] + 200, 1)
 
-				If _Wait4Pixel($aIsOnBuilderIsland[0], $aIsOnBuilderIsland[1], $aIsOnBuilderIsland[2], $aIsOnBuilderIsland[3], 3000, 500) Then
+				If _Wait4Pixel($aIsOnBuilderBase[0], $aIsOnBuilderBase[1], $aIsOnBuilderBase[2], $aIsOnBuilderBase[3], 3000, 500) Then
 					If QuickMIS("BC1", $g_sImgAutoUpgradeNewBldgYes, 150, 150, 650, 550, $Screencap, $Debug) Then
 						Click($g_iQuickMISX + 150, $g_iQuickMISY + 150, 1)
 						SetLog("Placed a new Building on Builder Island! [" & $g_iQuickMISX + 150 & "," & $g_iQuickMISY + 150 & "]", $COLOR_INFO)
@@ -342,6 +345,8 @@ Func NewBuildings($aResult)
 			EndIf
 		EndIf
 	EndIf
+
 	Return False
+
 EndFunc   ;==>NewBuildings
 

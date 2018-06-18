@@ -29,6 +29,7 @@ Func chkShieldStatus($bChkShield = True, $bForceChkPBT = False)
 			RestartBot()
 			Return
 		EndIf
+
 		If @error Then SetLog("chkShieldStatus Shield OCR error= " & @error & "Extended= " & @extended, $COLOR_ERROR)
 		If _Sleep($DELAYRESPOND) Then Return
 

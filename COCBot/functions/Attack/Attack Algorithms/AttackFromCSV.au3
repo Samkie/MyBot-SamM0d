@@ -87,8 +87,8 @@ Func ConvertInternalExternArea()
 		;debugAttackCSV("External Area Point " & $ExternalArea[$i][2] & ": " & $x & ", " & $y)
 	Next
 
-	; ================  samm0d - update edge coor
 
+	; ================  samm0d - update edge coor
 	Local $fEdgeFactor = 8.0
 
 	$g_aaiTopLeftDropPoints[0][0] = Ceiling($ExternalArea[0][0] + ((($ExternalArea[2][0] - $ExternalArea[0][0]) * $fEdgeFactor) / 100))
@@ -142,6 +142,8 @@ Func ConvertInternalExternArea()
 	$g_aaiBottomRightDropPoints[3][1] = Ceiling($g_aaiBottomRightDropPoints[2][1] - (($g_aaiBottomRightDropPoints[2][1] - $g_aaiBottomRightDropPoints[4][1]) / 2))
 
 	Global $g_aaiEdgeDropPoints[4] = [$g_aaiBottomRightDropPoints, $g_aaiTopLeftDropPoints, $g_aaiBottomLeftDropPoints, $g_aaiTopRightDropPoints]
+	;=====================================================================
+
 
 	; Full ECD Diamond $CocDiamondECD
 	; Top
@@ -472,6 +474,7 @@ Func Algorithm_AttackCSV($testattack = False, $captureredarea = True)
 
 	;_CaptureRegion()
 
+	;reset variables
 	;reset variables
 	; samm0d
 	If $bIDoScanMineAndElixir = False Then

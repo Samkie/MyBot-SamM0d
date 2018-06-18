@@ -39,16 +39,15 @@ Func CheckBaseQuick($bStopRecursion = False, $sReturnHome = "")
 	If IsMainPage() Then ; check for main page
 
 		If $g_bDebugSetlog Then SetDebugLog("CheckBaseQuick now...", $COLOR_DEBUG)
+			RequestCC() ; fill CC
+			If _Sleep($DELAYRUNBOT1) Then Return
+			checkMainScreen(False) ; required here due to many possible exits
+			If $g_bRestart = True Then
+				If $bStopRecursion = True Then $g_bDisableBreakCheck = False
+				Return
+			EndIf
 
-		RequestCC() ; fill CC
-		If _Sleep($DELAYRUNBOT1) Then Return
-		checkMainScreen(False) ; required here due to many possible exits
-		If $g_bRestart = True Then
-			If $bStopRecursion = True Then $g_bDisableBreakCheck = False
-			Return
-		EndIf
-
-		; samm0d
+			; samm0d
 		If $ichkModTrain = 0 Then
 			DonateCC() ; donate troops
 			If _Sleep($DELAYRUNBOT1) Then Return
@@ -77,6 +76,7 @@ Func CheckBaseQuick($bStopRecursion = False, $sReturnHome = "")
 					Return
 				EndIf
 			EndIf
+
 		Else
 			ModTrain()
 			If $g_iActiveDonate And $g_bChkDonate Then
@@ -91,6 +91,7 @@ Func CheckBaseQuick($bStopRecursion = False, $sReturnHome = "")
 				ModTrain()
 			EndIf
 		EndIf
+
 
 		Collect() ; Empty Collectors
 		If _Sleep($DELAYRUNBOT1) Then Return

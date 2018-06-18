@@ -174,7 +174,7 @@
 
 #include "functions\CreateArmy\getArmyCCSpells\getArmyCCSpellCapacity.au3"
 #include "functions\CreateArmy\getArmyCCSpells\getArmyCCSpell.au3"
-#EndRegion
+#EndRegion CreateArmy / Train
 
 #include "functions\Image Search\ImageSearch.au3"
 #include "functions\Image Search\checkDeadBase.au3"
@@ -194,7 +194,7 @@
 #include "functions\Main Screen\checkAttackDisable.au3"
 #include "functions\Main Screen\RemoveGhostTrayIcons.au3"
 #include "functions\Main Screen\waitMainScreen.au3"
-#include "functions\Main Screen\isOnBuilderIsland.au3"
+#include "functions\Main Screen\isOnBuilderBase.au3"
 
 ; Android support for MEmu, LeapDroid, Droid4X, Nox, BlueStacks...
 #include "functions\Android\AndroidMenuShortcuts.au3"
@@ -327,6 +327,8 @@
 #include "functions\Village\CheckNeedOpenTrain.au3"
 #include "functions\Village\SwitchBetweenBases.au3"
 #include "functions\Village\SwitchAccount.au3"
+#include "functions\Village\Clan Games\ClanGames.au3"
+#include "functions\Village\FreeMagicItems.au3"
 
 #include "functions\Village\BuilderBase\Collect.au3"
 #include "functions\Village\BuilderBase\StartClockTowerBoost.au3"

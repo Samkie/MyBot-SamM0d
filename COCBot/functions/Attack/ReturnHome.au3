@@ -159,7 +159,7 @@ Func ReturnHome($TakeSS = 1, $GoldChangeCheck = True) ;Return main screen
 
 	; samm0d
 	If IsReturnHomeBattlePage() Then ClickP($aReturnHomeButton, 1, 0, "#0101") ;Click Return Home Button
-
+;~
 ;~ 	$i = 0 ; Reset Loop counter
 ;~ 	While 1
 ;~ 		If $g_bDebugSetlog Then SetDebugLog("Wait for End Fight Scene to appear #" & $i)

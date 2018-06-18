@@ -65,6 +65,7 @@ Func CreateBotTab()
 	$arrowright2 = GUICtrlCreatePic(@ScriptDir & "\Images\triangle_right.bmp", $x + 198, $y+1, 8, 14)
 	_GUICtrlSetTip(-1, $sTxtTip)
 	GUICtrlSetOnEvent(-1, "DoViewStats2")
+
 EndFunc   ;==>CreateBotTab
 
 Func CreateBotSwitchAccLog()

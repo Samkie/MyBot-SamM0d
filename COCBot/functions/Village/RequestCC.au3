@@ -30,8 +30,6 @@ Func RequestCC($ClickPAtEnd = True, $specifyText = "", $bOpenTrainWindow = True)
 
 	SetLog("Requesting Clan Castle Troops", $COLOR_INFO)
 
-	;open army overview
-
 	; samm0d
 	If $bOpenTrainWindow = True Then
 		;open army overview

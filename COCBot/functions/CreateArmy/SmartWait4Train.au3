@@ -87,6 +87,7 @@ Func SmartWait4Train($iTestSeconds = Default)
 	;avoid click train windows if we don't need close game or emulator without shield
 	If $g_asShieldStatus[0] = "none" And $g_bCloseWithoutShield = False Then Return ; skip if not on shield and other options not selected
 	;================
+
 	Local $result = OpenArmyOverview(True, "SmartWait4Train()") ; Open train overview
 	If Not $result Then
 		If $g_bDebugImageSave Or $g_bDebugSetlogTrain Then DebugImageSave("SmartWait4Troop2_")
@@ -244,14 +245,6 @@ Func SmartWait4Train($iTestSeconds = Default)
 	EndIf
 
 	$iTrainWaitTime = $iTrainWaitTime * 60 ; convert $iTrainWaitTime to seconds instead of minutes returned from OCR
-
-	; samm0d - max log out
-	If $ichkEnableLogoutLimit = 1 Then
-		If $iTrainWaitTime > $itxtLogoutLimitTime Then
-			Setlog("Activated Max logout time: " & Floor($iTrainWaitTime) & " to " & $itxtLogoutLimitTime & " seconds", $COLOR_INFO)
-			$iTrainWaitTime = $itxtLogoutLimitTime
-		EndIf
-	EndIf
 
 	$sNowTime = _NowCalc() ; find/store time right now
 	If $g_bDebugSetlogTrain Or $g_bDebugSetlog Then SetLog("Train end time: " & _DateAdd("s", Int($iTrainWaitTime), $sNowTime), $COLOR_DEBUG)

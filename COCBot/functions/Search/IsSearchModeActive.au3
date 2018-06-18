@@ -13,6 +13,7 @@
 ; Link ..........: https://github.com/MyBotRun/MyBot/wiki
 ; Example .......: No
 ; ===============================================================================================================================
+
 Func IsSearchModeActiveSamM0d($g_iMatchMode, $nocheckHeroes = False, $bNoLog = False)
 	; samm0d
 	Local $bMatchModeEnabled = False
@@ -102,6 +103,7 @@ Func IsSearchModeActive($g_iMatchMode, $nocheckHeroes = False, $bNoLog = False)
 	If $ichkModTrain = 1 Then
 		Return IsSearchModeActiveSamM0d($g_iMatchMode, $nocheckHeroes, $bNoLog)
 	EndIf
+
 	Local $currentSearch = $g_iSearchCount + 1
 	Local $currentTropies = $g_aiCurrentLoot[$eLootTrophy]
 	Local $currentArmyCamps = Int($g_CurrentCampUtilization / $g_iTotalCampSpace * 100)

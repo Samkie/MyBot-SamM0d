@@ -378,6 +378,7 @@ Func CreateMainGUIControls($bGuiModeUpdate = False)
 	; samm0d
 	SplashStep(GetTranslatedFileIni("Sam M0d", "Loading Bot tab", "Loading Bot tab..."))
 	#include "SamM0d\GUI\MBR GUI Design Child SamM0d.au3"
+
 	If Not $bGuiModeUpdate Then DistributorsUpdateGUI() ; Now loading Distributors (during GUI switch it must be called outside CreateMainGUIControls()!)
 
 	SplashStep(GetTranslatedFileIni("MBR GUI Design - Loading", "SplashStep_07", "Loading About Us tab..."))
