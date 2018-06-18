@@ -225,14 +225,14 @@ Func SlotAttack($PosX, $CheckSlot12, $CheckSlotwHero, $SRIGHT, $Troop)
 			If $CheckSlotwHero Then $iStartOffsetHero = 16
 	EndSelect
 
-	If $SRIGHT Then
-		$iStartOffset = 56
-		If $CheckSlotwHero Then $iStartOffset = 39
-	ElseIf $CheckSlot12 Then
-		$iStartOffset = 11
+	If $SRIGHT Then									; if swipe right side
+		$iStartOffset = 60							;
+		If $CheckSlotwHero Then $iStartOffset = 43	; if got hero
+	ElseIf $CheckSlot12 Then						; if swipe left and got 12 slots
+		$iStartOffset = 15							; got or not hero also same 15
 	Else
-		$iStartOffset = 33
-		If $CheckSlotwHero Then $iStartOffset = 25
+		$iStartOffset = 37
+		If $CheckSlotwHero Then $iStartOffset = 29
 	EndIf
 
 	For $i = 0 To 12
@@ -252,6 +252,7 @@ Func SlotAttack($PosX, $CheckSlot12, $CheckSlotwHero, $SRIGHT, $Troop)
 		EndIf
 		If $g_bRunState = False Then Return
 	Next
+
 	Return $Slottemp
 
 EndFunc   ;==>SlotAttack

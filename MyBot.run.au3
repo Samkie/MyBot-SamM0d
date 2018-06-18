@@ -1,4 +1,8 @@
-﻿; #FUNCTION# ====================================================================================================================
+﻿#Region ;**** Directives created by AutoIt3Wrapper_GUI ****
+#AutoIt3Wrapper_Compression=4
+#Au3Stripper_Parameters=/rsln /MI=3
+#EndRegion ;**** Directives created by AutoIt3Wrapper_GUI ****
+; #FUNCTION# ====================================================================================================================
 ; Name ..........: MBR Bot
 ; Description ...: This file contains the initialization and main loop sequences f0r the MBR Bot
 ; Author ........:  (2014)
@@ -13,11 +17,11 @@
 ; AutoIt pragmas
 #NoTrayIcon
 #RequireAdmin
-#AutoIt3Wrapper_UseX64=7n
+;#AutoIt3Wrapper_UseX64=7n
 ;#AutoIt3Wrapper_Res_HiDpi=Y ; HiDpi will be set during run-time!
 ;#AutoIt3Wrapper_Run_AU3Check=n ; enable when running in folder with umlauts!
-#AutoIt3Wrapper_Run_Au3Stripper=y
-#Au3Stripper_Parameters=/rsln /MI=3
+;#AutoIt3Wrapper_Run_Au3Stripper=y
+;#Au3Stripper_Parameters=/rsln /MI=3
 ;/SV=0
 
 ; samm0d
@@ -71,7 +75,7 @@ InitializeBot()
 MainLoop(CheckPrerequisites())
 
 Func UpdateBotTitle()
-	Local $sTitle = "My Bot " & $g_sBotVersion
+	Local $sTitle = "My Bot " & $g_sBotVersion & " @Samkie M0d v1.3.9 "
 	Local $sConsoleTitle ; Console title has also Android Emulator Name
 	If $g_sBotTitle = "" Then
 		$g_sBotTitle = $sTitle

@@ -92,7 +92,7 @@ Func DoRevampSpells($bDoPreTrain = False)
 			For $i = 0 To UBound($tempSpells) - 1
 				Local $iOnQQty = Eval("Add" & $tempSpells[$i][0] & "Spell")
 				If $iOnQQty > 0 Then
-					SetLog($CustomTrain_MSG_10 & " " & MyNameOfTroop(Eval("enum" & $tempSpells[$i][0]) + 23, $iOnQQty) & " x" & $iOnQQty,$COLOR_ACTION)
+					SetLog($CustomTrain_MSG_10 & " " & MyNameOfTroop(Eval("enum" & $tempSpells[$i][0]) + $eLSpell, $iOnQQty) & " x" & $iOnQQty,$COLOR_ACTION)
 				EndIf
 			Next
 
@@ -154,7 +154,7 @@ Func DoRevampSpells($bDoPreTrain = False)
 					If ($tempSpell * $iCost) > $iBuildCost Then
 						$bFlagOutOfResource = True
 						; use eval and not $i to compare because of maybe after array sort $tempTroops
-						Setlog("Not enough " & (Eval("enum" & $tempSpells[$i][0]) > 5 ? "Dark" : "") & " Elixir to brew " & MyNameOfTroop(Eval("enum" & $tempSpells[$i][0])+23,0), $COLOR_ERROR)
+						Setlog("Not enough " & (Eval("enum" & $tempSpells[$i][0]) > 5 ? "Dark" : "") & " Elixir to brew " & MyNameOfTroop(Eval("enum" & $tempSpells[$i][0])+ $eLSpell,0), $COLOR_ERROR)
 						SetLog("Current " & (Eval("enum" & $tempSpells[$i][0]) > 5 ? "Dark" : "") & " Elixir: " & $iBuildCost, $COLOR_ERROR)
 						SetLog("Total need: " & $tempSpell * $iCost, $COLOR_ERROR)
 					EndIf
@@ -167,7 +167,7 @@ Func DoRevampSpells($bDoPreTrain = False)
 						Return ; We are out of Elixir stop training.
 					EndIf
 
-					SetLog($CustomTrain_MSG_14 & " " & MyNameOfTroop(Eval("enum" & $tempSpells[$i][0])+23,$tempSpell) & " x" & $tempSpell & " with total " & (Eval("enum" & $tempSpells[$i][0]) > 5 ? $CustomTrain_MSG_DarkElixir : $CustomTrain_MSG_Elixir) & ": " & ($tempSpell * $iCost),(Eval("enum" & $tempSpells[$i][0]) > 5 ? $COLOR_DARKELIXIR : $COLOR_ELIXIR))
+					SetLog($CustomTrain_MSG_14 & " " & MyNameOfTroop(Eval("enum" & $tempSpells[$i][0])+ $eLSpell,$tempSpell) & " x" & $tempSpell & " with total " & (Eval("enum" & $tempSpells[$i][0]) > 5 ? $CustomTrain_MSG_DarkElixir : $CustomTrain_MSG_Elixir) & ": " & ($tempSpell * $iCost),(Eval("enum" & $tempSpells[$i][0]) > 5 ? $COLOR_DARKELIXIR : $COLOR_ELIXIR))
 
 					If ($tempSpells[$i][2] * $tempSpell) <= $iRemainSpellsCapacity Then
 						If MyTrainClick($g_iTroopButtonX, $g_iTroopButtonY, $tempSpell, $g_iTrainClickDelay, "#BS01", True) Then
@@ -179,7 +179,7 @@ Func DoRevampSpells($bDoPreTrain = False)
 							$iRemainSpellsCapacity -= ($tempSpells[$i][2] * $tempSpell)
 						EndIf
 					Else
-						SetLog("Error: remaining space cannot fit to brew " & MyNameOfTroop(Eval("enum" & $tempSpells[$i][0])+23,0), $COLOR_ERROR)
+						SetLog("Error: remaining space cannot fit to brew " & MyNameOfTroop(Eval("enum" & $tempSpells[$i][0])+ $eLSpell,0), $COLOR_ERROR)
 					EndIf
 
 					Else

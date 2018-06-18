@@ -32,11 +32,11 @@ Global Const $aButtonClose7[9]    = [720, 104 + $g_iMidOffsetY, 738, 125 + $g_iM
 Global Const $aButtonClose8[9]	= [780, 185              , 835, 250              , 0  , 0                , 	0x0     ,  0, "=-= Random Away Coordinate"]
 
 ;~ ; ScreenCoordinates - first 4 values store the region [x1,y1,x2,y2] that can click; values 5,6,7,8 is the color check pixel x,y,color,tolerance level for confirm the button exist if needed.
-Global Const $aButtonArmyTab[9]                 = [30,  110, 164, 146, 115, 110, 0xF9F9F7, 20 , "=-= Army Tab"]
-Global Const $aButtonTrainTroopsTab[9]          = [187, 110, 321, 146, 265, 110, 0xF9F9F7, 20 , "=-= Train Troops Tab"]
-Global Const $aButtonBrewSpellsTab[9]           = [334, 110, 479, 146, 450, 110, 0xF9F9F7, 20 , "=-= Brew Spells Tab"]
-Global Const $aButtonQuickTrainTab[9]           = [500, 110, 635, 146, 600, 110, 0xFAFAF7, 20 , "=-= Quick Train Tab"]
- 
+Global Const $aButtonArmyTab[9]                 = [30,  115, 150, 140, 40, 111, 0xF9F9F7, 20 , "=-= Army Tab"]
+Global Const $aButtonTrainTroopsTab[9]          = [190, 115, 300, 140, 200, 111, 0xF9F9F7, 20 , "=-= Train Troops Tab"]
+Global Const $aButtonBrewSpellsTab[9]           = [350, 115, 460, 140, 360, 111, 0xF9F9F7, 20 , "=-= Brew Spells Tab"]
+Global Const $aButtonQuickTrainTab[9]           = [500, 115, 620, 140, 510, 111, 0xFAFAF7, 20 , "=-= Quick Train Tab"]
+
 Global Const $aButtonOpenTrainArmy[9]  	  	  = [25 , 540 + $g_iMidOffsetY, 50 , 570 + $g_iMidOffsetY, 50 , 537 + $g_iMidOffsetY, 	0xEEAF45, 20, "=-= Open Train Army Page"] ; Main Screen, Army Train Button
 Global Const $aButtonOpenProfile[9]    	  	  = [28 , 23               , 46 , 46               , 38 , 18               ,    0x10D0F0, 20, "=-= Open Profile Page"] ; Main page, Open Profile Button
 ;Global Const $aButtonOpenShieldInfo[9] 	  	  = [430, 7                , 442, 20               , 435, 14               ,    0xE8E8E0, 20, "=-= Open Shield Info Page"] ; main page, open shield info page

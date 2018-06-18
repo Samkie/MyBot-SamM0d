@@ -23,7 +23,7 @@ Func CheckAvailableUnit($hHBitmap)
 	For $i = 0 To UBound($MyTroops) - 1
 		Assign("cur" & $MyTroops[$i][0], 0)
 	Next
-	For $i = 0 To 10
+	For $i = 0 To 6
 		Assign("RemSlot" & $i + 1, 0)
 	Next
 
@@ -37,7 +37,7 @@ Func CheckAvailableUnit($hHBitmap)
 	EndIf
 	$g_hBitmap = _GDIPlus_BitmapCreateFromHBITMAP($g_hHBitmap)
 
-	Local $aiTroopsInfo[11][3]
+	Local $aiTroopsInfo[7][3]
 	Local $AvailableCamp = 0
 	Local $sDirectory = $g_sSamM0dImageLocation & "\Troops\"
 	Local $sOriDirectory = @ScriptDir & "\COCBot\SamM0d\Images\Troops\"
@@ -47,7 +47,7 @@ Func CheckAvailableUnit($hHBitmap)
 	Local $sTroopName = ""
 	Local $bDeletedExcess = False
 
-	For $i = 0 To 10
+	For $i = 0 To 6
 		If _ColorCheck(_GetPixelColor(Int(30 + ($g_iArmy_Av_Troop_Slot_Width * $i)),205,False), Hex(0X4689C8, 6), 20) Then
 		;If Not _ColorCheck(_GetPixelColor(Int(30 + ($g_iArmy_Av_Troop_Slot_Width * $i)),205,False), Hex(0XCDCCC6, 6), 20) Then
 			Local $iPixelDivider = ($g_iArmy_RegionSizeForScan - ($g_aiArmyAvailableSlot[3] - $g_aiArmyAvailableSlot[1])) / 2

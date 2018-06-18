@@ -147,7 +147,7 @@ EndFunc
 
 Func getMyOcrArmyCap($hHBitmap = 0)
 	; troops capacity from army overview page, top left
-	Local $sResult = getMyOcr($hHBitmap,109,136 + $g_iMidOffsetY,90,15,"armycap")
+	Local $sResult = getMyOcr($hHBitmap,112,136 + $g_iMidOffsetY,90,15,"armycap")
 	Return $sResult
 EndFunc
 
@@ -159,13 +159,13 @@ EndFunc
 
 Func getMyOcrCCCap()
 	; clan castle capacity from army overview page, bottom left
-	Local $sResult = getMyOcr(0,300,439 + $g_iMidOffsetY,70,15,"armycap")
+	Local $sResult = getMyOcr(0,290,439 + $g_iMidOffsetY,70,15,"armycap")
 	Return $sResult
 EndFunc
 
 Func getMyOcrCCSpellCap()
 	; clan castle capacity from army overview page, bottom right
-	Local $sResult = getMyOcr(0,530,438 + $g_iMidOffsetY,40,15,"armycap")
+	Local $sResult = getMyOcr(0,472,438 + $g_iMidOffsetY,40,15,"armycap")
 	Return $sResult
 EndFunc
 

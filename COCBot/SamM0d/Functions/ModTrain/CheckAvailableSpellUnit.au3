@@ -100,7 +100,7 @@ Func CheckAvailableSpellUnit($hHBitmap)
 			$aiSpellsInfo[$i][1] = getMyOcr(Eval("g_hHBitmap_Av_Spell_SlotQty" & $i + 1),0,0,0,0,"SpellQTY", True)
 
 			If $aiSpellsInfo[$i][1] <> 0 Then
-				SetLog(" - No. of Available " & MyNameOfTroop(Eval("enum" & $aiSpellsInfo[$i][0]) + 23, $aiSpellsInfo[$i][1]) & ": " & $aiSpellsInfo[$i][1], (Eval("enum" & $aiSpellsInfo[$i][0]) > 5 ? $COLOR_DARKELIXIR : $COLOR_ELIXIR))
+				SetLog(" - No. of Available " & MyNameOfTroop(Eval("enum" & $aiSpellsInfo[$i][0]) + $eLSpell, $aiSpellsInfo[$i][1]) & ": " & $aiSpellsInfo[$i][1], (Eval("enum" & $aiSpellsInfo[$i][0]) > 5 ? $COLOR_DARKELIXIR : $COLOR_ELIXIR))
 				Assign("cur" & $aiSpellsInfo[$i][0] & "Spell", $aiSpellsInfo[$i][1])
 
 				$AvailableCamp += ($aiSpellsInfo[$i][1] * $MySpells[Eval("enum" & $aiSpellsInfo[$i][0])][2])
@@ -114,7 +114,7 @@ Func CheckAvailableSpellUnit($hHBitmap)
 					EndIf
 				EndIf
 			Else
-				SetLog("Error detect quantity no. On Spell: " & MyNameOfTroop(Eval("enum" & $aiSpellsInfo[$i][0]) + 23, $aiSpellsInfo[$i][1]),$COLOR_RED)
+				SetLog("Error detect quantity no. On Spell: " & MyNameOfTroop(Eval("enum" & $aiSpellsInfo[$i][0]) + $eLSpell, $aiSpellsInfo[$i][1]),$COLOR_RED)
 				ExitLoop
 			EndIf
 		EndIf

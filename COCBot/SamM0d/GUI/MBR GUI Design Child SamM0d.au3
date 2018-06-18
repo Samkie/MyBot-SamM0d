@@ -31,6 +31,7 @@ Global $sTxtLavaHounds = GetTranslatedFileIni("MBR Global GUI Design Names Troop
 Global $sTxtBowlers = GetTranslatedFileIni("MBR Global GUI Design Names Troops", "TxtBowlers", "Bowlers")
 Global $sTxtBabyDragons = GetTranslatedFileIni("MBR Global GUI Design Names Troops", "TxtBabyDragons", "Baby Dragons")
 Global $sTxtMiners = GetTranslatedFileIni("MBR Global GUI Design Names Troops", "TxtMiners", "Miners")
+Global $sTxtElectroDragons = GetTranslatedFileIni("MBR Global GUI Design Names Troops", "TxtElectroDragons", "Electro Dragons")
 Global $sTxtLightningSpells = GetTranslatedFileIni("MBR Global GUI Design Names Spells", "TxtShortLightningSpells", "Lightning")
 Global $sTxtHealSpells = GetTranslatedFileIni("MBR Global GUI Design Names Spells", "TxtShortHealSpells", "Heal")
 Global $sTxtRageSpells = GetTranslatedFileIni("MBR Global GUI Design Names Spells", "TxtShortRageSpells", "Rage")
@@ -428,7 +429,7 @@ For $i = 0 To UBound($MyTroops) - 1
 		GUICtrlSetData(-1, $sComboData, $i + 1)
 		GUICtrlSetOnEvent(-1, "cmbMyTroopOrder")
 	$y +=24
-	If $i = 11 Then
+	If $i = 12 Then
 		$x = 205
 		$y = $yStart + 40
 	EndIf
@@ -471,7 +472,7 @@ $txtStickToTrainWindow = GUICtrlCreateInput("2", $x, $y-2, 30, 20, BitOR($GUI_SS
 	GUICtrlCreateLabel(GetTranslatedFileIni("sam m0d", 61, "minute(s)"), $x+35, $y, -1, -1)
 	_GUICtrlSetTip(-1, $sTxtTip)
 
-$y += 25
+$y += 45
 $x = 10
 $chkForcePreTrainTroops = GUICtrlCreateCheckbox(GetTranslatedFileIni("sam m0d", "ForcePreTrainTroops", "Force pre-train troops when army strength over percentage: "), $x+10, $y, -1, -1)
 GUICtrlSetOnEvent(-1, "ForcePretrainTroops")
@@ -713,7 +714,7 @@ $txtCCStrength = GUICtrlCreateInput("100", $x + 255, $y+2, 31, 20, BitOR($GUI_SS
 	Local $asTroopsList[11]
 	Local $sComboData= GetTranslatedFileIni("sam m0d", "Un specify","Un specify")
 	For $i = 1 To UBound($MySpells)
-		$sComboData =  $sComboData & "|" & Eval("sTxt" & StringReplace(MyNameOfTroop($i - 1 + 23,2)," ",""))
+		$sComboData =  $sComboData & "|" & Eval("sTxt" & StringReplace(MyNameOfTroop($i - 1 + $eLSpell,2)," ",""))
 	Next
 
 	$y += 55

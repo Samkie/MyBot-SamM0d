@@ -143,7 +143,7 @@ Func CheckAvailableCCSpellUnit()
 			If $aiSpellsInfo[$i][1] <> 0 Then
 				Assign("curCCSpell" & $aiSpellsInfo[$i][0], Eval("curCCSpell" & $aiSpellsInfo[$i][0]) + $aiSpellsInfo[$i][1])
 			Else
-				SetLog("Error detect quantity no. On CC Spell: " & MyNameOfTroop(Eval("enum" & $aiSpellsInfo[$i][0]) + 23, $aiSpellsInfo[$i][1]),$COLOR_RED)
+				SetLog("Error detect quantity no. On CC Spell: " & MyNameOfTroop(Eval("enum" & $aiSpellsInfo[$i][0]) + $eLSpell, $aiSpellsInfo[$i][1]),$COLOR_RED)
 				ExitLoop
 			EndIf
 		Next
@@ -156,7 +156,7 @@ Func CheckAvailableCCSpellUnit()
 		For $i = 0 To UBound($MySpells) - 1
 			Local $itempTotal = Eval("curCCSpell" & $MySpells[$i][0])
 			If $itempTotal > 0 Then
-				SetLog(" - No. of Available CC Spells - " & MyNameOfTroop(Eval("enum" & $MySpells[$i][0]) + 23,  Eval("curCCSpell" & $MySpells[$i][0])) & ": " &  Eval("curCCSpell" & $MySpells[$i][0]), (Eval("enum" & $MySpells[$i][0]) > 5 ? $COLOR_DARKELIXIR : $COLOR_ELIXIR))
+				SetLog(" - No. of Available CC Spells - " & MyNameOfTroop(Eval("enum" & $MySpells[$i][0]) + $eLSpell,  Eval("curCCSpell" & $MySpells[$i][0])) & ": " &  Eval("curCCSpell" & $MySpells[$i][0]), (Eval("enum" & $MySpells[$i][0]) > 5 ? $COLOR_DARKELIXIR : $COLOR_ELIXIR))
 				Local $bIsSpellInKeepList = False
 				If $iCCSpellSlot1 Or $iCCSpellSlot2 Then
 					For $j = 1 To 2
@@ -192,12 +192,12 @@ Func CheckAvailableCCSpellUnit()
 						Local $iUnitToRemove = Eval("RemoveUnitOfcurCCSpell" & $aiSpellsInfo[$i][0])
 						If $iUnitToRemove > 0 Then
 							If $aiSpellsInfo[$i][1] > $iUnitToRemove Then
-								SetLog("Remove " & MyNameOfTroop(Eval("enum" & $aiSpellsInfo[$i][0]) + 23,  $aiSpellsInfo[$i][1]) & " at slot: " & $aiSpellsInfo[$i][2] & ", unit to remove: " & $iUnitToRemove, $COLOR_ACTION)
+								SetLog("Remove " & MyNameOfTroop(Eval("enum" & $aiSpellsInfo[$i][0]) + $eLSpell,  $aiSpellsInfo[$i][1]) & " at slot: " & $aiSpellsInfo[$i][2] & ", unit to remove: " & $iUnitToRemove, $COLOR_ACTION)
 								RemoveCCSpells($aiSpellsInfo[$i][2]-1, $iUnitToRemove, $iOffsetSlot)
 								$iUnitToRemove = 0
 								Assign("RemoveUnitOfcurCCSpell" & $aiSpellsInfo[$i][0], $iUnitToRemove)
 							Else
-								SetLog("Remove " & MyNameOfTroop(Eval("enum" & $aiSpellsInfo[$i][0]) + 23,  $aiSpellsInfo[$i][1]) & " at slot: " & $aiSpellsInfo[$i][2] & ", unit to remove: " & $aiSpellsInfo[$i][1], $COLOR_ACTION)
+								SetLog("Remove " & MyNameOfTroop(Eval("enum" & $aiSpellsInfo[$i][0]) + $eLSpell,  $aiSpellsInfo[$i][1]) & " at slot: " & $aiSpellsInfo[$i][2] & ", unit to remove: " & $aiSpellsInfo[$i][1], $COLOR_ACTION)
 								RemoveCCSpells($aiSpellsInfo[$i][2]-1, $aiSpellsInfo[$i][1], $iOffsetSlot)
 								$iUnitToRemove -= $aiSpellsInfo[$i][1]
 								Assign("RemoveUnitOfcurCCSpell" & $aiSpellsInfo[$i][0], $iUnitToRemove)
