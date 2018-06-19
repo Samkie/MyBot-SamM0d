@@ -32,22 +32,28 @@ Func getMyArmyHeroCount($bSetLog = True)
 			Select
 				Case StringInStr($sResult, "king", $STR_NOCASESENSEBASIC)
 					If $bSetLog Then Setlog("Hero slot: " & $i + 1 & " - Barbarian King available", $COLOR_SUCCESS)
+					myHeroStatus("King","Green")
 					$g_iHeroAvailable = BitOR($g_iHeroAvailable, $eHeroKing)
 				Case StringInStr($sResult, "queen", $STR_NOCASESENSEBASIC)
 					If $bSetLog Then Setlog("Hero slot: " & $i + 1 & " - Archer Queen available", $COLOR_SUCCESS)
+					myHeroStatus("Queen","Green")
 					$g_iHeroAvailable = BitOR($g_iHeroAvailable, $eHeroQueen)
 				Case StringInStr($sResult, "warden", $STR_NOCASESENSEBASIC)
 					If $bSetLog Then Setlog("Hero slot: " & $i + 1 & " - Grand Warden available", $COLOR_SUCCESS)
+					myHeroStatus("Warden","Green")
 					$g_iHeroAvailable = BitOR($g_iHeroAvailable, $eHeroWarden)
 				Case StringInStr($sResult, "heal", $STR_NOCASESENSEBASIC)
 					;If $g_iSamM0dDebug = 1 Or $iDebugArmyHeroCount = 1 Then
 						Switch $i
 							Case 0
 								$sMessage = " - Barbarian King"
+								myHeroStatus("King","Blue")
 							Case 1
 								$sMessage = " - Archer Queen"
+								myHeroStatus("Queen","Blue")
 							Case 2
 								$sMessage = " - Grand Warden"
+								myHeroStatus("Warden","Blue")
 							Case Else
 								$sMessage = " - Very Bad Monkey Needs"
 						EndSwitch
@@ -57,6 +63,7 @@ Func getMyArmyHeroCount($bSetLog = True)
 					Switch $i
 						Case 0
 							$sMessage = " - Barbarian King"
+							myHeroStatus("King","Red")
 							$tmpUpgradingHeroes[$i] = $eHeroKing
 							; safety code to warn user when wait for hero found while being upgraded to reduce stupid user posts for not attacking
 							If BitAND($g_aiAttackUseHeroes[$DB], $g_aiSearchHeroWaitEnable[$DB], $eHeroKing) = $eHeroKing Or BitAND($g_aiAttackUseHeroes[$LB], $g_aiSearchHeroWaitEnable[$LB], $eHeroKing) = $eHeroKing Then ; check wait for hero status
@@ -69,6 +76,7 @@ Func getMyArmyHeroCount($bSetLog = True)
 							EndIf
 						Case 1
 							$sMessage = " - Archer Queen"
+							myHeroStatus("Queen","Red")
 							$tmpUpgradingHeroes[$i] = $eHeroQueen
 							; safety code
 							If BitAND($g_aiAttackUseHeroes[$DB], $g_aiSearchHeroWaitEnable[$DB], $eHeroQueen) = $eHeroQueen Or BitAND($g_aiAttackUseHeroes[$LB], $g_aiSearchHeroWaitEnable[$LB], $eHeroQueen) = $eHeroQueen Then
@@ -81,6 +89,7 @@ Func getMyArmyHeroCount($bSetLog = True)
 							EndIf
 						Case 2
 							$sMessage = " - Grand Warden"
+							myHeroStatus("Warden","Red")
 							$tmpUpgradingHeroes[$i] = $eHeroWarden
 							; safety code
 							If BitAND($g_aiAttackUseHeroes[$DB], $g_aiSearchHeroWaitEnable[$DB], $eHeroWarden) = $eHeroWarden Or BitAND($g_aiAttackUseHeroes[$LB], $g_aiSearchHeroWaitEnable[$LB], $eHeroWarden) = $eHeroWarden Then
@@ -96,6 +105,15 @@ Func getMyArmyHeroCount($bSetLog = True)
 					EndSwitch
 					If $bSetLog Then SetLog("Hero slot: " & $i + 1 & $sMessage & " Upgrade in Process", $COLOR_DEBUG)
 				Case StringInStr($sResult, "none", $STR_NOCASESENSEBASIC)
+					Switch $i
+						Case 0
+							myHeroStatus("King","Gray")
+						Case 1
+							myHeroStatus("Queen","Gray")
+						Case 2
+							myHeroStatus("Warden","Gray")
+					EndSwitch
+
 					If $g_iSamM0dDebug = 1 Or $iDebugArmyHeroCount = 1 Then SetLog("Hero slot: " & $i + 1 & " Empty.", $COLOR_DEBUG)
 					ExitLoop ; when we find empty slots, done looking for heroes
 				Case Else
@@ -159,4 +177,11 @@ Func myArmyHeroStatus($iHeroSlot)
 		Case 2
 			Return "warden"
 	EndSwitch
+EndFunc
+
+Func myHeroStatus($sHero, $sColor)
+	GUICtrlSetState(Eval("g_hPic" & $sHero & "Green"), ($sColor = "Green" ?  $GUI_SHOW : $GUI_HIDE))
+	GUICtrlSetState(Eval("g_hPic" & $sHero & "Red"), ($sColor = "Red" ?  $GUI_SHOW : $GUI_HIDE))
+	GUICtrlSetState(Eval("g_hPic" & $sHero & "Blue"), ($sColor = "Blue" ?  $GUI_SHOW : $GUI_HIDE))
+	GUICtrlSetState(Eval("g_hPic" & $sHero & "Gray"), ($sColor = "Gray" ?  $GUI_SHOW : $GUI_HIDE))
 EndFunc

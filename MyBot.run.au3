@@ -1375,7 +1375,7 @@ Func _RunFunction($action)
 		Case "BoostWarden"
 			BoostWarden()
 		Case "LabCheck"
-			Setlog("Checking Lab Status", $COLOR_INFO)
+			;Setlog("Checking Lab Status", $COLOR_INFO)
 			LabGuiDisplay()
 			_Sleep($DELAYRUNBOT3)
 		Case "RequestCC"

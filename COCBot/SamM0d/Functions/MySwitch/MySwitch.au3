@@ -616,6 +616,15 @@ Func DoVillageLoadSucess($iAcc)
 	$g_sPBStartTime = ""
 	$g_bShareAttackEnableNow = False
 
+
+	myHeroStatus("King","Gray")
+	myHeroStatus("Queen","Gray")
+	myHeroStatus("Warden","Gray")
+
+	GUICtrlSetState($g_hPicLabGreen, $GUI_HIDE)
+	GUICtrlSetState($g_hPicLabRed, $GUI_HIDE)
+	GUICtrlSetState($g_hPicLabGray, $GUI_SHOW)
+
 	; Mod Train
 	;-----------------------------------------------------
 	; reset Global variables for troops
