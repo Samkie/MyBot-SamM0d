@@ -75,7 +75,7 @@ InitializeBot()
 MainLoop(CheckPrerequisites())
 
 Func UpdateBotTitle()
-	Local $sTitle = "My Bot " & $g_sBotVersion & " @Samkie M0d v1.4 "
+	Local $sTitle = "My Bot " & $g_sBotVersion & " @Samkie M0d v1.4.1 "
 	Local $sConsoleTitle ; Console title has also Android Emulator Name
 	If $g_sBotTitle = "" Then
 		$g_sBotTitle = $sTitle
@@ -1035,6 +1035,7 @@ Func _Idle() ;Sequence that runs until Full Army
 				If CheckAndroidReboot() Then ContinueLoop 2
 			WEnd
 		EndIf
+
 		If _Sleep($DELAYIDLE1) Then ExitLoop
 		checkObstacles() ; trap common error messages also check for reconnecting animation
 		checkMainScreen(False) ; required here due to many possible exits
@@ -1051,15 +1052,8 @@ Func _Idle() ;Sequence that runs until Full Army
 			EndIf
 		EndIf
 
-;~ 		If ($g_iCommandStop = 3 Or $g_iCommandStop = 0) And $g_bTrainEnabled = True Then
-;~ 			CheckArmyCamp(True, True)
-;~ 			If _Sleep($DELAYIDLE1) Then Return
-;~ 			If ($g_bFullArmy = False Or $g_bFullArmySpells = False) Then
-;~ 				SetLog("Army Camp and Barracks are not full, Training Continues...", $COLOR_ACTION)
-;~ 				$g_iCommandStop = 0
-;~ 			EndIf
-;~ 		EndIf
 		ReplayShare($g_bShareAttackEnableNow)
+
 		If _Sleep($DELAYIDLE1) Then Return
 		If $g_bRestart = True Then ExitLoop
 		If $iCollectCounter > $g_iCollectAtCount Then ; This is prevent from collecting all the time which isn't needed anyway
@@ -1089,31 +1083,14 @@ Func _Idle() ;Sequence that runs until Full Army
 
 		; samm0d
 		If $ichkModTrain = 0 Then
-
-		If $g_iCommandStop = -1 Then
-			If $g_iActualTrainSkip < $g_iMaxTrainSkip Then
-				If CheckNeedOpenTrain($g_sTimeBeforeTrain) Then TrainRevamp()
-				If $g_bRestart = True Then ExitLoop
-				If _Sleep($DELAYIDLE1) Then ExitLoop
-				checkMainScreen(False)
-			Else
-				SetLog("Humanize bot, prevent to delete and recreate troops " & $g_iActualTrainSkip + 1 & "/" & $g_iMaxTrainSkip, $color_blue)
-				$g_iActualTrainSkip = $g_iActualTrainSkip + 1
-				If $g_iActualTrainSkip >= $g_iMaxTrainSkip Then
-					$g_iActualTrainSkip = 0
-				EndIf
-				CheckArmyCamp(True, True)
-			EndIf
-		EndIf
-		If _Sleep($DELAYIDLE1) Then Return
-		If $g_iCommandStop = 0 And $g_bTrainEnabled = True Then
-			If Not ($g_bFullArmy) Then
+			If $g_iCommandStop = -1 Then
 				If $g_iActualTrainSkip < $g_iMaxTrainSkip Then
 					If CheckNeedOpenTrain($g_sTimeBeforeTrain) Then TrainRevamp()
 					If $g_bRestart = True Then ExitLoop
 					If _Sleep($DELAYIDLE1) Then ExitLoop
 					checkMainScreen(False)
 				Else
+					SetLog("Humanize bot, prevent to delete and recreate troops " & $g_iActualTrainSkip + 1 & "/" & $g_iMaxTrainSkip, $color_blue)
 					$g_iActualTrainSkip = $g_iActualTrainSkip + 1
 					If $g_iActualTrainSkip >= $g_iMaxTrainSkip Then
 						$g_iActualTrainSkip = 0
@@ -1121,11 +1098,27 @@ Func _Idle() ;Sequence that runs until Full Army
 					CheckArmyCamp(True, True)
 				EndIf
 			EndIf
-			If $g_bFullArmy And $g_bTrainEnabled = True Then
-				SetLog("Army Camp and Barracks are full, stop Training...", $COLOR_ACTION)
-				$g_iCommandStop = 3
+			If _Sleep($DELAYIDLE1) Then Return
+			If $g_iCommandStop = 0 And $g_bTrainEnabled = True Then
+				If Not ($g_bFullArmy) Then
+					If $g_iActualTrainSkip < $g_iMaxTrainSkip Then
+						If CheckNeedOpenTrain($g_sTimeBeforeTrain) Then TrainRevamp()
+						If $g_bRestart = True Then ExitLoop
+						If _Sleep($DELAYIDLE1) Then ExitLoop
+						checkMainScreen(False)
+					Else
+						$g_iActualTrainSkip = $g_iActualTrainSkip + 1
+						If $g_iActualTrainSkip >= $g_iMaxTrainSkip Then
+							$g_iActualTrainSkip = 0
+						EndIf
+						CheckArmyCamp(True, True)
+					EndIf
+				EndIf
+				If $g_bFullArmy And $g_bTrainEnabled = True Then
+					SetLog("Army Camp and Barracks are full, stop Training...", $COLOR_ACTION)
+					$g_iCommandStop = 3
+				EndIf
 			EndIf
-		EndIf
 		Else
 			ModTrain()
 			If $g_bRestart = True Then ExitLoop
@@ -1331,43 +1324,44 @@ Func _RunFunction($action)
 				If _Sleep($DELAYRUNBOT1) = False Then checkMainScreen(False)
 			EndIf
 		Case "DonateCC,Train"
+			If $g_iActiveDonate And $g_bChkDonate Then
 
 			; samm0d
-			If $ichkModTrain = 1 Then
-				ModTrain()
-			EndIf
-
-			If $g_iActiveDonate And $g_bChkDonate Then
-				If $g_bFirstStart Then
-					getArmyTroopCapacity(True, False)
-					getArmySpellCapacity(False, True)
-				EndIf
-				If SkipDonateNearFullTroops(True) = False And BalanceDonRec(True) Then DonateCC()
-			EndIf
-			If _Sleep($DELAYRUNBOT1) = False Then checkMainScreen(False)
-
-			If $ichkModTrain = 1 Then
-				If $bJustMakeDonate Then
+				If $ichkModTrain = 1 Then
 					ModTrain()
+				Else
+					If $g_bFirstStart Then
+						getArmyTroopCapacity(True, False)
+						getArmySpellCapacity(False, True)
+					EndIf
 				EndIf
-			Else
-				If $g_bTrainEnabled Then ; check for training enabled in halt mode
-					If $g_iActualTrainSkip < $g_iMaxTrainSkip Then
-						;Train()
-						TrainRevamp()
-						_Sleep($DELAYRUNBOT1)
-					Else
-						SetLog("Humanize bot, prevent to delete and recreate troops " & $g_iActualTrainSkip + 1 & "/" & $g_iMaxTrainSkip, $color_blue)
-						$g_iActualTrainSkip = $g_iActualTrainSkip + 1
-						If $g_iActualTrainSkip >= $g_iMaxTrainSkip Then
-							$g_iActualTrainSkip = 0
-						EndIf
-						CheckOverviewFullArmy(True, False) ; use true parameter to open train overview window
-						getArmySpells()
-						getArmyHeroCount(False, True)
+
+				If SkipDonateNearFullTroops(True) = False And BalanceDonRec(True) Then DonateCC()
+				If _Sleep($DELAYRUNBOT1) = False Then checkMainScreen(False)
+
+				If $ichkModTrain = 1 Then
+					If $bJustMakeDonate Then
+						ModTrain()
 					EndIf
 				Else
-					If $g_bDebugSetlogTrain Then SetLog("Halt mode - training disabled", $COLOR_DEBUG)
+					If $g_bTrainEnabled Then ; check for training enabled in halt mode
+						If $g_iActualTrainSkip < $g_iMaxTrainSkip Then
+							;Train()
+							TrainRevamp()
+							_Sleep($DELAYRUNBOT1)
+						Else
+							SetLog("Humanize bot, prevent to delete and recreate troops " & $g_iActualTrainSkip + 1 & "/" & $g_iMaxTrainSkip, $color_blue)
+							$g_iActualTrainSkip = $g_iActualTrainSkip + 1
+							If $g_iActualTrainSkip >= $g_iMaxTrainSkip Then
+								$g_iActualTrainSkip = 0
+							EndIf
+							CheckOverviewFullArmy(True, False) ; use true parameter to open train overview window
+							getArmySpells()
+							getArmyHeroCount(False, True)
+						EndIf
+					Else
+						If $g_bDebugSetlogTrain Then SetLog("Halt mode - training disabled", $COLOR_DEBUG)
+					EndIf
 				EndIf
 			EndIf
 		Case "BoostBarracks"

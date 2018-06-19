@@ -17,6 +17,8 @@ Global $g_hCmbProfile2
 Global $g_iScreenSizeErrorCount = 0
 #include "functions\ModTrain\Mod Train Global Variables.au3"
 
+Global $g_aiPrepDon[4] = [0, 0, 0, 0]
+
 ;===============SamM0d Global Translate Variables====================
 Global $CustomTrain_MSG_1
 Global $CustomTrain_MSG_2

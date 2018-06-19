@@ -14,7 +14,6 @@
 ; Example .......: No
 ; ===============================================================================================================================
 
-Global $g_aiPrepDon[4] = [0, 0, 0, 0]
 ;Global $g_iTotalDonateCapacity, $g_iTotalDonateSpellCapacity
 Global $g_iTotalDonateTroopCapacity, $g_iTotalDonateSpellCapacity, $g_iTotalDonateSiegeMachineCapacity
 Global $g_iDonTroopsLimit = 8, $iDonSpellsLimit = 1, $g_iDonTroopsAv = 0, $g_iDonSpellsAv = 0
