@@ -7,13 +7,13 @@ Func chkMyTroopOrder()
 EndFunc
 
 Func cmbMyTroopOrder()
-	Local $tempOrder[19]
-	For $i = 0 To 18
+	Local $tempOrder[20]
+	For $i = 0 To 19
 		$tempOrder[$i] = Int(GUICtrlRead(Eval("cmbMy" & $MyTroops[$i][0] & "Order")))
 	Next
-	For $i = 0 To 18
+	For $i = 0 To 19
 		If $tempOrder[$i] <> $MyTroops[$i][1] Then
-			For $j = 0 To 18
+			For $j = 0 To 19
 				If $MyTroops[$j][1] = $tempOrder[$i] Then
 					$tempOrder[$j] = Int($MyTroops[$i][1])
 					ExitLoop
@@ -22,7 +22,7 @@ Func cmbMyTroopOrder()
 			ExitLoop
 		EndIf
 	Next
-	For $i = 0 To 18
+	For $i = 0 To 19
 		$MyTroopsSetting[$icmbTroopSetting][$i][1] = Int($tempOrder[$i])
 		$MyTroops[$i][1] = $MyTroopsSetting[$icmbTroopSetting][$i][1]
 		_GUICtrlComboBox_SetCurSel(Eval("cmbMy" & $MyTroops[$i][0] & "Order"), $MyTroops[$i][1]-1)
@@ -208,7 +208,7 @@ Func cmbMyQuickTrain()
 EndFunc
 
 Func btnResetTroops()
-	For $i = 0 To 18
+	For $i = 0 To 19
 		GUICtrlSetData(Eval("txtMy" & $MyTroops[$i][0]),"0")
 		$MyTroops[$i][3] = 0
 	Next
@@ -216,7 +216,7 @@ Func btnResetTroops()
 EndFunc
 
 Func btnResetOrder()
-	For $i = 0 To 18
+	For $i = 0 To 19
 		_GUICtrlComboBox_SetCurSel(Eval("cmbMy" & $MyTroops[$i][0] & "Order"), $i)
 		$MyTroops[$i][1] = $i + 1
 	Next
@@ -330,7 +330,7 @@ Func lblMyTotalCountSpell()
 	_GUI_Value_STATE("HIDE", $groupListMySpells)
 	; calculate $iTotalTrainSpaceSpell value
 	$g_iMySpellsSize = Int((GUICtrlRead($txtNumLightningSpell) * 2) + (GUICtrlRead($txtNumHealSpell) * 2) + (GUICtrlRead($txtNumRageSpell) * 2) + (GUICtrlRead($txtNumJumpSpell) * 2) + _
-			(GUICtrlRead($txtNumFreezeSpell) * 2) + (GUICtrlRead($txtNumCloneSpell) * 4) + GUICtrlRead($txtNumPoisonSpell) + GUICtrlRead($txtNumHasteSpell) + GUICtrlRead($txtNumEarthSpell) + GUICtrlRead($txtNumSkeletonSpell))
+			(GUICtrlRead($txtNumFreezeSpell) * 2) + (GUICtrlRead($txtNumCloneSpell) * 3) + GUICtrlRead($txtNumPoisonSpell) + GUICtrlRead($txtNumHasteSpell) + GUICtrlRead($txtNumEarthSpell) + GUICtrlRead($txtNumSkeletonSpell))
 
 	_GUICtrlComboBox_SetCurSel($g_hTxtTotalCountSpell, _GUICtrlComboBox_GetCurSel($txtTotalCountSpell2))
 
