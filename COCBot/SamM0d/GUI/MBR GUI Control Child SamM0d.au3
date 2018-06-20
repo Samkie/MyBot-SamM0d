@@ -8,12 +8,12 @@ EndFunc
 
 Func cmbMyTroopOrder()
 	Local $tempOrder[20]
-	For $i = 0 To 19
+	For $i = 0 To UBound($MyTroops) - 1
 		$tempOrder[$i] = Int(GUICtrlRead(Eval("cmbMy" & $MyTroops[$i][0] & "Order")))
 	Next
-	For $i = 0 To 19
+	For $i = 0 To UBound($MyTroops) - 1
 		If $tempOrder[$i] <> $MyTroops[$i][1] Then
-			For $j = 0 To 19
+			For $j = 0 To UBound($MyTroops) - 1
 				If $MyTroops[$j][1] = $tempOrder[$i] Then
 					$tempOrder[$j] = Int($MyTroops[$i][1])
 					ExitLoop
@@ -22,7 +22,7 @@ Func cmbMyTroopOrder()
 			ExitLoop
 		EndIf
 	Next
-	For $i = 0 To 19
+	For $i = 0 To UBound($MyTroops) - 1
 		$MyTroopsSetting[$icmbTroopSetting][$i][1] = Int($tempOrder[$i])
 		$MyTroops[$i][1] = $MyTroopsSetting[$icmbTroopSetting][$i][1]
 		_GUICtrlComboBox_SetCurSel(Eval("cmbMy" & $MyTroops[$i][0] & "Order"), $MyTroops[$i][1]-1)
@@ -72,12 +72,12 @@ EndFunc
 Func cmbMySpellOrder()
 	Local $tempOrder[10]
 
-	For $i = 0 To 9
+	For $i = 0 To UBound($MySpells) - 1
 		$tempOrder[$i] = Int(GUICtrlRead(Eval("cmbMy" & $MySpells[$i][0] & "SpellOrder")))
 	Next
-	For $i = 0 To 9
+	For $i = 0 To UBound($MySpells) - 1
 		If $tempOrder[$i] <> $MySpells[$i][1] Then
-			For $j = 0 To 9
+			For $j = 0 To UBound($MySpells) - 1
 				If $MySpells[$j][1] = $tempOrder[$i] Then
 					$tempOrder[$j] = Int($MySpells[$i][1])
 					ExitLoop
@@ -86,7 +86,7 @@ Func cmbMySpellOrder()
 			ExitLoop
 		EndIf
 	Next
-	For $i = 0 To 9
+	For $i = 0 To UBound($MySpells) - 1
 		$MySpellSetting[$icmbTroopSetting][$i][1] = Int($tempOrder[$i])
 		$MySpells[$i][1] =  $MySpellSetting[$icmbTroopSetting][$i][1]
 		_GUICtrlComboBox_SetCurSel(Eval("cmbMy" & $MySpells[$i][0] & "SpellOrder"), $MySpells[$i][1]-1)
@@ -208,7 +208,7 @@ Func cmbMyQuickTrain()
 EndFunc
 
 Func btnResetTroops()
-	For $i = 0 To 19
+	For $i = 0 To UBound($MyTroops)-1
 		GUICtrlSetData(Eval("txtMy" & $MyTroops[$i][0]),"0")
 		$MyTroops[$i][3] = 0
 	Next
@@ -216,21 +216,21 @@ Func btnResetTroops()
 EndFunc
 
 Func btnResetOrder()
-	For $i = 0 To 19
+	For $i = 0 To UBound($MyTroops)-1
 		_GUICtrlComboBox_SetCurSel(Eval("cmbMy" & $MyTroops[$i][0] & "Order"), $i)
 		$MyTroops[$i][1] = $i + 1
 	Next
 EndFunc
 
 Func btnResetSpells()
-	For $i = 0 To 9
+	For $i = 0 To UBound($MySpells)-1
 		GUICtrlSetData(Eval("txtNum" & $MySpells[$i][0] & "Spell"),"0")
 		$MySpells[$i][3] = 0
 	Next
 EndFunc
 
 Func btnResetSpellOrder()
-	For $i = 0 To 9
+	For $i = 0 To UBound($MySpells)-1
 		_GUICtrlComboBox_SetCurSel(Eval("cmbMy" & $MySpells[$i][0] & "SpellOrder"), $i)
 		$MySpells[$i][1] = $i + 1
 	Next

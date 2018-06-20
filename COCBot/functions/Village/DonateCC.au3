@@ -202,71 +202,51 @@ Func DonateCC($bCheckForNewMsg = False)
 			$g_bSkipDonTroops = False
 			$g_bSkipDonSpells = False
 
-			;Read chat request for DonateTroop and DonateSpell
+			;;; Read chat request for DonateTroop and DonateSpell
 			If $bDonateTroop Or $bDonateSpell And $donateCCfilter Then
-				If $g_bChkExtraAlphabets Then
-					; Chat Request using "coc-latin-cyr" xml: Latin + Cyrillic derived alphabets / three paragraphs
-					SetLog("Using OCR to read Latin and Cyrillic derived alphabets..", $COLOR_ACTION)
-					$ClanString = ""
-					$ClanString = getChatString(30, $g_aiDonatePixel[1] - 50, "coc-latin-cyr")
-					If $ClanString = "" Then
-						$ClanString = getChatString(30, $g_aiDonatePixel[1] - 36, "coc-latin-cyr")
+
+				Local $Alphabets[4] = [$g_bChkExtraAlphabets, $g_bChkExtraChinese, $g_bChkExtraKorean, $g_bChkExtraPersian]
+				Local $Yaxis[4] = [50, 26, 26, 31]
+				Local $TextAlphabetsNames[4] = ["Cyrillic and Latin", "Chinese", "Korean", "Persian"]
+				Local $AlphabetFunctions[4] = ["getChatString", "getChatStringChinese", "getChatStringKorean", "getChatStringPersian"]
+				Local $BlankSpaces = ""
+
+				For $i = 0 To UBound($Alphabets) - 1
+					If $i = 0 Then
+						Local $coordinates[3] = [50, 36, 23] ; Extra coordinates for Latin
+						Local $OcrName = ($Alphabets[$i] = True) ? ("coc-latin-cyr") : ("coc-latinA")
+						Local $log = "Latin"
+						If $Alphabets[$i] Then $log = $TextAlphabetsNames[$i]
+						$ClanString = ""
+						SetLog("Using OCR to read " & $log & " derived alphabets.", $COLOR_ACTION)
+						For $j = 0 To 2
+							If $ClanString = "" Or $ClanString = " " Then
+								$ClanString &= $BlankSpaces & getChatString(30, $g_aiDonatePixel[1] - $coordinates[$j], $OcrName)
+								If $g_bDebugSetlog Then SetDebugLog("$OcrName: " & $OcrName)
+								If $g_bDebugSetlog Then SetDebugLog("$coordinates: " & $coordinates[$j])
+								If $g_bDebugSetlog Then SetDebugLog("$ClanString: " & $ClanString)
+								If $ClanString <> "" And $ClanString <> " " Then ExitLoop
+							EndIf
+							If $ClanString <> "" Then $BlankSpaces = " "
+						Next
 					Else
-						$ClanString &= " " & getChatString(30, $g_aiDonatePixel[1] - 36, "coc-latin-cyr")
+						If $Alphabets[$i] Then
+							If $ClanString = "" Or $ClanString = " " Then
+								SetLog("Using OCR to read " & $TextAlphabetsNames[$i] & " alphabets.", $COLOR_ACTION)
+								; Ensure used functions are references in "MBR References.au3"
+								#Au3Stripper_Off
+								$ClanString &= $BlankSpaces & Call($AlphabetFunctions[$i], 30, $g_aiDonatePixel[1] - $Yaxis[$i])
+								#Au3Stripper_On
+								If @error = 0xDEAD And @extended = 0xBEEF Then SetLog("[DonatCC] Function " & $AlphabetFunctions[$i] & "() had a problem.")
+								If $g_bDebugSetlog Then SetDebugLog("$OcrName: " & $OcrName)
+								If $g_bDebugSetlog Then SetDebugLog("$Yaxis: " & $Yaxis[$i])
+								If $g_bDebugSetlog Then SetDebugLog("$ClanString: " & $ClanString)
+								If $ClanString <> "" And $ClanString <> " " Then ExitLoop
+							EndIf
+						EndIf
 					EndIf
-					If $ClanString = "" Or $ClanString = " " Then
-						$ClanString = getChatString(30, $g_aiDonatePixel[1] - 23, "coc-latin-cyr")
-					Else
-						$ClanString &= " " & getChatString(30, $g_aiDonatePixel[1] - 23, "coc-latin-cyr")
-					EndIf
-					If _Sleep($DELAYDONATECC2) Then ExitLoop
-				Else ; default
-					; Chat Request using "coc-latinA" xml: only Latin derived alphabets / three paragraphs
-					SetLog("Using OCR to read Latin derived alphabets..", $COLOR_ACTION)
-					$ClanString = ""
-					$ClanString = getChatString(30, $g_aiDonatePixel[1] - 50, "coc-latinA")
-					If $ClanString = "" Then
-						$ClanString = getChatString(30, $g_aiDonatePixel[1] - 36, "coc-latinA")
-					Else
-						$ClanString &= " " & getChatString(30, $g_aiDonatePixel[1] - 36, "coc-latinA")
-					EndIf
-					If $ClanString = "" Or $ClanString = " " Then
-						$ClanString = getChatString(30, $g_aiDonatePixel[1] - 23, "coc-latinA")
-					Else
-						$ClanString &= " " & getChatString(30, $g_aiDonatePixel[1] - 23, "coc-latinA")
-					EndIf
-					If _Sleep($DELAYDONATECC2) Then ExitLoop
-				EndIf
-				; Chat Request using IMGLOC: Chinese alphabet / one paragraph
-				If $g_bChkExtraChinese Then
-					SetLog("Using OCR to read the Chinese alphabet..", $COLOR_ACTION)
-					If $ClanString = "" Then
-						$ClanString = getChatStringChinese(30, $g_aiDonatePixel[1] - 26)
-					Else
-						$ClanString &= " " & getChatStringChinese(30, $g_aiDonatePixel[1] - 26)
-					EndIf
-					If _Sleep($DELAYDONATECC2) Then ExitLoop
-				EndIf
-				; Chat Request using IMGLOC: Korean alphabet / one paragraph
-				If $g_bChkExtraKorean Then
-					SetLog("Using OCR to read the Korean alphabet..", $COLOR_ACTION)
-					If $ClanString = "" Then
-						$ClanString = getChatStringKorean(30, $g_aiDonatePixel[1] - 24)
-					Else
-						$ClanString &= " " & getChatStringKorean(30, $g_aiDonatePixel[1] - 24)
-					EndIf
-					If _Sleep($DELAYDONATECC2) Then ExitLoop
-				EndIf
-				; Chat Request using IMGLOC: Persian alphabet / one paragraph
-				If $g_bChkExtraPersian Then
-					SetLog("Using OCR to read the Persian alphabet..", $COLOR_ACTION)
-					If $ClanString = "" Then
-						$ClanString = getChatStringPersian(30, $g_aiDonatePixel[1] - 31)
-					Else
-						$ClanString &= " " & getChatStringPersian(30, $g_aiDonatePixel[1] - 31)
-					EndIf
-					If _Sleep($DELAYDONATECC2) Then ExitLoop
-				EndIf
+				Next
+
 				; samm0d
 				If $ichkEnableCustomOCR4CCRequest = 1 Then
 					Setlog("Using custom OCR to read cc request message..", $COLOR_ACTION)
@@ -977,10 +957,10 @@ Func DonateTroopType(Const $iTroopIndex, $Quant = 0, Const $Custom = False, Cons
 
 	; figure out row/position
 	If $Slot < 0 Or $Slot > 11 Then
-		setlog("Invalid slot # found = " & $Slot & " for " & $g_asTroopNames[$iTroopIndex], $COLOR_ERROR)
+		SetLog("Invalid slot # found = " & $Slot & " for " & $g_asTroopNames[$iTroopIndex], $COLOR_ERROR)
 		Return
 	EndIf
-	If $g_bDebugSetlog Then SetDebugLog("slot found = " & $Slot & ", " & $g_asTroopNames[$Slot], $COLOR_DEBUG)
+	If $g_bDebugSetlog Then SetDebugLog("slot found = " & $Slot & ", " & $g_asTroopNames[$iTroopIndex], $COLOR_DEBUG)
 	$donaterow = 1 ;first row of troops
 	$donateposinrow = $Slot
 	If $Slot >= 6 And $Slot <= 11 Then
@@ -997,6 +977,7 @@ Func DonateTroopType(Const $iTroopIndex, $Quant = 0, Const $Custom = False, Cons
 			_ColorCheck(_GetPixelColor(360 + ($Slot * 68), $g_iDonationWindowY + 107 + $YComp, True), Hex(0x306ca8, 6), 20) Then ; check for 'blue'
 
 		If $Custom Then
+
 			; samm0d
 			If $ichkEnableLimitDonateUnit Then
 				If $iDonatedUnit + $Quant > $itxtLimitDonateUnit Then
@@ -1012,84 +993,82 @@ Func DonateTroopType(Const $iTroopIndex, $Quant = 0, Const $Custom = False, Cons
 				SetLog("donate", $COLOR_ERROR)
 				SetLog("row: " & $donaterow, $COLOR_ERROR)
 				SetLog("pos in row: " & $donateposinrow, $COLOR_ERROR)
-				setlog("coordinate: " & 365 + ($Slot * 68) & "," & $g_iDonationWindowY + 100 + $YComp, $COLOR_ERROR)
+				SetLog("coordinate: " & 365 + ($Slot * 68) & "," & $g_iDonationWindowY + 100 + $YComp, $COLOR_ERROR)
 				debugimagesave("LiveDonateCC-r" & $donaterow & "-c" & $donateposinrow & "-" & $g_asTroopNames[$iTroopIndex] & "_")
 			EndIf
-
-				; Use slow click when the Train system is Quicktrain
-				If $g_bQuickTrainEnable Then
-					Local $icount = 0
-					For $x = 0 To $Quant
-						If _ColorCheck(_GetPixelColor(350 + ($Slot * 68), $g_iDonationWindowY + 105 + $YComp, True), Hex(0x306ca8, 6), 20) Or _
-								_ColorCheck(_GetPixelColor(355 + ($Slot * 68), $g_iDonationWindowY + 106 + $YComp, True), Hex(0x306ca8, 6), 20) Or _
-								_ColorCheck(_GetPixelColor(360 + ($Slot * 68), $g_iDonationWindowY + 107 + $YComp, True), Hex(0x306ca8, 6), 20) Then ; check for 'blue'
-
-							Click(365 + ($Slot * 68), $g_iDonationWindowY + 100 + $YComp, 1, $DELAYDONATECC3, "#0175")
-							If $g_iCommandStop = 3 Then
-								$g_iCommandStop = 0
-								$g_bFullArmy = False
-							EndIf
-							; samm0d
-							$bJustMakeDonate = True
-							$tempDisableTrain = False
-							$iDonatedUnit += 1
-
-							If $ichkEnableDonateWhenReady = 1 Then
-								Assign("Ready" & $g_asTroopShortNames[$iTroopIndex], Eval("Ready" & $g_asTroopShortNames[$iTroopIndex]) - 1)
-							EndIf
-							If _Sleep(1000) Then Return
-							$icount += 1
-						EndIf
-					Next
-					$Quant = $icount ; Count Troops Donated Clicks
-					$g_aiDonateStatsTroops[$iTroopIndex][0] += $Quant
-				Else
+			; Use slow click when the Train system is Quicktrain
+			If $g_bQuickTrainEnable Then
+				Local $icount = 0
+				For $x = 0 To $Quant
 					If _ColorCheck(_GetPixelColor(350 + ($Slot * 68), $g_iDonationWindowY + 105 + $YComp, True), Hex(0x306ca8, 6), 20) Or _
 							_ColorCheck(_GetPixelColor(355 + ($Slot * 68), $g_iDonationWindowY + 106 + $YComp, True), Hex(0x306ca8, 6), 20) Or _
 							_ColorCheck(_GetPixelColor(360 + ($Slot * 68), $g_iDonationWindowY + 107 + $YComp, True), Hex(0x306ca8, 6), 20) Then ; check for 'blue'
 
-						Click(365 + ($Slot * 68), $g_iDonationWindowY + 100 + $YComp, $Quant, $DELAYDONATECC3, "#0175")
-						$g_aiDonateStatsTroops[$iTroopIndex][0] += $Quant
+						Click(365 + ($Slot * 68), $g_iDonationWindowY + 100 + $YComp, 1, $DELAYDONATECC3, "#0175")
 						If $g_iCommandStop = 3 Then
 							$g_iCommandStop = 0
 							$g_bFullArmy = False
 						EndIf
 						; samm0d
-						$iDonatedUnit += $Quant
 						$bJustMakeDonate = True
 						$tempDisableTrain = False
+						$iDonatedUnit += 1
 						If $ichkEnableDonateWhenReady = 1 Then
-							Assign("Ready" & $g_asTroopShortNames[$iTroopIndex], Eval("Ready" & $g_asTroopShortNames[$iTroopIndex]) - $Quant)
+							Assign("Ready" & $g_asTroopShortNames[$iTroopIndex], Eval("Ready" & $g_asTroopShortNames[$iTroopIndex]) - 1)
 						EndIf
+						If _Sleep(1000) Then Return
+						$icount += 1
 					EndIf
-				EndIf
+				Next
+				$Quant = $icount ; Count Troops Donated Clicks
+				$g_aiDonateStatsTroops[$iTroopIndex][0] += $Quant
+			Else
+				If _ColorCheck(_GetPixelColor(350 + ($Slot * 68), $g_iDonationWindowY + 105 + $YComp, True), Hex(0x306ca8, 6), 20) Or _
+						_ColorCheck(_GetPixelColor(355 + ($Slot * 68), $g_iDonationWindowY + 106 + $YComp, True), Hex(0x306ca8, 6), 20) Or _
+						_ColorCheck(_GetPixelColor(360 + ($Slot * 68), $g_iDonationWindowY + 107 + $YComp, True), Hex(0x306ca8, 6), 20) Then ; check for 'blue'
 
-				; Adjust Values for donated troops to prevent a Double ghost donate to stats and train
-				If $iTroopIndex >= $eTroopBarbarian And $iTroopIndex <= $eTroopBowler Then
-					;Reduce iTotalDonateCapacity by troops donated
-					$g_iTotalDonateTroopCapacity -= ($Quant * $g_aiTroopSpace[$iTroopIndex])
-					;If donated max allowed troop qty set $g_bSkipDonTroops = True
-					If $g_iDonTroopsLimit = $Quant Then
-						$g_bSkipDonTroops = True
+					Click(365 + ($Slot * 68), $g_iDonationWindowY + 100 + $YComp, $Quant, $DELAYDONATECC3, "#0175")
+					$g_aiDonateStatsTroops[$iTroopIndex][0] += $Quant
+					If $g_iCommandStop = 3 Then
+						$g_iCommandStop = 0
+						$g_bFullArmy = False
+					EndIf
+					; samm0d
+					$iDonatedUnit += $Quant
+					$bJustMakeDonate = True
+					$tempDisableTrain = False
+					If $ichkEnableDonateWhenReady = 1 Then
+						Assign("Ready" & $g_asTroopShortNames[$iTroopIndex], Eval("Ready" & $g_asTroopShortNames[$iTroopIndex]) - $Quant)
 					EndIf
 				EndIf
+			EndIf
+
+			; Adjust Values for donated troops to prevent a Double ghost donate to stats and train
+			If $iTroopIndex >= $eTroopBarbarian And $iTroopIndex <= $eTroopBowler Then
+				;Reduce iTotalDonateCapacity by troops donated
+				$g_iTotalDonateTroopCapacity -= ($Quant * $g_aiTroopSpace[$iTroopIndex])
+				;If donated max allowed troop qty set $g_bSkipDonTroops = True
+				If $g_iDonTroopsLimit = $Quant Then
+					$g_bSkipDonTroops = True
+				EndIf
+			EndIf
 
 		Else
 			If $g_bDebugOCRdonate Then
-				SetLog("donate", $color_RED)
-				SetLog("row: " & $donaterow, $color_RED)
-				SetLog("pos in row: " & $donateposinrow, $color_red)
-				setlog("coordinate: " & 365 + ($Slot * 68) & "," & $g_iDonationWindowY + 100 + $YComp, $color_red)
+				SetLog("donate", $COLOR_ERROR)
+				SetLog("row: " & $donaterow, $COLOR_ERROR)
+				SetLog("pos in row: " & $donateposinrow, $COLOR_ERROR)
+				SetLog("coordinate: " & 365 + ($Slot * 68) & "," & $g_iDonationWindowY + 100 + $YComp, $COLOR_ERROR)
 				debugimagesave("LiveDonateCC-r" & $donaterow & "-c" & $donateposinrow & "-" & $g_asTroopNames[$iTroopIndex] & "_")
 			EndIf
 
-				; samm0d
-				If $ichkEnableLimitDonateUnit Then
-					If $iDonatedUnit + $g_iDonTroopsQuantity > $itxtLimitDonateUnit Then
-						SetLog("Reach donate limit, reduce donate unit " & $g_iDonTroopsQuantity & " to " & $itxtLimitDonateUnit - $iDonatedUnit)
-						$g_iDonTroopsQuantity = $itxtLimitDonateUnit - $iDonatedUnit
-					EndIf
+			; samm0d
+			If $ichkEnableLimitDonateUnit Then
+				If $iDonatedUnit + $g_iDonTroopsQuantity > $itxtLimitDonateUnit Then
+					SetLog("Reach donate limit, reduce donate unit " & $g_iDonTroopsQuantity & " to " & $itxtLimitDonateUnit - $iDonatedUnit)
+					$g_iDonTroopsQuantity = $itxtLimitDonateUnit - $iDonatedUnit
 				EndIf
+			EndIf
 
 			; Use slow click when the Train system is Quicktrain
 			If $g_bQuickTrainEnable = True Then
@@ -1105,13 +1084,13 @@ Func DonateTroopType(Const $iTroopIndex, $Quant = 0, Const $Custom = False, Cons
 							$g_iCommandStop = 0
 							$g_bFullArmy = False
 						EndIf
-							; samm0d
-							$bJustMakeDonate = True
-							$tempDisableTrain = False
-							$iDonatedUnit += 1
-							If $ichkEnableDonateWhenReady = 1 Then
-								Assign("Ready" & $g_asTroopShortNames[$iTroopIndex], Eval("Ready" & $g_asTroopShortNames[$iTroopIndex]) - 1)
-							EndIf
+						; samm0d
+						$bJustMakeDonate = True
+						$tempDisableTrain = False
+						$iDonatedUnit += 1
+						If $ichkEnableDonateWhenReady = 1 Then
+							Assign("Ready" & $g_asTroopShortNames[$iTroopIndex], Eval("Ready" & $g_asTroopShortNames[$iTroopIndex]) - 1)
+						EndIf
 						If _Sleep(1000) Then Return
 					EndIf
 				Next
@@ -1128,13 +1107,13 @@ Func DonateTroopType(Const $iTroopIndex, $Quant = 0, Const $Custom = False, Cons
 						$g_iCommandStop = 0
 						$g_bFullArmy = False
 					EndIf
-						; samm0d
-						$bJustMakeDonate = True
-						$tempDisableTrain = False
-						$iDonatedUnit += $g_iDonTroopsQuantity
-						If $ichkEnableDonateWhenReady = 1 Then
-							Assign("Ready" & $g_asTroopShortNames[$iTroopIndex], Eval("Ready" & $g_asTroopShortNames[$iTroopIndex]) - $g_iDonTroopsQuantity)
-						EndIf
+					; samm0d
+					$bJustMakeDonate = True
+					$tempDisableTrain = False
+					$iDonatedUnit += $g_iDonTroopsQuantity
+					If $ichkEnableDonateWhenReady = 1 Then
+						Assign("Ready" & $g_asTroopShortNames[$iTroopIndex], Eval("Ready" & $g_asTroopShortNames[$iTroopIndex]) - $g_iDonTroopsQuantity)
+					EndIf
 				EndIf
 			EndIf
 
@@ -1218,7 +1197,7 @@ Func DonateSpellType(Const $iSpellIndex, $Quant = 0, Const $Custom = False, Cons
 
 	; figure out row/position
 	If $Slot < 12 Or $Slot > 17 Then
-		setlog("Invalid slot # found = " & $Slot & " for " & $g_asSpellNames[$iSpellIndex], $COLOR_ERROR)
+		SetLog("Invalid slot # found = " & $Slot & " for " & $g_asSpellNames[$iSpellIndex], $COLOR_ERROR)
 		Return
 	EndIf
 	$donaterow = 3 ;row of spells
@@ -1239,7 +1218,7 @@ Func DonateSpellType(Const $iSpellIndex, $Quant = 0, Const $Custom = False, Cons
 			SetLog("donate", $COLOR_ERROR)
 			SetLog("row: " & $donaterow, $COLOR_ERROR)
 			SetLog("pos in row: " & $donateposinrow, $COLOR_ERROR)
-			setlog("coordinate: " & 365 + ($Slot * 68) & "," & $g_iDonationWindowY + 100 + $YComp, $COLOR_ERROR)
+			SetLog("coordinate: " & 365 + ($Slot * 68) & "," & $g_iDonationWindowY + 100 + $YComp, $COLOR_ERROR)
 			debugimagesave("LiveDonateCC-r" & $donaterow & "-c" & $donateposinrow & "-" & $g_asSpellNames[$iSpellIndex] & "_")
 		EndIf
 		If Not $g_bDebugOCRdonate Then
@@ -1298,7 +1277,6 @@ Func DonateWindow($bOpen = True)
 	$iRight += $g_aiDonatePixel[0] + 1
 	$iBottom += $g_aiDonatePixel[1] + 1
 
-
 	; samm0d
 	Local $icount = 0
 	While $icount < 8
@@ -1323,6 +1301,7 @@ Func DonateWindow($bOpen = True)
 		SetLog("Could not find the Donate Button!", $COLOR_ERROR)
 		Return False
 	EndIf
+
 	If _Sleep($DELAYDONATEWINDOW1) Then Return
 
 	; Determinate the right position of the new Donation Window
@@ -1380,7 +1359,7 @@ Func DonateWindowCap(ByRef $g_bSkipDonTroops, ByRef $g_bSkipDonSpells)
 				$iDonSpellsLimit = $aTempReadCCSpellsCap[2]
 			EndIf
 		Else
-			SetLog("Error reading the Castle Spells Capacity", $COLOR_ERROR) ; log if there is read error
+			SetLog("Are you able to donate Spells? ", $COLOR_ERROR) ; log if there is read error
 			$g_iDonSpellsAv = 0
 			$iDonSpellsLimit = 0
 		EndIf
@@ -1538,6 +1517,7 @@ Func RemainingCCcapacity()
 
 		SetLog("Chat Troops: " & $iDonatedTroops & "/" & $iCapTroopsTotal & $sSpellText & $sSiegeMachineText)
 	EndIf
+
 EndFunc   ;==>RemainingCCcapacity
 
 Func DetectSlotTroop(Const $iTroopIndex)
@@ -1555,9 +1535,9 @@ Func DetectSlotTroop(Const $iTroopIndex)
 		If StringInStr($FullTemp[0] & " ", "empty") > 0 Then ExitLoop
 
 		If $FullTemp[0] <> "" Then
+			Local $iFoundTroopIndex = TroopIndexLookup($FullTemp[0])
 			For $i = $eTroopBarbarian To $eTroopBowler
-				Local $sTmp = StringStripWS(StringLeft($g_asTroopNames[$i], 4), $STR_STRIPTRAILING)
-				If StringInStr($FullTemp[0] & " ", $sTmp) > 0 Then
+				If $iFoundTroopIndex = $i Then
 					If $g_bDebugSetlog Then SetDebugLog("Detected " & $g_asTroopNames[$i], $COLOR_DEBUG)
 					If $iTroopIndex = $i Then Return $Slot
 					ExitLoop
@@ -1582,8 +1562,8 @@ Func DetectSlotTroop(Const $iTroopIndex)
 
 		If $FullTemp[0] <> "" Then
 			For $i = $eTroopBalloon To $eTroopBowler
-				Local $sTmp = StringStripWS(StringLeft($g_asTroopNames[$i], 4), $STR_STRIPTRAILING)
-				If StringInStr($FullTemp[0] & " ", $sTmp) > 0 Then
+				Local $iFoundTroopIndex = TroopIndexLookup($FullTemp[0])
+				If $iFoundTroopIndex = $i Then
 					If $g_bDebugSetlog Then SetDebugLog("Detected " & $g_asTroopNames[$i], $COLOR_DEBUG)
 					If $iTroopIndex = $i Then Return $Slot
 					ExitLoop
@@ -1695,7 +1675,7 @@ Func SkipDonateNearFullTroops($bSetLog = False, $aHeroResult = Default)
 	EndIf
 EndFunc   ;==>SkipDonateNearFullTroops
 
-Func BalanceDonRec($bSetlog = False)
+Func BalanceDonRec($bSetLog = False)
 
 	If Not $g_bDonationEnabled Then Return False ; Will disable donation
 	If Not $g_bUseCCBalanced Then Return True ; will enable the donation
@@ -1711,7 +1691,7 @@ Func BalanceDonRec($bSetlog = False)
 		If Number($g_iTroopsReceived) <> 0 Then
 			If Number(Number($g_iTroopsDonated) / Number($g_iTroopsReceived)) >= (Number($g_iCCDonated) / Number($g_iCCReceived)) Then
 				;Stop Donating
-				If $bSetlog Then SetLog("Skipping Donation because Donate/Recieve Ratio is wrong", $COLOR_INFO)
+				If $bSetLog Then SetLog("Skipping Donation because Donate/Recieve Ratio is wrong", $COLOR_INFO)
 				Return False
 			Else
 				; Continue

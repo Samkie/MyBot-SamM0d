@@ -1327,6 +1327,14 @@ Func btnPushshared_prefs()
 			EndIf
 	EndSwitch
 
+	myHeroStatus("King","Gray")
+	myHeroStatus("Queen","Gray")
+	myHeroStatus("Warden","Gray")
+
+	GUICtrlSetState($g_hPicLabGreen, $GUI_HIDE)
+	GUICtrlSetState($g_hPicLabRed, $GUI_HIDE)
+	GUICtrlSetState($g_hPicLabGray, $GUI_SHOW)
+
 	SetLog("Switch finished, elapsed: " & Round(__TimerDiff($hTimer) / 1000, 2) & "s")
 	GUICtrlSetState($btnPushshared_prefs, $GUI_ENABLE)
 	$g_bRunState = $currentRunState
