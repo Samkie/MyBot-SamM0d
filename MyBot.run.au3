@@ -1189,6 +1189,8 @@ Func _Idle() ;Sequence that runs until Full Army
 				EndIf
 			EndIf
 		EndIf
+
+		$bSkipEnterIdleLoop = $g_bIsFullArmywithHeroesAndSpells
 	WEnd
 EndFunc   ;==>_Idle
 
