@@ -1001,7 +1001,7 @@ Func _Idle() ;Sequence that runs until Full Army
 		$bSkipEnterIdleLoop = $g_bIsFullArmywithHeroesAndSpells
 	EndIf
 
-	While $g_bIsFullArmywithHeroesAndSpells = False
+	While $bSkipEnterIdleLoop = False
 
 		CheckAndroidReboot()
 

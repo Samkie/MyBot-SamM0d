@@ -175,7 +175,7 @@ Func SamM0dZap()
 				SetLog("Random Click =-= Change " & $PrevCoor & " To " & $x & "," & $y & "=-= Zap Drill", $COLOR_HMLClick_LOG)
 			EndIf
 			$bDoZap = myzapDrill($eLSpell,$x,$y)
-			SleepAndCheckHeroesHealth(3500, 1500)
+			SleepAndCheckHeroesHealth(3500, 500)
 			;If _Sleep(3500) Then Return
 		Else
 			If $Sort4DrillDEExpect <> $aDrill[0][4] Then
@@ -194,7 +194,7 @@ Func SamM0dZap()
 			If $ichkDrillExistBeforeZap Then
 				If $LastZapXY[0] = $x And $LastZapXY[1] = $y Then
 					if $debugZapSetLog Then SetLog("Make delay longer before checking drill cause of last zap animation." & $bZapFlag)
-					SleepAndCheckHeroesHealth(5000, 1500)
+					SleepAndCheckHeroesHealth(5000, 500)
 					;If _Sleep(5000) Then Return
 				EndIf
 				;$bZapFlag = checkAnyDrillExist($x,$y)
@@ -211,7 +211,7 @@ Func SamM0dZap()
 					SetLog("Random Click =-= Change " & $PrevCoor & " To " & $x & "," & $y & "=-= Zap Drill", $COLOR_HMLClick_LOG)
 				EndIf
 				$bDoZap = myzapDrill($eLSpell,$x,$y)
-				SleepAndCheckHeroesHealth(3500, 1500)
+				SleepAndCheckHeroesHealth(3500, 500)
 				;If _Sleep(3500) Then Return
 			EndIf
 		EndIf
