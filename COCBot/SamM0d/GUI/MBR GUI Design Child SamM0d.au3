@@ -397,7 +397,7 @@ $cmbMyQuickTrain = GUICtrlCreateCombo("", $x+300, $y+20, 130, 20, BitOR($CBS_DRO
 
 
 Local $sComboData= ""
-Local $aTroopOrderList[20] = ["","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19"]
+Local $aTroopOrderList[20] = ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"]
 For $j = 0 To 19
 	$sComboData &= $aTroopOrderList[$j] & "|"
 Next
