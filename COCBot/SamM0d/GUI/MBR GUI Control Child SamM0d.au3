@@ -329,8 +329,10 @@ EndFunc
 Func lblMyTotalCountSpell()
 	_GUI_Value_STATE("HIDE", $groupListMySpells)
 	; calculate $iTotalTrainSpaceSpell value
-	$g_iMySpellsSize = Int((GUICtrlRead($txtNumLightningSpell) * 2) + (GUICtrlRead($txtNumHealSpell) * 2) + (GUICtrlRead($txtNumRageSpell) * 2) + (GUICtrlRead($txtNumJumpSpell) * 2) + _
-			(GUICtrlRead($txtNumFreezeSpell) * 2) + (GUICtrlRead($txtNumCloneSpell) * 3) + GUICtrlRead($txtNumPoisonSpell) + GUICtrlRead($txtNumHasteSpell) + GUICtrlRead($txtNumEarthSpell) + GUICtrlRead($txtNumSkeletonSpell))
+	$g_iMySpellsSize = 0
+	For $i = 0 To UBound($MySpells) - 1
+		$g_iMySpellsSize += Int(GUICtrlRead(Eval("txtNum" & $MySpells[$i][0] & "Spell"))) * $MySpells[$i][2]
+	Next
 
 	_GUICtrlComboBox_SetCurSel($g_hTxtTotalCountSpell, _GUICtrlComboBox_GetCurSel($txtTotalCountSpell2))
 
