@@ -607,6 +607,9 @@ Func DoVillageLoadSucess($iAcc)
 	$g_bFullArmy = False
 	$g_bFullArmyHero = False
 	$g_bFullArmySpells = False
+	$g_FullCCTroops = False
+	$g_bFullCCSpells = False
+
 	$g_bIsClientSyncError = False
 	$g_bIsSearchLimit = False
 	$g_bQuickattack = False

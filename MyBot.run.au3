@@ -754,11 +754,19 @@ Func runBot() ;Bot that runs everything in order
 		EndIf
 
 		$g_bRestart = False
-		$g_bfullArmy = False
+		$g_bFullArmy = False
+		$g_bFullArmyHero = False
+		$g_bFullArmySpells = False
+		$g_FullCCTroops = False
+		$g_bFullCCSpells = False
+		$g_bIsFullArmywithHeroesAndSpells = False
+
 		$bJustMakeDonate = False
 		$bDonateAwayFlag = False
+
 		$tempDisableBrewSpell = False
 		$tempDisableTrain = False
+
 		$bAvoidSwitch = False
 		$g_iCommandStop = -1
 
@@ -974,6 +982,7 @@ Func _Idle() ;Sequence that runs until Full Army
 	If $g_bDebugSetlog Then SetDebugLog("Func Idle ", $COLOR_DEBUG)
 
 	; samm0d - check make donate type account enter idle loop
+	;=======================================
 	Local $bSkipEnterIdleLoop = False
 	Local $bDonateTypeAcc = False
 	If $ichkEnableMySwitch Then
@@ -1002,6 +1011,7 @@ Func _Idle() ;Sequence that runs until Full Army
 	EndIf
 
 	While $bSkipEnterIdleLoop = False
+	;===================================
 
 		CheckAndroidReboot()
 

@@ -114,7 +114,7 @@ Global $CurCCCamp = 0
 Global $CurTotalCCCamp = 0
 Global $CCCapacity = 0
 Global $CCStrength = 100
-Global $FullCCTroops = False
+Global $g_FullCCTroops = False
 ; Wait For CC Spell
 Global $g_iChkWait4CCSpell = False
 Global $g_iCurCCSpellCamp = 0

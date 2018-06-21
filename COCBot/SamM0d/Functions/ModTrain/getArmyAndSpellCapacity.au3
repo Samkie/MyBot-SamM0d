@@ -16,7 +16,7 @@
 Func getMyArmyCCCapacity()
 	If $g_iSamM0dDebug = 1 Or $g_bDebugSetlog Then SETLOG("Begin getCCCapacity:", $COLOR_DEBUG1)
 	; reset global variable
-	$FullCCTroops = False
+	$g_FullCCTroops = False
 
 	If $g_iChkWait4CC = 1 Then
 		Local $aGetCCSize[3] = ["", "", ""]
@@ -54,19 +54,19 @@ Func getMyArmyCCCapacity()
 
 		If $CurCCCamp = 0 And $CurTotalCCCamp = 0 Then
 			Setlog("CC size read error...", $COLOR_ERROR) ; log if there is read error
-			$FullCCTroops = False
+			$g_FullCCTroops = False
 			Return
 		EndIf
 		;If _Sleep(500) Then Return
 		If ($CurCCCamp >= ($CurTotalCCCamp * $CCStrength / 100)) Then
-			$FullCCTroops = True
+			$g_FullCCTroops = True
 		EndIf
 
-		If $FullCCTroops = False Then
+		If $g_FullCCTroops = False Then
 			SETLOG(" All mode - Waiting clan castle troops before start attack.", $COLOR_ACTION)
 		EndIf
 	Else
-		$FullCCTroops = True
+		$g_FullCCTroops = True
 	EndIf
 EndFunc   ;==>getMyArmyCCCapacity
 

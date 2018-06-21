@@ -30,7 +30,7 @@ Func IsSearchModeActiveSamM0d($g_iMatchMode, $nocheckHeroes = False, $bNoLog = F
 	If $bMatchModeEnabled = False Then Return False ; exit if no DB, LB, TS mode enabled
 
 	Local $currentCCCampsFull = $CCCapacity >= $CCStrength
-	Local $checkCCTroops = ($FullCCTroops And $g_iChkWait4CC = 1) Or ($currentCCCampsFull  And $g_iChkWait4CC = 1) Or $g_iChkWait4CC = 0
+	Local $checkCCTroops = ($g_FullCCTroops And $g_iChkWait4CC = 1) Or ($currentCCCampsFull  And $g_iChkWait4CC = 1) Or $g_iChkWait4CC = 0
 	Local $checkCCSpells = $g_iChkWait4CCSpell = 0 Or ($g_bFullCCSpells And $g_iChkWait4CCSpell)
 
 	Local $currentSearch = $g_iSearchCount + 1

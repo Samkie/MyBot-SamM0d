@@ -33,7 +33,7 @@ Func RequestCC($ClickPAtEnd = True, $specifyText = "", $bOpenTrainWindow = True)
 	Local $bRequestCCSpells = True
 
 	If $g_iChkWait4CC = 1 Then
-		If $FullCCTroops = True Then
+		If $g_FullCCTroops = True Then
 			$bRequestCCTroops = False
 		EndIf
 	EndIf
