@@ -19,28 +19,19 @@ Func AttackReport()
 	Local $g_asLeagueDetailsShort = ""
 	Local $iCount
 
-;~ 	$iCount = 0 ; Reset loop counter
-;~ 	While _CheckPixel($aEndFightSceneAvl, True) = False ; check for light gold pixle in the Gold ribbon in End of Attack Scene before reading values
-;~ 		$iCount += 1
-;~ 		If _Sleep($DELAYATTACKREPORT1) Then Return
-;~ 		If $g_bDebugSetlog Then SetDebugLog("Waiting Attack Report Ready, " & ($iCount / 2) & " Seconds.", $COLOR_DEBUG)
-;~ 		If $iCount > 20 Then ExitLoop ; wait 20*500ms = 10 seconds max before we have call the OCR read an error
-;~ 	WEnd
-;~ 	If $iCount > 20 Then SetLog("End of Attack scene slow to appear, attack values my not be correct", $COLOR_INFO)
-
+    ; samm0d
+	;==============================================================================================
 	Local $iTempStatsLastAttack[UBound($g_iStatsLastAttack)]
 	Local $iTempOldStatsLastAttack[UBound($g_iStatsLastAttack)]
 	Local $iTempStatsBonusLast[UBound($g_iStatsBonusLast)]
 	Local $iTempOldStatsBonusLast[UBound($g_iStatsBonusLast)]
 	Local $iTempBonusLast, $iTempOldBonusLast
-	Local $iTempstarsearned, $iTempOldstarsearned
-	Local $starsearned
 	Local $bRedo = True
 
 	$iCount = 0
 	While $bRedo
 		$bRedo = False
-		; samm0d - set ocr farce capture to false
+
 		Local $wasForce = OcrForceCaptureRegion(False)
 		_CaptureRegions()
 
@@ -101,18 +92,7 @@ Func AttackReport()
 				EndIf
 			EndIf
 		EndIf
-		; check stars earned
-		$starsearned = 0
-		If _ColorCheck(_GetPixelColor($aWonOneStarAtkRprt[0], $aWonOneStarAtkRprt[1], $g_bNoCapturePixel), Hex($aWonOneStarAtkRprt[2], 6), $aWonOneStarAtkRprt[3]) Then $starsearned += 1
-		If _ColorCheck(_GetPixelColor($aWonTwoStarAtkRprt[0], $aWonTwoStarAtkRprt[1], $g_bNoCapturePixel), Hex($aWonTwoStarAtkRprt[2], 6), $aWonTwoStarAtkRprt[3]) Then $starsearned += 1
-		If _ColorCheck(_GetPixelColor($aWonThreeStarAtkRprt[0], $aWonThreeStarAtkRprt[1], $g_bNoCapturePixel), Hex($aWonThreeStarAtkRprt[2], 6), $aWonThreeStarAtkRprt[3]) Then $starsearned += 1
 
-		$iTempstarsearned = $starsearned
-		If $iTempstarsearned <> $iTempOldstarsearned Then
-			$iTempOldstarsearned = $iTempstarsearned
-			$bRedo = True
-		EndIf
-		; samm0d
 		OcrForceCaptureRegion($wasForce)
 		If _Sleep($DELAYATTACKREPORT1) Then Return ; delay 500ms
 
@@ -122,6 +102,14 @@ Func AttackReport()
 			ExitLoop
 		EndIf
 	WEnd
+	;==============================================================================================
+
+	; check stars earned
+	Local $starsearned = 0
+	If _ColorCheck(_GetPixelColor($aWonOneStarAtkRprt[0], $aWonOneStarAtkRprt[1], True), Hex($aWonOneStarAtkRprt[2], 6), $aWonOneStarAtkRprt[3]) Then $starsearned += 1
+	If _ColorCheck(_GetPixelColor($aWonTwoStarAtkRprt[0], $aWonTwoStarAtkRprt[1], True), Hex($aWonTwoStarAtkRprt[2], 6), $aWonTwoStarAtkRprt[3]) Then $starsearned += 1
+	If _ColorCheck(_GetPixelColor($aWonThreeStarAtkRprt[0], $aWonThreeStarAtkRprt[1], True), Hex($aWonThreeStarAtkRprt[2], 6), $aWonThreeStarAtkRprt[3]) Then $starsearned += 1
+	SetLog("Stars earned: " & $starsearned)
 
 	$g_iStatsLastAttack[$eLootGold] = $iTempStatsLastAttack[$eLootGold]
 	$g_iStatsLastAttack[$eLootElixir] = $iTempStatsLastAttack[$eLootElixir]
