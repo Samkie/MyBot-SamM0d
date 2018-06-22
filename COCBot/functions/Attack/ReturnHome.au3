@@ -104,6 +104,7 @@ Func ReturnHome($TakeSS = 1, $GoldChangeCheck = True) ;Return main screen
 			EndIf
 			Click(Random(487,543,1),Random(415,445,1), 1, 0, "#SurrenderOkay") ;Click Surrender
 		EndIf
+		$i += 1
 		If $i > 5 Then
 			CheckAndroidReboot(False)
 			Return ; if end battle or surrender button are not found in 5*(200)ms + 10*(200)ms or 3 seconds, then give up.
