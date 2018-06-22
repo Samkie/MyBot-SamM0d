@@ -91,15 +91,16 @@ Func ReturnHome($TakeSS = 1, $GoldChangeCheck = True) ;Return main screen
 		If ReturnHomeMainPage() Then Return
 		If IsAttackPage() Then
 			If $g_bDebugSetlog Then SetDebugLog("Wait for surrender button to appear #" & $i)
-			If _Wait4Pixel($aSurrenderButton[0], $aSurrenderButton[1], $aSurrenderButton[2], $aSurrenderButton[3], 2000) = False Then
-				SetLog("surrender or end battle button not found.")
-				ExitLoop
+			If _Wait4Pixel($aSurrenderButton[0], $aSurrenderButton[1], $aSurrenderButton[2], $aSurrenderButton[3], 3000) = False Then
+				;SetLog("surrender or end battle button not found.")
+				Return
 			EndIf
 			ClickP($aSurrenderButton, 1, 0, "#0099") ;Click Surrender
-			If _Wait4Pixel(470, 410, 0xE0F78B, 40, 2000) = False Then
-				SetLog("Okay button not found.")
-				ExitLoop
+			If _Wait4Pixel(470, 410, 0xE0F78B, 40, 3000) = False Then
+				;SetLog("Okay button not found.")
+				Return
 			EndIf
+			Click(Random(487,543,1),Random(415,445,1), 1, 0, "#SurrenderOkay") ;Click Surrender
 		EndIf
 		If $i > 5 Then ExitLoop ; if end battle or surrender button are not found in 5*(200)ms + 10*(200)ms or 3 seconds, then give up.
 		If _Sleep($DELAYRETURNHOME5) Then Return
