@@ -77,7 +77,6 @@ Func algorithm_AllTroops() ;Attack Algorithm for all existing troops
 				SetLog("Attacking on Dark Elixir Side.", $COLOR_INFO)
 				If Not ($g_abAttackStdSmartAttack[$g_iMatchMode]) Then GetBuildingEdge($eSideBuildingDES) ; Get DE Storage side when Redline is not used.
 			EndIf
-			If Not ($g_abAttackStdSmartAttack[$g_iMatchMode]) Then GetBuildingEdge($eSideBuildingDES) ; Get DE Storage side when Redline is not used.
 		Case 5 ;TH Side - Live Base only ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 			SetLog("Attacking on Town Hall Side.", $COLOR_INFO)
 			$nbSides = 1

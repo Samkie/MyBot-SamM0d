@@ -105,8 +105,14 @@ Func DonateCC($bCheckForNewMsg = False)
 	SetLog("Checking for Donate Requests in Clan Chat", $COLOR_INFO)
 
 	ForceCaptureRegion()
-	If Not _CheckPixel($aChatTab, $g_bCapturePixel) Or Not _CheckPixel($aChatTab2, $g_bCapturePixel) Or Not _CheckPixel($aChatTab3, $g_bCapturePixel) Then ClickP($aOpenChat, 1, 0, "#0168") ; Clicks chat tab
-	If _Sleep($DELAYDONATECC4) Then Return
+	If _CheckColorPixel($aButtonClanWindowOpen[4], $aButtonClanWindowOpen[5], $aButtonClanWindowOpen[6], $aButtonClanWindowOpen[7], $g_bCapturePixel, "aButtonClanWindowOpen") Then
+		Click($aButtonClanWindowOpen[0], $aButtonClanWindowOpen[1], 1, 0, "#0168")
+		If _Wait4Pixel($aButtonClanWindowClose[4], $aButtonClanWindowClose[5], $aButtonClanWindowClose[6], $aButtonClanWindowClose[7], 1500) = False Then
+			SetLog("Clan Chat Did Not Open")
+			AndroidPageError("DonateCC")
+			Return
+		EndIf
+	EndIf
 
 	Local $iLoopCount = 0
 	While 1
