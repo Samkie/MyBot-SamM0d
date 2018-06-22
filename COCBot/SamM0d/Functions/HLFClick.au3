@@ -29,7 +29,7 @@ Global Const $aButtonClose5[9] 	= [806, 27               , 828, 52              
 ;Global Const $aButtonClose6[9]	= [666, 135 + $g_iMidOffsetY, 685, 155 + $g_iMidOffsetY, 680, 142 + $g_iMidOffsetY, 	0xFFFFFF, 10, "=-= Close Achievements [X]"] ; Main Page, Achievement Close Button
 Global Const $aButtonClose6[9]    = [790, 25               , 818, 48               , 804, 33               , 	0xFFFFFF, 10, "=-= Close Launch Attack [X]"] ; Launch Attack Page, Close Button
 Global Const $aButtonClose7[9]    = [720, 104 + $g_iMidOffsetY, 738, 125 + $g_iMidOffsetY, 730, 112 + $g_iMidOffsetY, 	0xFFFFFF, 10, "=-= Close Laboratory [X]"] ; Laboratory Page, Close Button
-Global Const $aButtonClose8[9]	= [780, 185              , 835, 250              , 0  , 0                , 	0x0     ,  0, "=-= Random Away Coordinate"]
+Global Const $aButtonClose8[9]	= [840, 210              , 855, 250              , 0  , 0                , 	0x0     ,  0, "=-= Random Away Coordinate"]
 
 ;~ ; ScreenCoordinates - first 4 values store the region [x1,y1,x2,y2] that can click; values 5,6,7,8 is the color check pixel x,y,color,tolerance level for confirm the button exist if needed.
 Global Const $aButtonArmyTab[9]                 = [30,  115, 150, 140, 40, 111, 0xF9F9F7, 20 , "=-= Army Tab"]
