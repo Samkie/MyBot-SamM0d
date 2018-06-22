@@ -29,7 +29,10 @@ Global Const $aButtonClose5[9] 	= [806, 27               , 828, 52              
 ;Global Const $aButtonClose6[9]	= [666, 135 + $g_iMidOffsetY, 685, 155 + $g_iMidOffsetY, 680, 142 + $g_iMidOffsetY, 	0xFFFFFF, 10, "=-= Close Achievements [X]"] ; Main Page, Achievement Close Button
 Global Const $aButtonClose6[9]    = [790, 25               , 818, 48               , 804, 33               , 	0xFFFFFF, 10, "=-= Close Launch Attack [X]"] ; Launch Attack Page, Close Button
 Global Const $aButtonClose7[9]    = [720, 104 + $g_iMidOffsetY, 738, 125 + $g_iMidOffsetY, 730, 112 + $g_iMidOffsetY, 	0xFFFFFF, 10, "=-= Close Laboratory [X]"] ; Laboratory Page, Close Button
-Global Const $aButtonClose8[9]	= [840, 210              , 855, 250              , 0  , 0                , 	0x0     ,  0, "=-= Random Away Coordinate"]
+Global Const $aButtonClose8[9]    = [815, 35 + $g_iMidOffsetY, 835, 60 + $g_iMidOffsetY, 827, 47 + $g_iMidOffsetY, 	0xFFFFFF, 10, "=-= Close Clan Games [X]"] ; Laboratory Page, Close Button
+Global Const $aButtonClose9[9]    = [696, 150 + $g_iMidOffsetY, 719, 177 + $g_iMidOffsetY, 707, 160 + $g_iMidOffsetY, 	0xFFFFFF, 10, "=-= Close Clan Games [X]"] ; Laboratory Page, Close Button
+
+Global Const $aButtonCloseAway[9]	= [840, 210              , 855, 250              , 0  , 0                , 	0x0     ,  0, "=-= Random Away Coordinate"]
 
 ;~ ; ScreenCoordinates - first 4 values store the region [x1,y1,x2,y2] that can click; values 5,6,7,8 is the color check pixel x,y,color,tolerance level for confirm the button exist if needed.
 Global Const $aButtonArmyTab[9]                 = [30,  115, 150, 140, 40, 111, 0xF9F9F7, 20 , "=-= Army Tab"]
@@ -182,8 +185,8 @@ Func CheckClickMsg(ByRef $x, ByRef $y, ByRef $times, ByRef $speed, ByRef $MsgCod
 			$y = Random($y-4, $y+4,1)
 			Return 1
 		Case "#0176","#0171"
-			$MsgCode = $aButtonClose8[8]
-			Return HMLClickPR($aButtonClose8,$x,$y)
+			$MsgCode = $aButtonCloseAway[8]
+			Return HMLClickPR($aButtonCloseAway,$x,$y)
 		Case "#0666","#0096","#0097","#0098","#0102","#0103","#0104","#0105","#0106","#0107","#0108","#0109"; Randomize all troops drop pixel (DropTroopFromINI #0666, DropOnPixel #0096,#0097,#0098, DropOnEdge #0102,#0103,#0104,#0105,#0106,#0107,#0108,#0109)
 			For $i = 0 To $times - 1
 				HMLPureClick(Random($x-1,$x+1,1),Random($y-1,$y+1,1),1,$speed,"#R666")
@@ -435,12 +438,12 @@ EndFunc
 
 Func HMLClickAway(ByRef $x, ByRef $y, ByRef $MsgCode)
 	If $bDonateAwayFlag = True Then
-		Return HMLClickPR($aButtonClose8,$x,$y)
+		Return HMLClickPR($aButtonCloseAway,$x,$y)
 	Else
 		ForceCaptureRegion()
 		_CaptureRegion()
 		If _CheckPixel($aIsMain) Or _CheckPixel($aIsMainGrayed) Or _CheckPixel($aIsOnBuilderBase) Or _CheckPixel($aIsOnBuilderBaseGrayed) Then
-			For $i = 1 To 7
+			For $i = 1 To 9
 				Local $tempButton = Eval("aButtonClose" & $i)
 				Local $sMsg = Default
 				If $EnableHMLSetLog = 1 Then $sMsg = "aButtonClose" & $i
@@ -452,7 +455,7 @@ Func HMLClickAway(ByRef $x, ByRef $y, ByRef $MsgCode)
 			; randomize some pixel area we usually aways click, like train page, League page and profile page close area
 			; even if the close button not exist, we use to Away
 			$MsgCode = "=-= Random Away Coordinate =-= " & $MsgCode
-			Return HMLClickPR($aButtonClose8,$x,$y)
+			Return HMLClickPR($aButtonCloseAway,$x,$y)
 		Else
 			Return 0
 		EndIf

@@ -121,18 +121,7 @@ Func ReturnHome($TakeSS = 1, $GoldChangeCheck = True) ;Return main screen
 	CheckAndroidReboot(False)
 
 	If $GoldChangeCheck Then
-		; samm0d - cannot be still at attack page
-;~ 		If IsAttackPage() Then
-;~ 			$counter = 0
-;~ 			While _ColorCheck(_GetPixelColor($aRtnHomeCheck1[0], $aRtnHomeCheck1[1], True), Hex($aRtnHomeCheck1[2], 6), $aRtnHomeCheck1[3]) = False And _ColorCheck(_GetPixelColor($aRtnHomeCheck2[0], $aRtnHomeCheck2[1], True), Hex($aRtnHomeCheck2[2], 6), $aRtnHomeCheck2[3]) = False ; test for Return Home Button
-;~ 				If $g_bDebugSetlog Then SetDebugLog("Wait for Return Home Button to appear #" & $counter)
-;~ 				If _Sleep($DELAYRETURNHOME2) Then ExitLoop
-;~ 				$counter += 1
-;~ 				If $counter > 40 Then ExitLoop
-;~ 			WEnd
-;~ 		EndIf
-;~ 		If _Sleep($DELAYRETURNHOME3) Then Return ; wait for all report details
-		_CaptureRegion()
+		; samm0d
 		AttackReport()
 		If _Sleep(200) Then Return ; setlog and pause response
 	EndIf
