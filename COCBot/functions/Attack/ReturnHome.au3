@@ -84,6 +84,8 @@ Func ReturnHome($TakeSS = 1, $GoldChangeCheck = True) ;Return main screen
 	SetLog("Returning Home", $COLOR_INFO)
 	If $g_bRunState = False Then Return
 
+	TrayTip($g_sBotTitle, "", BitOR($TIP_ICONASTERISK, $TIP_NOSOUND)) ; clear village search match found message
+
 	; ---- CLICK SURRENDER BUTTON ----
 	; samm0d - waiting for return home button appear
 	$i = 0 ; Reset Loop counter
@@ -102,13 +104,14 @@ Func ReturnHome($TakeSS = 1, $GoldChangeCheck = True) ;Return main screen
 			EndIf
 			Click(Random(487,543,1),Random(415,445,1), 1, 0, "#SurrenderOkay") ;Click Surrender
 		EndIf
-		If $i > 5 Then ExitLoop ; if end battle or surrender button are not found in 5*(200)ms + 10*(200)ms or 3 seconds, then give up.
+		If $i > 5 Then
+			CheckAndroidReboot(False)
+			Return ; if end battle or surrender button are not found in 5*(200)ms + 10*(200)ms or 3 seconds, then give up.
+		EndIf
 		If _Sleep($DELAYRETURNHOME5) Then Return
 	WEnd
 
-	TrayTip($g_sBotTitle, "", BitOR($TIP_ICONASTERISK, $TIP_NOSOUND)) ; clear village search match found message
-
-	CheckAndroidReboot(False)
+	;CheckAndroidReboot(False)
 
 	If $GoldChangeCheck Then
 		; samm0d
