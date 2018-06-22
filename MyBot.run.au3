@@ -755,11 +755,6 @@ Func runBot() ;Bot that runs everything in order
 
 		$g_bRestart = False
 		$g_bFullArmy = False
-		$g_bFullArmyHero = False
-		$g_bFullArmySpells = False
-		$g_FullCCTroops = False
-		$g_bFullCCSpells = False
-		$g_bIsFullArmywithHeroesAndSpells = False
 
 		$bJustMakeDonate = False
 		$bDonateAwayFlag = False
