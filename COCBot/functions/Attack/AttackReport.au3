@@ -35,64 +35,83 @@ Func AttackReport()
 		Local $wasForce = OcrForceCaptureRegion(False)
 		_CaptureRegions()
 
+		; check gold loot got value change.
 		$iTempStatsLastAttack[$eLootGold] = getResourcesLoot(333, 289 + $g_iMidOffsetY)
 		If $iTempStatsLastAttack[$eLootGold] <> $iTempOldStatsLastAttack[$eLootGold] Then
 			$iTempOldStatsLastAttack[$eLootGold] = $iTempStatsLastAttack[$eLootGold]
 			$bRedo = True
 		EndIf
-		$iTempStatsLastAttack[$eLootElixir] = getResourcesLoot(333, 328 + $g_iMidOffsetY)
-		If $iTempStatsLastAttack[$eLootElixir] <> $iTempOldStatsLastAttack[$eLootElixir] Then
-			$iTempOldStatsLastAttack[$eLootElixir] = $iTempStatsLastAttack[$eLootElixir]
-			$bRedo = True
-		EndIf
-		If _ColorCheck(_GetPixelColor($aAtkRprtDECheck[0], $aAtkRprtDECheck[1], $g_bNoCapturePixel), Hex($aAtkRprtDECheck[2], 6), $aAtkRprtDECheck[3]) Then ; if the color of the DE drop detected
-			$iTempStatsLastAttack[$eLootDarkElixir] = getResourcesLootDE(365, 365 + $g_iMidOffsetY)
-			If $iTempStatsLastAttack[$eLootDarkElixir] <> $iTempOldStatsLastAttack[$eLootDarkElixir] Then
-				$iTempOldStatsLastAttack[$eLootDarkElixir] = $iTempStatsLastAttack[$eLootDarkElixir]
+
+		If $bRedo = False Then
+			; check elixir got change value or not
+			$iTempStatsLastAttack[$eLootElixir] = getResourcesLoot(333, 328 + $g_iMidOffsetY)
+			If $iTempStatsLastAttack[$eLootElixir] <> $iTempOldStatsLastAttack[$eLootElixir] Then
+				$iTempOldStatsLastAttack[$eLootElixir] = $iTempStatsLastAttack[$eLootElixir]
 				$bRedo = True
 			EndIf
-			$iTempStatsLastAttack[$eLootTrophy] = getResourcesLootT(403, 402 + $g_iMidOffsetY)
-		Else
-			$iTempStatsLastAttack[$eLootTrophy] = getResourcesLootT(403, 365 + $g_iMidOffsetY)
-		EndIf
-		If $iTempStatsLastAttack[$eLootTrophy] <> $iTempOldStatsLastAttack[$eLootTrophy] Then
-			$iTempOldStatsLastAttack[$eLootTrophy] = $iTempStatsLastAttack[$eLootTrophy]
-			$bRedo = True
-		EndIf
+			If $bRedo = False Then
+				If _ColorCheck(_GetPixelColor($aAtkRprtDECheck[0], $aAtkRprtDECheck[1], $g_bNoCapturePixel), Hex($aAtkRprtDECheck[2], 6), $aAtkRprtDECheck[3]) Then ; if the color of the DE drop detected
+					$iTempStatsLastAttack[$eLootDarkElixir] = getResourcesLootDE(365, 365 + $g_iMidOffsetY)
+					If $iTempStatsLastAttack[$eLootDarkElixir] <> $iTempOldStatsLastAttack[$eLootDarkElixir] Then
+						$iTempOldStatsLastAttack[$eLootDarkElixir] = $iTempStatsLastAttack[$eLootDarkElixir]
+						$bRedo = True
+					EndIf
+					If $bRedo = False Then
+						$iTempStatsLastAttack[$eLootTrophy] = getResourcesLootT(403, 402 + $g_iMidOffsetY)
+					EndIf
+				Else
+					$iTempStatsLastAttack[$eLootTrophy] = getResourcesLootT(403, 365 + $g_iMidOffsetY)
+				EndIf
 
-		If $iTempStatsLastAttack[$eLootTrophy] >= 0 Then
-			$iTempBonusLast = Number(getResourcesBonusPerc(570, 309 + $g_iMidOffsetY))
-			If ($iTempBonusLast <> $iTempOldBonusLast) Or ($iTempBonusLast = 0) Then
-				$iTempOldBonusLast = $iTempBonusLast
-				$bRedo = True
-			Else
-				If $iTempBonusLast > 0 Then
-					$iTempStatsBonusLast[$eLootGold] = getResourcesBonus(590, 340 + $g_iMidOffsetY)
-					$iTempStatsBonusLast[$eLootGold] = StringReplace($iTempStatsBonusLast[$eLootGold], "+", "")
-					If $iTempStatsBonusLast[$eLootGold] <> $iTempOldStatsBonusLast[$eLootGold] Then
-						$iTempOldStatsBonusLast[$eLootGold] = $iTempStatsBonusLast[$eLootGold]
-						$bRedo = True
+				If $iTempStatsLastAttack[$eLootTrophy] <> $iTempOldStatsLastAttack[$eLootTrophy] Then
+					$iTempOldStatsLastAttack[$eLootTrophy] = $iTempStatsLastAttack[$eLootTrophy]
+					$bRedo = True
+				EndIf
+
+				If $bRedo = False Then
+					If _ColorCheck(_GetPixelColor($aAtkRprtTrophyCheck[0], $aAtkRprtTrophyCheck[1], $g_bNoCapturePixel), Hex($aAtkRprtTrophyCheck[2], 6), $aAtkRprtTrophyCheck[3]) Then
+						$iTempStatsLastAttack[$eLootTrophy] = -$iTempStatsLastAttack[$eLootTrophy]
 					EndIf
-					$iTempStatsBonusLast[$eLootElixir] = getResourcesBonus(590, 371 + $g_iMidOffsetY)
-					$iTempStatsBonusLast[$eLootElixir] = StringReplace($iTempStatsBonusLast[$eLootElixir], "+", "")
-					If $iTempStatsBonusLast[$eLootElixir] <> $iTempOldStatsBonusLast[$eLootElixir] Then
-						$iTempOldStatsBonusLast[$eLootElixir] = $iTempStatsBonusLast[$eLootElixir]
-						$bRedo = True
-					EndIf
-					If _ColorCheck(_GetPixelColor($aAtkRprtDECheck2[0], $aAtkRprtDECheck2[1], $g_bNoCapturePixel), Hex($aAtkRprtDECheck2[2], 6), $aAtkRprtDECheck2[3]) Then
-						$iTempStatsBonusLast[$eLootDarkElixir] = getResourcesBonus(621, 402 + $g_iMidOffsetY)
-						$iTempStatsBonusLast[$eLootDarkElixir] = StringReplace($iTempStatsBonusLast[$eLootDarkElixir], "+", "")
-					Else
-						$iTempStatsBonusLast[$eLootDarkElixir] = 0
-					EndIf
-					If $iTempStatsBonusLast[$eLootDarkElixir] <> $iTempOldStatsBonusLast[$eLootDarkElixir] Then
-						$iTempOldStatsBonusLast[$eLootDarkElixir] = $iTempStatsBonusLast[$eLootDarkElixir]
-						$bRedo = True
+
+					If $iTempStatsLastAttack[$eLootTrophy] >= 0 Then
+						$iTempBonusLast = Number(getResourcesBonusPerc(570, 309 + $g_iMidOffsetY))
+						If ($iTempBonusLast <> $iTempOldBonusLast) Or ($iTempBonusLast = 0) Then
+							$iTempOldBonusLast = $iTempBonusLast
+							$bRedo = True
+						Else
+							If $iTempBonusLast > 0 Then
+								$iTempStatsBonusLast[$eLootGold] = getResourcesBonus(590, 340 + $g_iMidOffsetY)
+								$iTempStatsBonusLast[$eLootGold] = StringReplace($iTempStatsBonusLast[$eLootGold], "+", "")
+								If $iTempStatsBonusLast[$eLootGold] <> $iTempOldStatsBonusLast[$eLootGold] Then
+									$iTempOldStatsBonusLast[$eLootGold] = $iTempStatsBonusLast[$eLootGold]
+									$bRedo = True
+								EndIf
+								If $bRedo = False Then
+									$iTempStatsBonusLast[$eLootElixir] = getResourcesBonus(590, 371 + $g_iMidOffsetY)
+									$iTempStatsBonusLast[$eLootElixir] = StringReplace($iTempStatsBonusLast[$eLootElixir], "+", "")
+									If $iTempStatsBonusLast[$eLootElixir] <> $iTempOldStatsBonusLast[$eLootElixir] Then
+										$iTempOldStatsBonusLast[$eLootElixir] = $iTempStatsBonusLast[$eLootElixir]
+										$bRedo = True
+									EndIf
+									If $bRedo = False Then
+										If _ColorCheck(_GetPixelColor($aAtkRprtDECheck2[0], $aAtkRprtDECheck2[1], $g_bNoCapturePixel), Hex($aAtkRprtDECheck2[2], 6), $aAtkRprtDECheck2[3]) Then
+											$iTempStatsBonusLast[$eLootDarkElixir] = getResourcesBonus(621, 402 + $g_iMidOffsetY)
+											$iTempStatsBonusLast[$eLootDarkElixir] = StringReplace($iTempStatsBonusLast[$eLootDarkElixir], "+", "")
+										Else
+											$iTempStatsBonusLast[$eLootDarkElixir] = 0
+										EndIf
+										If $iTempStatsBonusLast[$eLootDarkElixir] <> $iTempOldStatsBonusLast[$eLootDarkElixir] Then
+											$iTempOldStatsBonusLast[$eLootDarkElixir] = $iTempStatsBonusLast[$eLootDarkElixir]
+											$bRedo = True
+										EndIf
+									EndIf
+								EndIf
+							EndIf
+						EndIf
 					EndIf
 				EndIf
 			EndIf
 		EndIf
-
 		OcrForceCaptureRegion($wasForce)
 		If _Sleep($DELAYATTACKREPORT1) Then Return ; delay 500ms
 
@@ -115,9 +134,7 @@ Func AttackReport()
 	$g_iStatsLastAttack[$eLootElixir] = $iTempStatsLastAttack[$eLootElixir]
 	$g_iStatsLastAttack[$eLootDarkElixir] = $iTempStatsLastAttack[$eLootDarkElixir]
 	$g_iStatsLastAttack[$eLootTrophy] = $iTempStatsLastAttack[$eLootTrophy]
-	If _ColorCheck(_GetPixelColor($aAtkRprtTrophyCheck[0], $aAtkRprtTrophyCheck[1], $g_bNoCapturePixel), Hex($aAtkRprtTrophyCheck[2], 6), $aAtkRprtTrophyCheck[3]) Then
-		$g_iStatsLastAttack[$eLootTrophy] = -$g_iStatsLastAttack[$eLootTrophy]
-	EndIf
+
 
 	If _ColorCheck(_GetPixelColor($aAtkRprtDECheck[0], $aAtkRprtDECheck[1], $g_bNoCapturePixel), Hex($aAtkRprtDECheck[2], 6), $aAtkRprtDECheck[3]) Then ; if the color of the DE drop detected
 		SetLog("Loot: [G]: " & _NumberFormat($g_iStatsLastAttack[$eLootGold]) & " [E]: " & _NumberFormat($g_iStatsLastAttack[$eLootElixir]) & " [DE]: " & _NumberFormat($g_iStatsLastAttack[$eLootDarkElixir]) & " [T]: " & $g_iStatsLastAttack[$eLootTrophy], $COLOR_SUCCESS)
