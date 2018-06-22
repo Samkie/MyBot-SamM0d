@@ -88,30 +88,19 @@ Func ReturnHome($TakeSS = 1, $GoldChangeCheck = True) ;Return main screen
 	; samm0d - waiting for return home button appear
 	$i = 0 ; Reset Loop counter
 	While IsReturnHomeBattlePage(True, False) = False ; dynamic wait loop for surrender button to appear
-		If $g_bDebugSetlog Then SetDebugLog("Wait for surrender button to appear #" & $i)
-		If _CheckPixel($aSurrenderButton, $g_bCapturePixel) Then ;is surrender button is visible?
-			If IsAttackPage() Then ; verify still on attack page, and battle has not ended magically before clicking
-				ClickP($aSurrenderButton, 1, 0, "#0099") ;Click Surrender
-				$j = 0
-				While 1 ; dynamic wait for Okay button
-					If $g_bDebugSetlog Then SetDebugLog("Wait for OK button to appear #" & $j)
-					If IsEndBattlePage(False) Then
-						ClickOkay("SurrenderOkay") ; Click Okay to Confirm surrender
-						ExitLoop 2
-					Else
-						$j += 1
-					EndIf
-					If ReturnHomeMainPage() Then Return
-					If $j > 10 Then ExitLoop ; if Okay button not found in 10*(200)ms or 2 seconds, then give up.
-					If _Sleep($DELAYRETURNHOME5) Then Return
-				WEnd
-			Else
-				$i += 1
-			EndIf
-		Else
-			$i += 1
-		EndIf
 		If ReturnHomeMainPage() Then Return
+		If IsAttackPage() Then
+			If $g_bDebugSetlog Then SetDebugLog("Wait for surrender button to appear #" & $i)
+			If _Wait4Pixel($aSurrenderButton[0], $aSurrenderButton[1], $aSurrenderButton[2], $aSurrenderButton[3], 2000) = False Then
+				SetLog("surrender or end battle button not found.")
+				ExitLoop
+			EndIf
+			ClickP($aSurrenderButton, 1, 0, "#0099") ;Click Surrender
+			If _Wait4Pixel(470, 410, 0xE0F78B, 40, 2000) = False Then
+				SetLog("Okay button not found.")
+				ExitLoop
+			EndIf
+		EndIf
 		If $i > 5 Then ExitLoop ; if end battle or surrender button are not found in 5*(200)ms + 10*(200)ms or 3 seconds, then give up.
 		If _Sleep($DELAYRETURNHOME5) Then Return
 	WEnd

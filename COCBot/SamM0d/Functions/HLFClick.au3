@@ -23,16 +23,17 @@
 
 Global Const $aButtonClose1[9] 	= [817, 84  + $g_iMidOffsetY, 836, 104 + $g_iMidOffsetY, 824, 91  + $g_iMidOffsetY, 	0xFFFFFF, 10, "=-= Close Train [X]"] ; Train window, Close Button
 Global Const $aButtonClose2[9]    = [755, 76  + $g_iMidOffsetY, 775, 96  + $g_iMidOffsetY, 764, 84  + $g_iMidOffsetY,  0xFFFFFF, 10, "=-= Close Setting [X] | Def / Atk Log [X]"] ; Def / Atk log window / setting window, Close Button
-Global Const $aButtonClose3[9]   	= [815, 35  + $g_iMidOffsetY, 836, 60  + $g_iMidOffsetY, 826, 43  + $g_iMidOffsetY,  0xFFFFFF, 10, "=-= Close Profile/League [X]"] ; Profile / League page, Close Button
+Global Const $aButtonClose3[9]   	= [815, 35  + $g_iMidOffsetY, 836, 60  + $g_iMidOffsetY, 826, 43  + $g_iMidOffsetY,  0xFFFFFF, 10, "=-= Close Profile/League/Clan Games [X]"] ; Profile / League page/ Clan Games, Close Button
 Global Const $aButtonClose4[9]    = [620, 150 + $g_iMidOffsetY, 642, 170 + $g_iMidOffsetY, 632, 158 + $g_iMidOffsetY, 	0xFFFFFF, 10, "=-= Close Shield Info [X]"] ; PB Info page, Close Button
 Global Const $aButtonClose5[9] 	= [806, 27               , 828, 52               , 817, 37               ,  0xFFFFFF, 10, "=-= Close Shop [X]"] ; Shop, Close Button  / Same area with map editor close button
 ;Global Const $aButtonClose6[9]	= [666, 135 + $g_iMidOffsetY, 685, 155 + $g_iMidOffsetY, 680, 142 + $g_iMidOffsetY, 	0xFFFFFF, 10, "=-= Close Achievements [X]"] ; Main Page, Achievement Close Button
 Global Const $aButtonClose6[9]    = [790, 25               , 818, 48               , 804, 33               , 	0xFFFFFF, 10, "=-= Close Launch Attack [X]"] ; Launch Attack Page, Close Button
-Global Const $aButtonClose7[9]    = [720, 104 + $g_iMidOffsetY, 738, 125 + $g_iMidOffsetY, 730, 112 + $g_iMidOffsetY, 	0xFFFFFF, 10, "=-= Close Laboratory [X]"] ; Laboratory Page, Close Button
-Global Const $aButtonClose8[9]    = [815, 35 + $g_iMidOffsetY, 835, 60 + $g_iMidOffsetY, 827, 47 + $g_iMidOffsetY, 	0xFFFFFF, 10, "=-= Close Clan Games [X]"] ; Laboratory Page, Close Button
-Global Const $aButtonClose9[9]    = [696, 150 + $g_iMidOffsetY, 719, 177 + $g_iMidOffsetY, 707, 160 + $g_iMidOffsetY, 	0xFFFFFF, 10, "=-= Close Clan Games [X]"] ; Laboratory Page, Close Button
 
-Global Const $aButtonCloseAway[9]	= [840, 210              , 855, 250              , 0  , 0                , 	0x0     ,  0, "=-= Random Away Coordinate"]
+Global Const $aButtonClose7[9]    = [720, 104 + $g_iMidOffsetY, 738, 125 + $g_iMidOffsetY, 717, 122 + $g_iMidOffsetY, 	0xE91313, 10, "=-= Close Laboratory [X]"] ; Laboratory Page, Close Button
+
+Global Const $aButtonClose8[9]    = [696, 150 + $g_iMidOffsetY, 719, 177 + $g_iMidOffsetY, 692, 171 + $g_iMidOffsetY, 	0xE91219, 10, "=-= Close Daily Discounts [X]"] ; Laboratory Page, Close Button
+
+Global Const $aButtonCloseAway[9]	= [225, 5              , 255, 20              , 0  , 0                , 	0x0     ,  0, "=-= Random Away Coordinate"]
 
 ;~ ; ScreenCoordinates - first 4 values store the region [x1,y1,x2,y2] that can click; values 5,6,7,8 is the color check pixel x,y,color,tolerance level for confirm the button exist if needed.
 Global Const $aButtonArmyTab[9]                 = [30,  115, 150, 140, 40, 111, 0xF9F9F7, 20 , "=-= Army Tab"]
@@ -443,7 +444,7 @@ Func HMLClickAway(ByRef $x, ByRef $y, ByRef $MsgCode)
 		ForceCaptureRegion()
 		_CaptureRegion()
 		If _CheckPixel($aIsMain) Or _CheckPixel($aIsMainGrayed) Or _CheckPixel($aIsOnBuilderBase) Or _CheckPixel($aIsOnBuilderBaseGrayed) Then
-			For $i = 1 To 9
+			For $i = 1 To 8
 				Local $tempButton = Eval("aButtonClose" & $i)
 				Local $sMsg = Default
 				If $EnableHMLSetLog = 1 Then $sMsg = "aButtonClose" & $i

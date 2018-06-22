@@ -28,6 +28,9 @@ Func AttackReport()
 	Local $iTempBonusLast, $iTempOldBonusLast
 	Local $bRedo = True
 
+
+	SetLog("Preparing attack report.", $COLOR_INFO)
+
 	$iCount = 0
 	While $bRedo
 		$bRedo = False
