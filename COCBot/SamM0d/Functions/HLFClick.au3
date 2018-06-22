@@ -189,14 +189,14 @@ Func CheckClickMsg(ByRef $x, ByRef $y, ByRef $times, ByRef $speed, ByRef $MsgCod
 				HMLPureClick(Random($x-1,$x+1,1),Random($y-1,$y+1,1),1,$speed,"#R666")
 			Next
 			Return 2
-		Case "#0168"
+		Case "#0168","#0510"
 			$bDonateAwayFlag = True
 			$MsgCode = $aButtonClanWindowOpen[8]
 			Return HMLClickPR($aButtonClanWindowOpen,$x,$y)
 		Case "#0169"
 			$MsgCode = $aButtonClanChatTab[8]
 			Return HMLClickPR($aButtonClanChatTab,$x,$y,2)
-		Case "#0173","#0136"
+		Case "#0173","#0136","#0511"
 			$bDonateAwayFlag = False
 			$MsgCode = $aButtonClanWindowClose[8] & " From: " & $MsgCode
 			Return HMLClickPR($aButtonClanWindowClose,$x,$y,1)
