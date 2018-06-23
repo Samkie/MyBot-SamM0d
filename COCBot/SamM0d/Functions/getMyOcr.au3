@@ -147,37 +147,37 @@ EndFunc
 
 Func getMyOcrArmyCap($hHBitmap = 0)
 	; troops capacity from army overview page, top left
-	Local $sResult = getMyOcr($hHBitmap,112,136 + $g_iMidOffsetY,90,15,"armycap")
+	Local $sResult = getMyOcr($hHBitmap,113,136 + $g_iMidOffsetY,90,15,"armycap")
 	Return $sResult
 EndFunc
 
 Func getMyOcrSpellCap($hHBitmap = 0)
 	; spells capacity from army overview page, center left
-	Local $sResult = getMyOcr($hHBitmap,98,283 + $g_iMidOffsetY,90,15,"armycap")
+	Local $sResult = getMyOcr($hHBitmap,104,283 + $g_iMidOffsetY,90,15,"armycap")
 	Return $sResult
 EndFunc
 
 Func getMyOcrCCCap()
 	; clan castle capacity from army overview page, bottom left
-	Local $sResult = getMyOcr(0,290,439 + $g_iMidOffsetY,70,15,"armycap")
+	Local $sResult = getMyOcr(0,291,439 + $g_iMidOffsetY,70,15,"armycap")
 	Return $sResult
 EndFunc
 
 Func getMyOcrCCSpellCap()
 	; clan castle capacity from army overview page, bottom right
-	Local $sResult = getMyOcr(0,472,438 + $g_iMidOffsetY,40,15,"armycap")
+	Local $sResult = getMyOcr(0,473,438 + $g_iMidOffsetY,40,15,"armycap")
 	Return $sResult
 EndFunc
 
 Func getMyOcrCCSeigeMachineCap()
 	; clan castle capacity from army overview page, bottom right
-	Local $sResult = getMyOcr(0,649,438 + $g_iMidOffsetY,40,15,"armycap")
+	Local $sResult = getMyOcr(0,650,438 + $g_iMidOffsetY,40,15,"armycap")
 	Return $sResult
 EndFunc
 
 Func getMyOcrTrainArmyOrBrewSpellCap($hHBitmap = 0)
 	; Troops/Spells capacity at army train page or brew spell page, top left
-	Local $sResult = getMyOcr($hHBitmap,45,131 + $g_iMidOffsetY,87,173,"armybuildinfo")
+	Local $sResult = getMyOcr($hHBitmap,46,131 + $g_iMidOffsetY,87,173,"armybuildinfo")
 	Return $sResult
 EndFunc
 
