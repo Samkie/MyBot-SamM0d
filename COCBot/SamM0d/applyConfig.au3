@@ -130,6 +130,15 @@ GUICtrlSetData($txtCCSpellSlotQty1,$iCCSpellSlotQty1)
 GUICtrlSetData($txtCCSpellSlotQty2,$iCCSpellSlotQty2)
 chkWait4CCSpell()
 
+; request cc
+GUICtrlSetState($chkRequestCC4Troop, ($ichkRequestCC4Troop = 1 ? $GUI_CHECKED : $GUI_UNCHECKED))
+GUICtrlSetState($chkRequestCC4Spell, ($ichkRequestCC4Spell = 1 ? $GUI_CHECKED : $GUI_UNCHECKED))
+GUICtrlSetState($chkRequestCC4SeigeMachine, ($ichkRequestCC4SeigeMachine = 1 ? $GUI_CHECKED : $GUI_UNCHECKED))
+GUICtrlSetData($txtRequestCC4Troop, $itxtRequestCC4Troop)
+GUICtrlSetData($txtRequestCC4Spell, $itxtRequestCC4Spell)
+GUICtrlSetData($txtRequestCC4SeigeMachine, $itxtRequestCC4SeigeMachine)
+chkRequestCC4Troop()
+
 ; check 4 cc
 GUICtrlSetState($chkCheck4CC, ($ichkCheck4CC = 1 ? $GUI_CHECKED : $GUI_UNCHECKED))
 GUICtrlSetData($txtCheck4CCWaitTime, $itxtCheck4CCWaitTime)

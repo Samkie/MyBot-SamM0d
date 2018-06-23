@@ -18,7 +18,7 @@ Func getMyArmyCCCapacity()
 	; reset global variable
 	$g_FullCCTroops = False
 
-	If $g_iChkWait4CC = 1 Then
+	;If $g_iChkWait4CC = 1 Then
 		Local $aGetCCSize[3] = ["", "", ""]
 		Local $sCCInfo = ""
 		Local $iCount
@@ -57,17 +57,39 @@ Func getMyArmyCCCapacity()
 			$g_FullCCTroops = False
 			Return
 		EndIf
-		;If _Sleep(500) Then Return
+
 		If ($CurCCCamp >= ($CurTotalCCCamp * $CCStrength / 100)) Then
 			$g_FullCCTroops = True
 		EndIf
 
-		If $g_FullCCTroops = False Then
-			SETLOG(" All mode - Waiting clan castle troops before start attack.", $COLOR_ACTION)
+		If $g_iChkWait4CC = 1 Then
+			If $g_FullCCTroops = False Then
+				SETLOG(" All mode - Waiting clan castle troops before start attack.", $COLOR_ACTION)
+			EndIf
+		Else
+			If $g_FullCCTroops = False Then
+				Local $i
+				Local $bIsWaitForCCTroopsEnable = False
+				For $i = $DB To $LB
+					If $g_abAttackTypeEnable[$i] Then
+						If $g_abSearchCastleTroopsWaitEnable[$i] Then
+							SETLOG(" " & $g_asModeText[$i] & " Setting - Waiting for Clan Castle Troops.", $COLOR_ACTION)
+							$bIsWaitForCCTroopsEnable = True
+						EndIf
+					EndIf
+				Next
+				If $bIsWaitForCCTroopsEnable = False Then
+					SETLOG("Not waiting for clan castle troop.", $COLOR_ACTION)
+					$g_FullCCTroops = True
+				EndIf
+			EndIf
 		EndIf
-	Else
-		$g_FullCCTroops = True
-	EndIf
+		If $ichkRequestCC4Troop = 1 Then
+			$g_bNeedRequestCCTroop = $CurCCCamp < ($CurTotalCCCamp * $itxtRequestCC4Troop / 100)
+		EndIf
+	;Else
+	;	$g_FullCCTroops = True
+	;EndIf
 EndFunc   ;==>getMyArmyCCCapacity
 
 Func getMyArmyCCSpellCapacity()
@@ -75,7 +97,7 @@ Func getMyArmyCCSpellCapacity()
 	; reset global variable
 	$g_bFullCCSpells = False
 
-	If $g_iChkWait4CCSpell = 1 Then
+	;If $g_iChkWait4CCSpell = 1 Then
 		Local $aGetCCSpellSize[3] = ["", "", ""]
 		Local $sCCSpellInfo = ""
 		Local $iCount
@@ -116,13 +138,87 @@ Func getMyArmyCCSpellCapacity()
 		If $g_iCurCCSpellCamp >= $g_iCurTotalCCSpellCamp Then
 			$g_bFullCCSpells = True
 		EndIf
-		If $g_bFullCCSpells = False Then
-			SETLOG(" All mode - Waiting clan castle spells before start attack.", $COLOR_ACTION)
+		If $g_iChkWait4CCSpell = 1 Then
+			If $g_bFullCCSpells = False Then
+				SETLOG(" All mode - Waiting clan castle spells before start attack.", $COLOR_ACTION)
+			EndIf
+		Else
+			If $g_bFullCCSpells = False Then
+				Local $i
+				Local $bIsWaitForCCSpellsEnable = False
+				For $i = $DB To $LB
+					If $g_abAttackTypeEnable[$i] Then
+						If $g_abSearchCastleSpellsWaitEnable[$i] Then
+							SETLOG(" " & $g_asModeText[$i] & " Setting - Waiting for Clan Castle Spells.", $COLOR_ACTION)
+							$bIsWaitForCCSpellsEnable = True
+						EndIf
+					EndIf
+				Next
+				If $bIsWaitForCCSpellsEnable = False Then
+					SETLOG("Not waiting for clan castle spell.", $COLOR_ACTION)
+					$g_bFullCCSpells = True
+				EndIf
+			EndIf
 		EndIf
-	Else
-		$g_bFullCCSpells = True
-	EndIf
+		If $ichkRequestCC4Spell = 1 Then
+			$g_bNeedRequestCCSpell = $g_iCurCCSpellCamp < $itxtRequestCC4Spell
+		EndIf
+	;Else
+	;	$g_bFullCCSpells = True
+	;EndIf
 EndFunc   ;==>getMyArmyCCSpellCapacity
+
+
+Func getMyArmyCCSeigeMachineCapacity()
+	If $g_iSamM0dDebug = 1 Or $g_bDebugSetlog Then SETLOG("Begin getMyArmyCCSeigeMachineCapacity:", $COLOR_DEBUG1)
+	; reset global variable
+	$g_bFullCCSeigeMachine = False
+
+		Local $aGetCCSeigeMachineSize[3] = ["", "", ""]
+		Local $sCCSeigeMachineInfo = ""
+		Local $iCount
+
+		$iCount = 0 ; reset loop safety exit counter
+		While 1
+			$sCCSeigeMachineInfo = getMyOcrCCSeigeMachineCap()
+			If $g_iSamM0dDebug = 1 Then Setlog("$sCCSeigeMachineInfo = " & $sCCSeigeMachineInfo, $COLOR_DEBUG)
+			If $sCCSeigeMachineInfo = "" And $iCount > 1 Then ExitLoop
+			$aGetCCSeigeMachineSize = StringSplit($sCCSeigeMachineInfo, "#")
+			If IsArray($aGetCCSeigeMachineSize) Then
+				If $aGetCCSeigeMachineSize[0] > 1 Then
+					If Number($aGetCCSeigeMachineSize[2]) > 2 And $aGetCCSeigeMachineSize[2] = 0 Then
+						If $g_iSamM0dDebug = 1 Then Setlog(" OCR value is not valid cc spell camp size", $COLOR_DEBUG)
+						ContinueLoop
+					EndIf
+					$g_iCurTotalCCSeigeMachineCamp = Number($aGetCCSeigeMachineSize[2])
+					$g_iCurCCSeigeMachineCamp = Number($aGetCCSeigeMachineSize[1])
+					SetLog("Clan Castle seige machine: " & $g_iCurCCSeigeMachineCamp & "/" & $g_iCurTotalCCSeigeMachineCamp)
+					ExitLoop
+				Else
+					$g_iCurCCSeigeMachineCamp = 0
+					$g_iCurTotalCCSeigeMachineCamp = 0
+				EndIf
+			Else
+				$g_iCurCCSeigeMachineCamp = 0
+				$g_iCurTotalCCSeigeMachineCamp = 0
+			EndIf
+			$iCount += 1
+			If $iCount > 30 Then ExitLoop
+			If _Sleep(250) Then Return
+		WEnd
+		If $g_iCurCCSeigeMachineCamp = 0 And $g_iCurTotalCCSeigeMachineCamp = 0 Then
+			Setlog("CC Seige Machine size read error...", $COLOR_ERROR) ; log if there is read error
+			$g_bFullCCSeigeMachine = False
+			Return
+		EndIf
+		If $g_iCurCCSeigeMachineCamp >= $g_iCurTotalCCSeigeMachineCamp Then
+			$g_bFullCCSeigeMachine = True
+		EndIf
+
+		If $ichkRequestCC4SeigeMachine = 1 Then
+			$g_bNeedRequestCCSeigeMachine = $g_iCurCCSeigeMachineCamp < $itxtRequestCC4SeigeMachine
+		EndIf
+EndFunc   ;==>getMyArmyCCSeigeMachineCapacity
 
 Func getTrainArmyCapacity($bSpellFlag = False)
 	If $g_iSamM0dDebug = 1 Or $g_bDebugSetlog Then SETLOG("Begin getTrainArmyCapacity:", $COLOR_DEBUG1)
@@ -329,6 +425,24 @@ Func getMySpellCapacityMini($hHBitmap, $bShowLog = True)
 		If $bShowLog Then SetLog("Spells: " & $g_iCurrentSpells & "/" & $g_iTotalSpellCampSpace)
 	EndIf
 	$g_bFullArmySpells = $g_iCurrentSpells >= $g_iMySpellsSize
+
+	If $g_bFullArmySpells = False Then
+		Local $bIsWaitForSpellEnable = False
+
+		For $i = $DB To $LB
+			If $g_abAttackTypeEnable[$i] Then
+				If $g_abSearchSpellsWaitEnable[$i] Then
+					SETLOG(" " & $g_asModeText[$i] & " Setting - Waiting for spells ready.", $COLOR_ACTION)
+					$bIsWaitForSpellEnable = True
+				EndIf
+			EndIf
+		Next
+
+		If $bIsWaitForSpellEnable = False Then
+			SETLOG("Not waiting for spell.", $COLOR_ACTION)
+			$g_bFullArmySpells = True
+		EndIf
+	EndIf
 EndFunc
 
 Func getBrewSpellCapacityMini($hHBitmap, $bShowLog = True)

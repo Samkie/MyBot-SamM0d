@@ -124,6 +124,15 @@ _Ini_Add("Wait4CCSpell", "CCSpellSlotQty2", GUICtrlRead($txtCCSpellSlotQty2))
 _Ini_Add("Check4CC", "Enable", (GUICtrlRead($chkCheck4CC) = $GUI_CHECKED ? 1 : 0))
 _Ini_Add("Check4CC", "WaitTime", GUICtrlRead($txtCheck4CCWaitTime))
 
+; request cc
+_Ini_Add("RequestCC4Troop", "Enable", (GUICtrlRead($chkRequestCC4Troop) = $GUI_CHECKED ? 1 : 0))
+_Ini_Add("RequestCC4Spell", "Enable", (GUICtrlRead($chkRequestCC4Spell) = $GUI_CHECKED ? 1 : 0))
+_Ini_Add("RequestCC4SeigeMachine", "Enable", (GUICtrlRead($chkRequestCC4SeigeMachine) = $GUI_CHECKED ? 1 : 0))
+_Ini_Add("RequestCC4Troop", "CCStrength", GUICtrlRead($txtRequestCC4Troop))
+_Ini_Add("RequestCC4Spell", "SpellHousing", GUICtrlRead($txtRequestCC4Spell))
+_Ini_Add("RequestCC4SeigeMachine", "SiegeMachineHousing", GUICtrlRead($txtRequestCC4SeigeMachine))
+
+
 ; global delay increse
 _Ini_Add("GlobalDelay", "Enable", (GUICtrlRead($chkIncreaseGlobalDelay) = $GUI_CHECKED ? 1 : 0))
 _Ini_Add("GlobalDelay", "DelayPercentage", GUICtrlRead($txtIncreaseGlobalDelay))

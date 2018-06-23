@@ -28,24 +28,28 @@ Func RequestCC($ClickPAtEnd = True, $specifyText = "", $bOpenTrainWindow = True)
 		EndIf
 	EndIf
 
+	Local $bContinueRequest = False
+
 	; samm0d
-	Local $bRequestCCTroops = True
-	Local $bRequestCCSpells = True
-
-	If $g_iChkWait4CC = 1 Then
-		If $g_FullCCTroops = True Then
-			$bRequestCCTroops = False
+	If $ichkRequestCC4Troop = 0 And $ichkRequestCC4Spell = 0 And $ichkRequestCC4SeigeMachine = 0 Then
+		$bContinueRequest = True
+	Else
+		If $ichkRequestCC4Troop = 1 And $g_bNeedRequestCCTroop = True Then
+			SetLog("Need request for cc troops.", $COLOR_ACTION)
+			$bContinueRequest = True
+		EndIf
+		If $ichkRequestCC4Spell = 1 And $g_bNeedRequestCCSpell = True Then
+			SetLog("Need request for cc spells.", $COLOR_ACTION)
+			$bContinueRequest = True
+		EndIf
+		If $ichkRequestCC4SeigeMachine = 1 And $g_bNeedRequestCCSeigeMachine = True Then
+			SetLog("Need request for cc seige machine.", $COLOR_ACTION)
+			$bContinueRequest = True
 		EndIf
 	EndIf
 
-	If $g_iChkWait4CCSpell = 1 Then
-		If $g_bFullCCSpells = True Then
-			$bRequestCCSpells = False
-		EndIf
-	EndIf
-
-	If $bRequestCCTroops = False And $bRequestCCSpells = False Then
-		SetLog("Skip request since Clan Castle Troops and Spells ready.", $COLOR_ACTION)
+	If $bContinueRequest = False Then
+		SetLog("Skip request since Clan Castle Troops / Spells / Seige Machine ready.", $COLOR_ACTION)
 		Return ; exit func if no planned donate checkmarks
 	EndIf
 

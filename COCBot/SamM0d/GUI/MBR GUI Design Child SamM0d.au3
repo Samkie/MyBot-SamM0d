@@ -717,12 +717,12 @@ $txtCCStrength = GUICtrlCreateInput("100", $x + 255, $y+2, 31, 20, BitOR($GUI_SS
 		$sComboData =  $sComboData & "|" & Eval("sTxt" & StringReplace(MyNameOfTroop($i - 1 + $eLSpell,2)," ",""))
 	Next
 
-	$y += 55
+	$y += 50
 	$chkWait4CCSpell = GUICtrlCreateCheckbox(GetTranslatedFileIni("sam m0d", "WaitForCCSpell", "Wait For Clan Castle Spells."), $x+10, $y, -1, -1)
 	GUICtrlSetOnEvent(-1, "chkWait4CCSpell")
 	GUICtrlSetState(-1, $GUI_UNCHECKED)
 
-	$y += 35
+	$y += 20
 	GUICtrlCreateLabel(GetTranslatedFileIni("sam m0d", "RemoveClanCastleSpells", "Remove Clan Castle Spells If not is follow type or over quantity:"), $x + 10, $y, -1, -1)
 
 	$y += 20
@@ -744,6 +744,53 @@ $txtCCStrength = GUICtrlCreateInput("100", $x + 255, $y+2, 31, 20, BitOR($GUI_SS
 	_GUICtrlSetTip(-1, GetTranslatedFileIni("sam m0d", "Unit Quantity", "Unit Quantity"))
 	GUICtrlSetLimit(-1, 3)
 	GUICtrlSetOnEvent(-1, "chkWait4CCSpell")
+
+
+	$y += 50
+
+$chkRequestCC4Troop = GUICtrlCreateCheckbox(GetTranslatedFileIni("sam m0d", "Request CC for troop", "Only Request CC Troops when CC Troops Strength less than:"), $x+10, $y, -1, -1)
+	GUICtrlSetOnEvent(-1, "chkRequestCC4Troop")
+	GUICtrlSetState(-1, $GUI_UNCHECKED)
+
+$txtRequestCC4Troop = GUICtrlCreateInput("100", $x + 335, $y+2, 31, 20, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
+	$sTxtTip = "CC Troops Strength"
+	_GUICtrlSetTip(-1, $sTxtTip)
+	GUICtrlSetLimit(-1, 3)
+	GUICtrlSetState(-1, $GUI_DISABLE)
+	GUICtrlSetData(-1, 100)
+	GUICtrlSetOnEvent(-1, "chkRequestCC4Troop")
+	GUICtrlCreateLabel("%", $x + 366, $y+6, -1, -1)
+	_GUICtrlSetTip(-1, $sTxtTip)
+
+	$y += 25
+
+$chkRequestCC4Spell = GUICtrlCreateCheckbox(GetTranslatedFileIni("sam m0d", "Request CC for spell", "Only Request CC Spell when housing space less than:"), $x+10, $y,  -1, -1)
+	GUICtrlSetOnEvent(-1, "chkRequestCC4Troop")
+	GUICtrlSetState(-1, $GUI_UNCHECKED)
+
+$txtRequestCC4Spell = GUICtrlCreateInput("2", $x + 335, $y+2, 31, 20, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
+	$sTxtTip = "CC Spells Housing Space"
+	_GUICtrlSetTip(-1, $sTxtTip)
+	GUICtrlSetLimit(-1, 2)
+	GUICtrlSetState(-1, $GUI_DISABLE)
+	GUICtrlSetData(-1, 2)
+	GUICtrlSetOnEvent(-1, "chkRequestCC4Troop")
+
+
+	$y += 25
+
+$chkRequestCC4SeigeMachine = GUICtrlCreateCheckbox(GetTranslatedFileIni("sam m0d", "Request CC for seige machine", "Only Request CC Seige Machine when housing space less than:"), $x+10, $y,  -1, -1)
+	GUICtrlSetOnEvent(-1, "chkRequestCC4Troop")
+	GUICtrlSetState(-1, $GUI_UNCHECKED)
+
+$txtRequestCC4SeigeMachine = GUICtrlCreateInput("1", $x + 335, $y+2, 31, 20, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
+	$sTxtTip = "Seige Machine Housing Space"
+	_GUICtrlSetTip(-1, $sTxtTip)
+	GUICtrlSetLimit(-1, 1)
+	GUICtrlSetState(-1, $GUI_DISABLE)
+	GUICtrlSetData(-1, 1)
+	GUICtrlSetOnEvent(-1, "chkRequestCC4Troop")
+
 
 
 	GUICtrlCreateGroup("", -99, -99, 1, 1)

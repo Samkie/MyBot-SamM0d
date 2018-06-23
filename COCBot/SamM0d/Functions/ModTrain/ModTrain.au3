@@ -99,6 +99,8 @@ Func ModTrain($ForcePreTrain = False)
 	If _Sleep(50) Then Return ; 50ms improve pause button response
 	getMyArmyCCSpellCapacity()
 	If _Sleep(50) Then Return ; 50ms improve pause button response
+	getMyArmyCCSeigeMachineCapacity()
+	If _Sleep(50) Then Return ; 50ms improve pause button response
 
 	If $ichkEnableMySwitch = 1 Then
 		Local $iKTime[5] = [0,0,0,0,0]
@@ -179,10 +181,6 @@ Func ModTrain($ForcePreTrain = False)
 
 	EndGainCost("Train")
 	UpdateStats()
-
-	If $g_bFullArmySpells = False Then
-		$g_bFullArmySpells = ($g_abAttackTypeEnable[$DB] = True And $g_abSearchSpellsWaitEnable[$DB] = False) Or ($g_abAttackTypeEnable[$LB] = True And $g_abSearchSpellsWaitEnable[$LB] = False)
-	EndIf
 
 	If $g_iSamM0dDebug = 1 Then SetLog("$g_bfullArmy: " & $g_bfullArmy)
 	If $g_iSamM0dDebug = 1 Then SetLog("$g_bFullArmyHero: " & $g_bFullArmyHero)

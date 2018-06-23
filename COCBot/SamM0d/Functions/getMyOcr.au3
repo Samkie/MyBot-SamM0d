@@ -169,6 +169,12 @@ Func getMyOcrCCSpellCap()
 	Return $sResult
 EndFunc
 
+Func getMyOcrCCSeigeMachineCap()
+	; clan castle capacity from army overview page, bottom right
+	Local $sResult = getMyOcr(0,649,438 + $g_iMidOffsetY,40,15,"armycap")
+	Return $sResult
+EndFunc
+
 Func getMyOcrTrainArmyOrBrewSpellCap($hHBitmap = 0)
 	; Troops/Spells capacity at army train page or brew spell page, top left
 	Local $sResult = getMyOcr($hHBitmap,45,131 + $g_iMidOffsetY,87,173,"armybuildinfo")

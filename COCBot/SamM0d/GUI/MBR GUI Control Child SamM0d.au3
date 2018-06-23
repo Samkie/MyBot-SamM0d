@@ -469,6 +469,45 @@ Func chkWait4CC()
 	$iCCTroopSlotQty3 = GUICtrlRead($txtCCTroopSlotQty3)
 EndFunc
 
+Func chkRequestCC4Troop()
+	If GUICtrlRead($chkRequestCC4Troop) = $GUI_CHECKED Then
+		$ichkRequestCC4Troop = 1
+		GUICtrlSetState($txtRequestCC4Troop, $GUI_ENABLE)
+		;SetLog("$ichkRequestCC4Troop: " & $ichkRequestCC4Troop)
+	Else
+		$ichkRequestCC4Troop = 0
+		GUICtrlSetState($txtRequestCC4Troop, $GUI_DISABLE)
+		;SetLog("$ichkRequestCC4Troop: " & $ichkRequestCC4Troop)
+	EndIf
+	$itxtRequestCC4Troop = GUICtrlRead($txtRequestCC4Troop)
+	;SetLog("$itxtRequestCC4Troop: " & $itxtRequestCC4Troop)
+
+	If GUICtrlRead($chkRequestCC4Spell) = $GUI_CHECKED Then
+		$ichkRequestCC4Spell = 1
+		GUICtrlSetState($txtRequestCC4Spell, $GUI_ENABLE)
+		;SetLog("$ichkRequestCC4Spell: " & $ichkRequestCC4Spell)
+	Else
+		$ichkRequestCC4Spell = 0
+		GUICtrlSetState($txtRequestCC4Spell, $GUI_DISABLE)
+		;SetLog("$ichkRequestCC4Spell: " & $ichkRequestCC4Spell)
+	EndIf
+	$itxtRequestCC4Spell = GUICtrlRead($txtRequestCC4Spell)
+	;SetLog("$itxtRequestCC4Spell: " & $itxtRequestCC4Spell)
+
+
+	If GUICtrlRead($chkRequestCC4SeigeMachine) = $GUI_CHECKED Then
+		$ichkRequestCC4SeigeMachine = 1
+		GUICtrlSetState($txtRequestCC4SeigeMachine, $GUI_ENABLE)
+		;SetLog("$ichkRequestCC4SeigeMachine: " & $ichkRequestCC4SeigeMachine)
+	Else
+		$ichkRequestCC4SeigeMachine = 0
+		GUICtrlSetState($txtRequestCC4SeigeMachine, $GUI_DISABLE)
+		;SetLog("$ichkRequestCC4SeigeMachine: " & $ichkRequestCC4SeigeMachine)
+	EndIf
+	$itxtRequestCC4SeigeMachine = GUICtrlRead($txtRequestCC4SeigeMachine)
+	;SetLog("$itxtRequestCC4SeigeMachine: " & $itxtRequestCC4SeigeMachine)
+EndFunc
+
 Func chkWait4CCSpell()
 	If GUICtrlRead($chkWait4CCSpell) = $GUI_CHECKED Then
 		$g_iChkWait4CCSpell = 1

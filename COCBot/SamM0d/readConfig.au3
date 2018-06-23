@@ -127,6 +127,14 @@ IniReadS($iCCSpellSlotQty2, $g_sProfileConfigPath, "Wait4CCSpell", "CCSpellSlotQ
 IniReadS($ichkCheck4CC, $g_sProfileConfigPath, "Check4CC", "Enable", "0", "Int")
 IniReadS($itxtCheck4CCWaitTime, $g_sProfileConfigPath, "Check4CC", "WaitTime", "7", "Int")
 
+; request cc
+IniReadS($ichkRequestCC4Troop, $g_sProfileConfigPath, "RequestCC4Troop", "Enable", "0", "Int")
+IniReadS($ichkRequestCC4Spell, $g_sProfileConfigPath, "RequestCC4Spell", "Enable", "0", "Int")
+IniReadS($ichkRequestCC4SeigeMachine, $g_sProfileConfigPath, "RequestCC4SeigeMachine", "Enable", "0", "Int")
+IniReadS($itxtRequestCC4Troop, $g_sProfileConfigPath, "RequestCC4Troop", "CCStrength", "100", "Int")
+IniReadS($itxtRequestCC4Spell, $g_sProfileConfigPath, "RequestCC4Spell", "SpellHousing", "2", "Int")
+IniReadS($itxtRequestCC4SeigeMachine, $g_sProfileConfigPath, "RequestCC4SeigeMachine", "SiegeMachineHousing", "1", "Int")
+
 ; global delay increse
 IniReadS($ichkIncreaseGlobalDelay, $g_sProfileConfigPath, "GlobalDelay", "Enable", "0", "Int")
 IniReadS($itxtIncreaseGlobalDelay, $g_sProfileConfigPath, "GlobalDelay", "DelayPercentage", "10", "Int")

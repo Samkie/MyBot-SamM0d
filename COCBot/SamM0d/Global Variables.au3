@@ -62,6 +62,17 @@ Global $ichkDropCCFirst = 0
 ;~ ; Remove Special Obstacle at Builder Base
 ;~ Global $ichkRemoveSpecialObstacleBB, $chkRemoveSpecialObstacleBB
 
+
+; Only Request CC
+Global $chkRequestCC4Troop, $txtRequestCC4Troop
+Global $chkRequestCC4Spell, $txtRequestCC4Spell
+Global $chkRequestCC4SeigeMachine, $txtRequestCC4SeigeMachine
+
+Global $ichkRequestCC4Troop, $itxtRequestCC4Troop, $ichkRequestCC4Spell, $itxtRequestCC4Spell, $ichkRequestCC4SeigeMachine, $itxtRequestCC4SeigeMachine
+Global $g_bNeedRequestCCTroop = False
+Global $g_bNeedRequestCCSpell = False
+Global $g_bNeedRequestCCSeigeMachine = False
+
 ; Donate not over unit
 Global $ichkEnableLimitDonateUnit, $chkEnableLimitDonateUnit, $itxtLimitDonateUnit, $txtLimitDonateUnit, $iDonatedUnit
 
@@ -120,6 +131,10 @@ Global $g_iChkWait4CCSpell = False
 Global $g_iCurCCSpellCamp = 0
 Global $g_iCurTotalCCSpellCamp = 0
 Global $g_bFullCCSpells = False
+
+Global $g_iCurCCSeigeMachineCamp = 0
+Global $g_iCurTotalCCSeigeMachineCamp = 0
+Global $g_bFullCCSeigeMachine = False
 
 
 ;~ Global $chkEnableADBClick
