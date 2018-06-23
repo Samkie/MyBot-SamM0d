@@ -1331,46 +1331,54 @@ Func _RunFunction($action)
 				If _Sleep($DELAYRUNBOT1) = False Then checkMainScreen(False)
 			EndIf
 		Case "DonateCC,Train"
-			If $g_iActiveDonate And $g_bChkDonate Then
-
-			; samm0d
-				If $ichkModTrain = 1 Then
+			If $ichkModTrain = 1 Then
+				If $g_bTrainEnabled Then
 					ModTrain()
 				Else
+					If $g_iSamM0dDebug = 1 Then SetLog("Halt mode - training disabled [Before donate]", $COLOR_DEBUG)
+				EndIf
+
+				If $g_iActiveDonate And $g_bChkDonate Then
+					If SkipDonateNearFullTroops(True) = False And BalanceDonRec(True) Then DonateCC()
+					If _Sleep($DELAYRUNBOT1) = False Then checkMainScreen(False)
+				EndIf
+
+				If $bJustMakeDonate Then
+					If $g_bTrainEnabled Then
+						ModTrain()
+					Else
+						If $g_iSamM0dDebug = 1 Then SetLog("Halt mode - training disabled [After donate]", $COLOR_DEBUG)
+					EndIf
+				EndIf
+			Else
+				If $g_iActiveDonate And $g_bChkDonate Then
 					If $g_bFirstStart Then
 						getArmyTroopCapacity(True, False)
 						getArmySpellCapacity(False, True)
 					EndIf
+					If SkipDonateNearFullTroops(True) = False And BalanceDonRec(True) Then DonateCC()
 				EndIf
-
-				If SkipDonateNearFullTroops(True) = False And BalanceDonRec(True) Then DonateCC()
 				If _Sleep($DELAYRUNBOT1) = False Then checkMainScreen(False)
-
-				If $ichkModTrain = 1 Then
-					If $bJustMakeDonate Then
-						ModTrain()
+				If $g_bTrainEnabled Then ; check for training enabled in halt mode
+					If $g_iActualTrainSkip < $g_iMaxTrainSkip Then
+						;Train()
+						TrainRevamp()
+						_Sleep($DELAYRUNBOT1)
+					Else
+						SetLog("Humanize bot, prevent to delete and recreate troops " & $g_iActualTrainSkip + 1 & "/" & $g_iMaxTrainSkip, $color_blue)
+						$g_iActualTrainSkip = $g_iActualTrainSkip + 1
+						If $g_iActualTrainSkip >= $g_iMaxTrainSkip Then
+							$g_iActualTrainSkip = 0
+						EndIf
+						CheckOverviewFullArmy(True, False) ; use true parameter to open train overview window
+						getArmySpells()
+						getArmyHeroCount(False, True)
 					EndIf
 				Else
-					If $g_bTrainEnabled Then ; check for training enabled in halt mode
-						If $g_iActualTrainSkip < $g_iMaxTrainSkip Then
-							;Train()
-							TrainRevamp()
-							_Sleep($DELAYRUNBOT1)
-						Else
-							SetLog("Humanize bot, prevent to delete and recreate troops " & $g_iActualTrainSkip + 1 & "/" & $g_iMaxTrainSkip, $color_blue)
-							$g_iActualTrainSkip = $g_iActualTrainSkip + 1
-							If $g_iActualTrainSkip >= $g_iMaxTrainSkip Then
-								$g_iActualTrainSkip = 0
-							EndIf
-							CheckOverviewFullArmy(True, False) ; use true parameter to open train overview window
-							getArmySpells()
-							getArmyHeroCount(False, True)
-						EndIf
-					Else
-						If $g_bDebugSetlogTrain Then SetLog("Halt mode - training disabled", $COLOR_DEBUG)
-					EndIf
+					If $g_bDebugSetlogTrain Then SetLog("Halt mode - training disabled", $COLOR_DEBUG)
 				EndIf
 			EndIf
+
 		Case "BoostBarracks"
 			BoostBarracks()
 		Case "BoostSpellFactory"
