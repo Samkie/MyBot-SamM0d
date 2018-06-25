@@ -4,7 +4,7 @@
 ; Syntax ........: ModTrain()
 ; Parameters ....: $bDoPreTrain = False
 ; Return values .: None
-; Author ........: Samkie (21 Jun, 2017)
+; Author ........: Samkie (25 Jun, 2018)
 ; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2016
 ;                  MyBot is distributed under the term
 ; Related .......:

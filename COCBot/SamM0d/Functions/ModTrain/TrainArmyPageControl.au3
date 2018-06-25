@@ -88,11 +88,16 @@ Func gotoQuickTrain()
 		ForceCaptureRegion()
 		_CaptureRegion()
 		If _ColorCheck(_GetPixelColor($aButtonClose1[4],$aButtonClose1[5], False), Hex($aButtonClose1[6], 6), $aButtonClose1[7]) = True Then
-			If _ColorCheck(_GetPixelColor($aButtonQuickTrainTab[4],$aButtonQuickTrainTab[5], False), Hex($aButtonQuickTrainTab[6], 6), $aButtonQuickTrainTab[7]) = False Then
-				ClickP($aButtonQuickTrainTab,1,0,"QuickTrainTab")
+			If _ColorCheck(_GetPixelColor(727,122, False), Hex(0x746B67, 6), 6) = True Then
+				If _ColorCheck(_GetPixelColor($aButtonQuickTrainTab1[4],$aButtonQuickTrainTab1[5], False), Hex($aButtonQuickTrainTab1[6], 6), $aButtonQuickTrainTab1[7]) = False Then
+					ClickP($aButtonQuickTrainTab1,1,0,"QuickTrainTab1")
+				EndIf
 			Else
-				ExitLoop
+				If _ColorCheck(_GetPixelColor($aButtonQuickTrainTab2[4],$aButtonQuickTrainTab2[5], False), Hex($aButtonQuickTrainTab2[6], 6), $aButtonQuickTrainTab2[7]) = False Then
+					ClickP($aButtonQuickTrainTab2,1,0,"QuickTrainTab2")
+				EndIf
 			EndIf
+			ExitLoop
 		EndIf
 		$iCount += 1
 		If $iCount >= 15 Then
