@@ -78,7 +78,7 @@ Global Const $aButtonVillageConfirmOK[9]        = [500, 185, 555, 205, 480, 198,
 Global Const $aButtonVillageWasAttackOK[9]	    = [380, 505, 470, 540, 405, 537, 0x5EAC10, 20, "=-= Village Was Attacked Confirm Okay"]
 
 Global Const $aButtonEditArmy[9]                = [740, 510, 800, 536, 800, 520, 0XC0E968, 20, "=-= Edit Army"]
-Global Const $aButtonEditCancel[9]              = [740, 500, 800, 520, 800, 415, 0XE91217, 20, "=-= Edit Army Cancel"]
+Global Const $aButtonEditCancel[9]              = [740, 500, 800, 520, 800, 515, 0XE91217, 20, "=-= Edit Army Cancel"]
 Global Const $aButtonEditOkay[9]                = [740, 562, 800, 582, 800, 560, 0XDDF685, 20, "=-= Edit Army Okay"]
 
 Global Const $aButtonFriendlyChallenge[9]       = [160, 700, 220, 714, 200, 693, 0XDDF685, 20, "=-= Friendly Challenge"]
