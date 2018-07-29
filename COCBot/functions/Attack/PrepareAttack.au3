@@ -49,6 +49,7 @@ Func PrepareAttack($pMatchMode, $Remaining = False, $SRIGHT = False) ;Assigns tr
 
 	; JUNE 2018 @PROMAC
 	; Lets Select The CC and not the Siege Machine ; $eCastle
+
 	If Not $Remaining  And IsTroopToBeUsed($pMatchMode, $eCastle) Then
 		If QuickMIS("BC1", $g_sImgSwitchSiegeMacines, 28, 698, 820, 726, True, False) Then
 			Setlog("Switching button in a Siege Machine detected.")
@@ -79,6 +80,7 @@ Func PrepareAttack($pMatchMode, $Remaining = False, $SRIGHT = False) ;Assigns tr
 	Local $result = AttackBarCheck($Remaining, $SRIGHT)
 	If $g_bDebugSetlog Then SetDebugLog("DLL Troopsbar list: " & $result, $COLOR_DEBUG)
 	Local $aTroopDataList = StringSplit($result, "|")
+
 	; samm0d
 	Local $aTemp[12][4]
 	If $result <> "" Then
@@ -139,7 +141,6 @@ Func PrepareAttack($pMatchMode, $Remaining = False, $SRIGHT = False) ;Assigns tr
 			EndIf
 		EndIf
 	Next
-
 	;ResumeAndroid()
 
 	If $g_bDebugSetlog Then SetDebugLog("troopsnumber  = " & $troopsnumber)

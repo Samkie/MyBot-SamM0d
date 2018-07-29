@@ -1,8 +1,4 @@
-﻿#Region ;**** Directives created by AutoIt3Wrapper_GUI ****
-#AutoIt3Wrapper_Compression=4
-#Au3Stripper_Parameters=/rsln /MI=3
-#EndRegion ;**** Directives created by AutoIt3Wrapper_GUI ****
-; #FUNCTION# ====================================================================================================================
+﻿; #FUNCTION# ====================================================================================================================
 ; Name ..........: MBR Bot
 ; Description ...: This file contains the initialization and main loop sequences f0r the MBR Bot
 ; Author ........:  (2014)
@@ -17,12 +13,6 @@
 ; AutoIt pragmas
 #NoTrayIcon
 #RequireAdmin
-;#AutoIt3Wrapper_UseX64=7n
-;#AutoIt3Wrapper_Res_HiDpi=Y ; HiDpi will be set during run-time!
-;#AutoIt3Wrapper_Run_AU3Check=n ; enable when running in folder with umlauts!
-;#AutoIt3Wrapper_Run_Au3Stripper=y
-;#Au3Stripper_Parameters=/rsln /MI=3
-;/SV=0
 
 ; samm0d
 #include <WinAPILocale.au3>
@@ -31,8 +21,6 @@ Global $g_iLCID = _WinAPI_GetUserDefaultLCID()
 ;#AutoIt3Wrapper_Change2CUI=y
 ;#pragma compile(Console, true)
 #include "MyBot.run.version.au3"
-#pragma compile(ProductName, My Bot)
-#pragma compile(Out, MyBot.run.exe) ; Required
 
 ; Enforce variable declarations
 Opt("MustDeclareVars", 1)

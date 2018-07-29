@@ -38,7 +38,6 @@ Func AttackBarCheck($Remaining = False, $SRIGHT = False)
 		$CheckSlotwHero = False
 	EndIf
 
-
 	; Reset to level one the Spells level
 	$g_iLSpellLevel = 1
 	$g_iESpellLevel = 1

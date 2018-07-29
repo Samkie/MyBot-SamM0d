@@ -46,6 +46,7 @@
 ;---------------------------------------------------------------
 #include "SamM0d\Functions\Other\_debugSaveHBitmapToImage.au3"
 #include "SamM0d\Functions\Other\_Wait4Pixel.au3"
+#include "SamM0d\Functions\Other\SetModDebugLog.au3"
 #include "SamM0d\GUI\GUI Control MySwitch Setting.au3"
 #include "SamM0d\GUI\MBR GUI Control Child SamM0d.au3"
 ;----------------------------------------------------------------

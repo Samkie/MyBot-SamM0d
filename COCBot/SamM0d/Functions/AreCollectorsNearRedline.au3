@@ -16,6 +16,7 @@
 
 Func AreCollectorsNearRedline($percent)
 	SetLog("Locating Mines & Collectors", $COLOR_BLUE)
+
 	; reset variables
 	Global $g_aiPixelMine[0]
 	Global $g_aiPixelElixir[0]
@@ -73,5 +74,6 @@ Func AreCollectorsNearRedline($percent)
 		EndIf
 	EndIf
 	If $g_bDebugMakeIMGCSV = 1 Then AttackCSVDEBUGIMAGE()
+
 	Return False
 EndFunc

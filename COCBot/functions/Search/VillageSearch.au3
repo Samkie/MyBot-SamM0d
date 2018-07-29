@@ -129,6 +129,7 @@ Func _VillageSearch() ;Control for searching a village that meets conditions
 
 		If _Sleep($DELAYRESPOND) Then Return
 
+
 		For $i = 0 To $g_iModeCount - 1
 			$isModeActive[$i] = IsSearchModeActive($i)
 			If $isModeActive[$i] Then
@@ -159,6 +160,7 @@ Func _VillageSearch() ;Control for searching a village that meets conditions
 				ExitLoop
 			EndIf
 		Next
+
 		; ----------------- FIND TARGET TOWNHALL -------------------------------------------
 		; $g_iSearchTH name of level of townhall (return "-" if no th found)
 		; $g_iTHx and $g_iTHy coordinates of townhall
@@ -221,6 +223,7 @@ Func _VillageSearch() ;Control for searching a village that meets conditions
 					EndIf
 				EndIf
 			Next
+
 		EndIf
 
 		; ----------------- CHECK MILKING ----------------------------------------------------
@@ -251,6 +254,7 @@ Func _VillageSearch() ;Control for searching a village that meets conditions
 			SetLog($GetResourcesTXT, $COLOR_SUCCESS, "Lucida Console", 7.5)
 			SetLog("      " & "Dead Base Found!", $COLOR_SUCCESS, "Lucida Console", 7.5)
 			$logwrited = True
+
 			; SamM0d
 			Local $blnFlagSearchAnotherBase = False
 			If $iChkNoLeague[$DB] = 1 Then
@@ -264,6 +268,7 @@ Func _VillageSearch() ;Control for searching a village that meets conditions
 			ElseIf $iChkNoLeague[$DB] = 0 Then
 				$blnFlagSearchAnotherBase = False
 			EndIf
+
 			If $blnFlagSearchAnotherBase = False Then
 				If $ichkDBMeetCollOutside = 1 Then ; check is that collector  near outside
 					$bIDoScanMineAndElixir = False
@@ -338,6 +343,7 @@ Func _VillageSearch() ;Control for searching a village that meets conditions
 							EndIf
 						EndIf
 					EndIf
+
 					$g_iSearchTH = ""
 				Else
 					$blnFlagSearchAnotherBase = False
@@ -347,6 +353,7 @@ Func _VillageSearch() ;Control for searching a village that meets conditions
 					ExitLoop
 				EndIf
 			EndIf
+
 			; =====END samm0d====
 		ElseIf $match[$LB] And Not $dbBase Then
 			SetLog($GetResourcesTXT, $COLOR_SUCCESS, "Lucida Console", 7.5)
