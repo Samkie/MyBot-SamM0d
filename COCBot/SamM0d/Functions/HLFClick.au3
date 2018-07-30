@@ -442,7 +442,8 @@ EndFunc
 
 Func HMLClickAway(ByRef $x, ByRef $y, ByRef $MsgCode)
 	If $bDonateAwayFlag = True Then
-		Return HMLClickPR($aButtonCloseAway,$x,$y)
+		Local $aCoor[4] = [230,15,260,30]
+		Return HMLClickPR($aCoor,$x,$y)
 	Else
 		ForceCaptureRegion()
 		_CaptureRegion()
