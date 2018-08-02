@@ -21,6 +21,7 @@
 ;			Add each sides in one array (not use, but it can help to get closer pixel of all the red area)
 
 Func _GetRedArea($iMode = $REDLINE_IMGLOC, $iMaxAllowedPixelDistance = 25, $fMinSideLengthFactor = 0.65)
+
 	Local $nameFunc = "[_GetRedArea] "
 	debugRedArea($nameFunc & " IN")
 
@@ -37,7 +38,6 @@ Func _GetRedArea($iMode = $REDLINE_IMGLOC, $iMaxAllowedPixelDistance = 25, $fMin
 		$result = DllCall($g_hLibMyBot, "str", "getRedAreaSideBuilding", "ptr", $g_hHBitmap2, "int", $xSkip, "int", $ySkip, "int", $colorVariation, "int", $eSideBuildingTH)
 		If $g_bDebugSetlog Then SetDebugLog("Debug: Redline with TH Side chosen")
 	Else ; Normal getRedArea
-
 		Switch $iMode
 			Case $REDLINE_NONE ; No red line
 				Local $a = ["NoRedLine", "", "", "", ""]
@@ -51,13 +51,6 @@ Func _GetRedArea($iMode = $REDLINE_IMGLOC, $iMaxAllowedPixelDistance = 25, $fMin
 				SearchRedLinesMultipleTimes()
 				Local $dropPoints = GetOffSetRedline("TL") & "|" & GetOffSetRedline("BL") & "|" & GetOffSetRedline("BR") & "|" & GetOffSetRedline("TR")
 				$listPixelBySide = getRedAreaSideBuilding($dropPoints)
-				#cs
-					$g_aiPixelTopLeft = _SortRedline(GetOffSetRedline("TL"))
-					$g_aiPixelBottomLeft =  _SortRedline(GetOffSetRedline("BL"))
-					$g_aiPixelBottomRight = _SortRedline(GetOffSetRedline("BR"))
-					$g_aiPixelTopRight =  _SortRedline(GetOffSetRedline("TR"))
-					Local $listPixelBySide = ["ImgLoc", $g_aiPixelTopLeft, $g_aiPixelBottomLeft, $g_aiPixelBottomRight, $g_aiPixelTopRight]
-				#ce
 			Case $REDLINE_ORIGINAL ; Original red line routine
 				Local $result = DllCall($g_hLibMyBot, "str", "getRedArea", "ptr", $g_hHBitmap2, "int", $xSkip, "int", $ySkip, "int", $colorVariation)
 		EndSwitch

@@ -254,6 +254,7 @@ Func _VillageSearch() ;Control for searching a village that meets conditions
 			SetLog($GetResourcesTXT, $COLOR_SUCCESS, "Lucida Console", 7.5)
 			SetLog("      " & "Dead Base Found!", $COLOR_SUCCESS, "Lucida Console", 7.5)
 			$logwrited = True
+			$g_iMatchMode = $DB
 
 			; SamM0d
 			Local $blnFlagSearchAnotherBase = False
@@ -343,13 +344,11 @@ Func _VillageSearch() ;Control for searching a village that meets conditions
 							EndIf
 						EndIf
 					EndIf
-
 					$g_iSearchTH = ""
 				Else
 					$blnFlagSearchAnotherBase = False
 				EndIf
 				If $blnFlagSearchAnotherBase = False Then
-					$g_iMatchMode = $DB
 					ExitLoop
 				EndIf
 			EndIf
